@@ -12,7 +12,12 @@ class Student_ProfileController extends Zend_Controller_Action
     {
         // action body
     }
-
-
+    
+    public function createAction()
+    {
+        $this->view->headTitle("create profile");
+        $form = new Student_Form_Create();
+        $this->view->form = $form;
+    }
 }
 
