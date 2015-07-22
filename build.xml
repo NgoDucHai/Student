@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="" default="soft-design-verify">
+    <target name="web-server" depends="migrate-dev">
+        <exec command="php -S 127.0.0.1:7777 -t public/" passthru="true"></exec>
+    </target>
+    <target name="soft-design-verify" depends="migrate-testing">
+        <exec command="vendor/bin/phpunit -c tests/phpunit.xml" passthru="true"></exec>
+    </target>
+    <target name="migrate-testing">
+        <exec command="vendor/bin/phinx migrate -e testing" passthru="true"></exec>
+    </target>
+    <target name="migrate-dev">
+        <exec command="vendor/bin/phinx migrate -e development" passthru="true"></exec>
+    </target>
+</project>
