@@ -5,12 +5,7 @@ class Student_ProfileController extends Zend_Controller_Action {
     public function init() {
         /* Initialize action controller here */
     }
-<<<<<<< HEAD
 
-    public function indexAction() {
-        // action body
-    }
-    
     public function showAction() {
         $this->view->headTitle('Show Profile');
         $form = new Student_Form_ShowProfile();
@@ -34,7 +29,6 @@ class Student_ProfileController extends Zend_Controller_Action {
             "address" => $student->getAddress()
         ];
         $form->populate($data);
-=======
     
     public function indexAction() {
         $request = $this->getRequest();
@@ -68,7 +62,6 @@ class Student_ProfileController extends Zend_Controller_Action {
     {
         $this->view->headTitle("create profile");
         $form = new Student_Form_Create();
->>>>>>> 0341effc6bb0e3f234f69f28aa3d24f905331eca
         $this->view->form = $form;
     }
 }
