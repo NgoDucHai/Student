@@ -11,7 +11,6 @@ class updateProfileActionTest extends Vms_Test_PHPUnit_ControllerWithDatabaseFix
         return new PHPUnit_Extensions_Database_DataSet_ArrayDataSet([
             "student" => [
                 [
-                    "id" => '1',
                     "studentId" => '1135678',
                     "studentName" => "domanhdat",
                     "dateOfBirth" => '1993-12-13',
@@ -24,19 +23,19 @@ class updateProfileActionTest extends Vms_Test_PHPUnit_ControllerWithDatabaseFix
     }
 
     public function testWhenAccessUrlThenReturnHttpCode200() {
-        $this->dispatch('/student/profile/update-profile/id/1');
+        $this->dispatch('/student/profile/update-profile/id/1135678');
 
         $this->assertResponseCode(200);
     }
 
     public function testWhenAccessPageUpdateProfileThenDisplayTitle() {
-        $this->dispatch('/student/profile/update-profile/id/1');
+        $this->dispatch('/student/profile/update-profile/id/1135678');
 
         $this->assertQueryContentContains('head', 'Update-profile');
     }
 
     public function testWhenAccessPageUpdateProfileThenDisplayForm() {
-        $this->dispatch('/student/profile/update-profile/id/1');
+        $this->dispatch('/student/profile/update-profile/id/1135678');
 
         $this->assertQuery('form#update-profile');
 
@@ -49,7 +48,7 @@ class updateProfileActionTest extends Vms_Test_PHPUnit_ControllerWithDatabaseFix
     }
 
     public function testWhenAccessPageUpdateProfileThenDisplayInformation() {
-        $this->dispatch('/student/profile/update-profile/id/1');
+        $this->dispatch('/student/profile/update-profile/id/1135678');
 
         $this->assertQueryContentContains('label', 'Mã sinh viên');
         $this->assertQueryContentContains('label', 'Họ và tên');
@@ -72,7 +71,7 @@ class updateProfileActionTest extends Vms_Test_PHPUnit_ControllerWithDatabaseFix
     }
 
     public function testWhenAccessPageUpdateProfileThenDisplayInformationOfStudent() {
-        $this->dispatch('/student/profile/update-profile/id/1');
+        $this->dispatch('/student/profile/update-profile/id/1135678');
 
         $this->assertQuery('input[@value="1135678"]');
         $this->assertQuery('input[@value="domanhdat"]');
@@ -92,8 +91,8 @@ class updateProfileActionTest extends Vms_Test_PHPUnit_ControllerWithDatabaseFix
                     'phone' => '987654321',
                     'address' => 'hoa binh'
         ]);
-        $this->dispatch('/student/profile/update-profile/id/1');
-        
+        $this->dispatch('/student/profile/update-profile/id/1135678');
+
         $this->assertQuery('input[@value="1135678"]');
         $this->assertQuery('input[@value="domanhdat1"]');
         $this->assertQuery('input[@value="1995-12-24"]');
