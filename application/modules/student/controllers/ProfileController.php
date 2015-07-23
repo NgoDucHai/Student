@@ -29,7 +29,8 @@ class Student_ProfileController extends Zend_Controller_Action {
             "address" => $student->getAddress()
         ];
         $form->populate($data);
-	}    
+    }
+
     public function indexAction() {
         $request = $this->getRequest();
         $currentPageNumber = $this->getParam("page", 1);
@@ -38,30 +39,29 @@ class Student_ProfileController extends Zend_Controller_Action {
         $this->view->listStudents = $paginator;
         $this->view->headTitle('List Student');
     }
-    
+
     /**
      * @return \Application_Service_Paginator
      */
-    private function factoryPaginator(){
+    private function factoryPaginator() {
         return new Application_Service_Paginator('Student_Model_StudentMapper');
     }
-    
+
     /**
      * paginate
      * @param int $currentPageNumber
      * @param int $itemPerPage
      * @return Zend_Paginator
      */
-    private function paginator($currentPageNumber, $itemPerPage){
+    private function paginator($currentPageNumber, $itemPerPage) {
         $paginator = $this->factoryPaginator();
         return $paginator->paginate($currentPageNumber, $itemPerPage);
     }
-    
 
-    public function createAction()
-    {
+    public function createAction() {
         $this->view->headTitle("create profile");
         $form = new Student_Form_Create();
         $this->view->form = $form;
     }
+
 }
