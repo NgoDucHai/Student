@@ -70,14 +70,14 @@ class ShowProfileActionTest extends Vms_Test_PHPUnit_ControllerWithDatabaseFixtu
     public function testDisplayFromDb() {
         //$student = $this->getDataSet();/*@var $student PHPUnit_Extensions_Database_DataSet_ArrayDataSet*/
         $student = [
-        "studentId" => 1,
-        "studentName" => "Ngo Duc Hai",
-        "dateOfBirth" => "1994-03-06",
-        "gender" => 1,
-        "phone" => "01659338885",
-        "address" => "Tan Yen- Bac Giang"
+            "studentId" => 1,
+            "studentName" => "Ngo Duc Hai",
+            "dateOfBirth" => "1994-03-06",
+            "gender" => 1,
+            "phone" => "01659338885",
+            "address" => "Tan Yen- Bac Giang"
         ];
-        
+
         $this->dispatch('student/profile/show/id/1');
         $this->assertQueryContentContains('dl > dd', $student['studentId'], "Không hiển thị mã số sinh viên");
         $this->assertQueryContentContains('dl > dd', $student['studentName'], "Không hiển thị họ tên");
