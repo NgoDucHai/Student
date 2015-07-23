@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Profile</title>
+        <?php echo $this->headTitle(); ?>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -21,21 +21,10 @@
                     <div class="panel panel-default">
                         <div class="panel-heading text-center"><h4>Profile</h4></div>
                         <div class="panel-body">
-
-                            <dl class="dl-horizontal h4">
-                                <dt>MSSV</dt>
-                                <dd>1222222</dd>
-                                <dt>Name</dt>
-                                <dd>Ngo Duc Hai</dd>
-                                <dt>Date of birthday</dt>
-                                <dd>06/03/1994</dd>
-                                <dt>Gender</dt>
-                                <dd>Nam</dd>
-                                <dt>Phone</dt>
-                                <dd>01659338885</dd>
-                                <dt>Address</dt>
-                                <dd>Tan Yen - Bac Giang</dd>
-                            </dl>
+                            <?php
+                        
+                            echo $this->form; ?>
+ 
                         </div>
                     </div>
                 </div>
