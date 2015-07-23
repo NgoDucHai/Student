@@ -10,7 +10,7 @@ class StudentProfile extends AbstractMigration {
                 ->addColumn('studentName', 'string', ['limit' => 50])
                 ->addColumn('dateOfBirth', 'date')
                 ->addColumn('gender', 'boolean')
-                ->addColumn('phone', 'integer', ['limit' => 11])
+                ->addColumn('phone', 'string', ['limit' => 11])
                 ->addColumn('address', 'string', ['limit' => 150])
                 ->addIndex(array('studentId'), array('unique' => true))
                 ->create();
