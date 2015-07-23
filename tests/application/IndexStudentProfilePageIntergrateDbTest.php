@@ -94,7 +94,7 @@ class IndexStudentProfilePageIntergrateDbTest extends Vms_Test_PHPUnit_Controlle
     }
     
     /**
-     * test paginator on index student page when only page param
+     * test paginator on index student page when having only page param
      * @dataProvider prepare3RecordsOfStudentToTest
      */
     public function testPaginatorOnIndexStudentPage($studentId, $studentName, $studentBirthOfDay, $studentGender, $studentPhone, $studentAddress){
