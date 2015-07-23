@@ -12,7 +12,7 @@ class Student_ProfileController extends Zend_Controller_Action {
         $student = new Student_Model_Student();
         $studentM = new Student_Model_StudentMapper();
         //kiem tra id tu request
-        $id = $this->getParam("id", '');
+        $id = $this->getParam("i", '');
         if ($id == '')
             echo "Chua nhap vao id";
         $result = $studentM->find($id, $student);
@@ -20,7 +20,6 @@ class Student_ProfileController extends Zend_Controller_Action {
             echo "Id khong ton tai";
         }
         $data = [
-            "id" => $id,
             "studentId" => $student->getStudentId(),
             'studentName' => $student->getStudentName(),
             'dateOfBirth' => $student->getDateOfBirth(),
