@@ -12,7 +12,6 @@ class StudentProfile extends AbstractMigration {
                 ->addColumn('gender', 'boolean')
                 ->addColumn('phone', 'string', ['limit' => 11])
                 ->addColumn('address', 'string', ['limit' => 150])
-                ->addIndex(array('studentId'), array('unique' => true))
                 ->create();
         
     }
