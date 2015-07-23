@@ -7,18 +7,20 @@ class Student_ProfileController extends Zend_Controller_Action {
     }
 
     public function indexAction() {
-        $request = $this->getRequest();
+        $this->view->headTitle('List Student');
+        
         $currentPageNumber = $this->getParam("page", 1);
         $itemPerPage = $this->getParam("size", 3);
-        $paginator = $this->paginator($currentPageNumber, $itemPerPage);
+        $paginator = $this->__paginator($currentPageNumber, $itemPerPage);
+        
         $this->view->listStudents = $paginator;
-        $this->view->headTitle('List Student');
+        
     }
 
     /**
      * @return \Application_Service_Paginator
      */
-    private function factoryPaginator() {
+    private function __factoryPaginator() {
         return new Application_Service_Paginator('Student_Model_StudentMapper');
     }
 
@@ -28,8 +30,8 @@ class Student_ProfileController extends Zend_Controller_Action {
      * @param int $itemPerPage
      * @return Zend_Paginator
      */
-    private function paginator($currentPageNumber, $itemPerPage) {
-        $paginator = $this->factoryPaginator();
+    private function __paginator($currentPageNumber, $itemPerPage) {
+        $paginator = $this->__factoryPaginator();
         return $paginator->paginate($currentPageNumber, $itemPerPage);
     }
 
