@@ -2,7 +2,6 @@
 
 class Student_Model_Student {
 
-    protected $_id;
     protected $_studentId;
     protected $_studentName;
     protected $_dateOfBirth;
@@ -43,10 +42,6 @@ class Student_Model_Student {
         return $this;
     }
 
-    public function getId() {
-        return $this->_id;
-    }
-
     public function getStudentId() {
         return $this->_studentId;
     }
@@ -69,10 +64,6 @@ class Student_Model_Student {
 
     public function getAddress() {
         return $this->_address;
-    }
-
-    public function setId($id) {
-        $this->_id = $id;
     }
 
     public function setStudentId($studentId) {
