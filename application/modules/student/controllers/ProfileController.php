@@ -6,15 +6,39 @@ class Student_ProfileController extends Zend_Controller_Action {
         
     }
 
+    public function showAction() {
+        $this->view->headTitle('Show Profile');
+        $form = new Student_Form_ShowProfile();
+        $student = new Student_Model_Student();
+        $studentM = new Student_Model_StudentMapper();
+        //kiem tra id tu request
+        $id = $this->getParam("id", '');
+        if ($id == '')
+            echo "Chua nhap vao id";
+        $result = $studentM->find($id, $student);
+        if (!$result) {
+            echo "Id khong ton tai";
+        }
+        $data = [
+            "id" => $id,
+            "studentId" => $student->getStudentId(),
+            'studentName' => $student->getStudentName(),
+            'dateOfBirth' => $student->getDateOfBirth(),
+            "gender" => $student->getGender(),
+            "phone" => $student->getPhone(),
+            "address" => $student->getAddress()
+        ];
+        $form->populate($data);
+    }
+
     public function indexAction() {
         $this->view->headTitle('List Student');
-        
+
         $currentPageNumber = $this->getParam("page", 1);
         $itemPerPage = $this->getParam("size", 3);
         $paginator = $this->__paginator($currentPageNumber, $itemPerPage);
-        
+
         $this->view->listStudents = $paginator;
-        
     }
 
     /**
