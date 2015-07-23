@@ -25,17 +25,17 @@ class ShowProfileActionTest extends Vms_Test_PHPUnit_ControllerWithDatabaseFixtu
     }
 
     public function testReturnCode200WhenRequestSuccess() {
-        $this->dispatch('student/profile/show/id/1');
+        $this->dispatch('student/profile/show-profile/id/1');
 
         $this->assertResponseCode(200);
     }
 
     public function testCallWithoutActionShouldPullFromIndexActionDefault() {
-        $this->dispatch('student/profile/show');
+        $this->dispatch('student/profile/show-profile');
 
         $this->assertModule('student');
         $this->assertController('profile');
-        $this->assertAction('show');
+        $this->assertAction('show-profile');
     }
 
     public function testDisplayTitle() {
@@ -43,13 +43,13 @@ class ShowProfileActionTest extends Vms_Test_PHPUnit_ControllerWithDatabaseFixtu
                 ->setPost([
                     'id' => 1
         ]);
-        $this->dispatch('student/profile/show');
+        $this->dispatch('student/profile/show-profile');
 
         $this->assertQueryContentContains('title', 'Show Profile');
     }
 
     public function testIfNotDisplayInformationThenReturnMessanger() {
-        $this->dispatch('student/profile/show/id/1');
+        $this->dispatch('student/profile/show-profile/id/1');
         $this->assertQueryContentContains('table > tbody > tr > td', 'Mã sinh viên:', "Không hiển thị mã số sinh viên");
         $this->assertQueryContentContains('table > tbody > tr > td', 'Họ và tên:', "Không hiển thị họ tên");
         $this->assertQueryContentContains('table > tbody > tr > td', 'Ngày sinh:', "Không hiển thị ngày sinh");
@@ -59,7 +59,7 @@ class ShowProfileActionTest extends Vms_Test_PHPUnit_ControllerWithDatabaseFixtu
     }
 
     public function testDisplayFromDb() {
-        $this->dispatch('student/profile/show/id/1');
+        $this->dispatch('student/profile/show-profile/id/1');
         $this->assertQueryContentContains('table > tbody > tr > td', 1, "Không hiển thị mã số sinh viên");
         $this->assertQueryContentContains('table > tbody > tr > td', "Ngo Duc Hai", "Không hiển thị họ tên");
         $this->assertQueryContentContains('table > tbody > tr > td', "1994-03-06", "Không hiển thị ngày sinh");

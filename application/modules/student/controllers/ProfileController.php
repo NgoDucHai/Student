@@ -5,8 +5,11 @@ class Student_ProfileController extends Zend_Controller_Action {
     public function init() {
         /* Initialize action controller here */
     }
-
-    public function showAction() {
+    /**
+     * Display profile student
+     * @return Student_Model_Student
+     */
+    public function showProfileAction() {
         $this->view->headTitle('Show Profile');
         
         //kiem tra id tu request
@@ -14,8 +17,6 @@ class Student_ProfileController extends Zend_Controller_Action {
         if ($id == '') {
             $this->_helper->redirector('index');
         }
-        
-//        $student = new Student_Model_Student();
         $studentM = new Student_Model_StudentMapper();
         $result = $studentM->findId($id);
         if (!$result) {
@@ -23,17 +24,6 @@ class Student_ProfileController extends Zend_Controller_Action {
             return;
         }
         /*@var $result Student_Model_Student*/
-        //$form = new Student_Form_ShowProfile();
-        $data = [
-            "studentId" => $result->getStudentId(),
-            "studentName" => $result->getStudentName(),
-            "dateOfBirth" => $result->getDateOfBirth(),
-            "gender" => $result->getGender(),
-            "phone" =>$result->getPhone(),
-            "address" =>$result->getAddress()
-        ];
-        //$form->populate($data);
-        
         $this->view->student = $result;
     }
 
