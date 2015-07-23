@@ -1,1 +1,7 @@
-<?php echo $this->layout()->content; ?>
+<?php
+
+/* @var $this Zend_View */
+
+echo $this->doctype();
+echo $this->headMeta()->appendHttpEquiv('Content-Type', 'text/html; charset=UTF-8');
+echo $this->layout()->content;
