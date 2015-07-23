@@ -5,15 +5,15 @@ use Phinx\Migration\AbstractMigration;
 class StudentProfile extends AbstractMigration {
 
     public function change() {
-        $table = $this->table('student');
+        $table = $this->table('student', ['id' => false, 'primary_key' => ['studentId']]);
         $table->addColumn('studentId', 'string', ['limit' => 25])
                 ->addColumn('studentName', 'string', ['limit' => 50])
                 ->addColumn('dateOfBirth', 'date')
                 ->addColumn('gender', 'boolean')
-                ->addColumn('phone', 'integer', ['limit' => 11])
+                ->addColumn('phone', 'string', ['limit' => 15])
                 ->addColumn('address', 'string', ['limit' => 150])
-                ->addIndex(array('studentId'), array('unique' => true))
                 ->create();
+        
     }
 
 }
