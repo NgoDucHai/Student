@@ -29,7 +29,7 @@ class Student_ProfileController extends Zend_Controller_Action {
             "address" => $student->getAddress()
         ];
         $form->populate($data);
-    
+	}    
     public function indexAction() {
         $request = $this->getRequest();
         $currentPageNumber = $this->getParam("page", 1);
