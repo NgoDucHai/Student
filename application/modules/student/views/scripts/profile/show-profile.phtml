@@ -12,12 +12,7 @@
 <table>
     <thead>
         <tr>
-            <th></th>
-            <th></th>
-            <th>Show Profile</th>
-            <th></th>
-            <th></th>
-            <th></th>
+            <th>Show Profile</th> 
         </tr>
     </thead>
     <tbody>
@@ -25,31 +20,32 @@
             <td>Mã sinh viên: </td>
             <td><?php echo $this->escape($this->student->getStudentId()) ?></td>
         </tr>
-         <tr>
+        <tr>
             <td>Họ và tên: </td>
             <td><?php echo $this->escape($this->student->getStudentName()) ?></td>
         </tr>
-         <tr>
+        <tr>
             <td>Ngày sinh: </td>
             <td><?php echo $this->escape($this->student->getDateOfBirth()) ?></td>
         </tr>
-         <tr>
+        <tr>
             <td>Giới tính: </td>
-            <td><?php if(1 == $this->student->getGender() )
-                echo "Nam";
+            <td><?php
+                if (1 == $this->student->getGender())
+                    echo "Nam";
                 else
                     echo "Nữ";
                 ?></td>
         </tr>
-         <tr>
+        <tr>
             <td>Số điện thoại: </td>
             <td><?php echo $this->escape($this->student->getPhone()) ?></td>
         </tr>
-         <tr>
+        <tr>
             <td>Địa chỉ: </td>
             <td><?php echo $this->escape($this->student->getAddress()) ?></td>
         </tr>
-        
+
     </tbody>
 </table>
 
