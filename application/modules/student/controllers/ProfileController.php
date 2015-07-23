@@ -75,7 +75,7 @@ class Student_ProfileController extends Zend_Controller_Action {
         }
 
         $studentMapper = new Student_Model_StudentMapper();
-        $result = $studentMapper->find($id);
+        $result = $studentMapper->findId($id);
         if (!$result) {
             $this->view->message = "Page not found information";
             return;

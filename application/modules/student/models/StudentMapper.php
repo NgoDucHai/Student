@@ -58,7 +58,6 @@ class Student_Model_StudentMapper {
             return false;
         }
         $row = $result->current();
-        $student->setId($row->id);
         $student->setStudentId($row->studentId);
         $student->setStudentName($row->studentName);
         $student->setDateOfBirth($row->dateOfBirth);
@@ -73,7 +72,7 @@ class Student_Model_StudentMapper {
      * @param number $id
      * @return \Student_Model_Student|boolean
      */
-    public function find($id) {
+    public function findId($id) {
         $table = $this->getDbTable(); /* @var $table Student_Model_DbTable_Student */
         $result = $table->find($id); /* @var $result Zend_Db_Table_Rowset */
         if (count($result) == 0) {
