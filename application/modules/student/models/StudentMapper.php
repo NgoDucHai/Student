@@ -50,22 +50,6 @@ class Student_Model_StudentMapper {
         }
         return $this->_dbTable;
     }
-    
-    public function find($id, Student_Model_Student $student) {
-       
-        $result = $this->getDbTable()->find($id);
-        if (0 == count($result)) {
-            return false;
-        }
-        $row = $result->current();
-        $student->setStudentId($row->studentId);
-        $student->setStudentName($row->studentName);
-        $student->setDateOfBirth($row->dateOfBirth);
-        $student->setGender($row->gender);
-        $student->setPhone($row->phone);
-        $student->setAddress($row->address);
-        return TRUE;
-    }
 
     /**
      * 

@@ -3,31 +3,38 @@
 class Student_ProfileController extends Zend_Controller_Action {
 
     public function init() {
-        
+        /* Initialize action controller here */
     }
 
     public function showAction() {
         $this->view->headTitle('Show Profile');
-        $form = new Student_Form_ShowProfile();
-        $student = new Student_Model_Student();
-        $studentM = new Student_Model_StudentMapper();
+        
         //kiem tra id tu request
-        $id = $this->getParam("i", '');
-        if ($id == '')
-            echo "Chua nhap vao id";
-        $result = $studentM->find($id, $student);
-        if (!$result) {
-            echo "Id khong ton tai";
+        $id = $this->getParam("id", '');
+        if ($id == '') {
+            $this->_helper->redirector('index');
         }
+        
+//        $student = new Student_Model_Student();
+        $studentM = new Student_Model_StudentMapper();
+        $result = $studentM->findId($id);
+        if (!$result) {
+            $this->view->message = "Page not found information";
+            return;
+        }
+        /*@var $result Student_Model_Student*/
+        //$form = new Student_Form_ShowProfile();
         $data = [
-            "studentId" => $student->getStudentId(),
-            'studentName' => $student->getStudentName(),
-            'dateOfBirth' => $student->getDateOfBirth(),
-            "gender" => $student->getGender(),
-            "phone" => $student->getPhone(),
-            "address" => $student->getAddress()
+            "studentId" => $result->getStudentId(),
+            "studentName" => $result->getStudentName(),
+            "dateOfBirth" => $result->getDateOfBirth(),
+            "gender" => $result->getGender(),
+            "phone" =>$result->getPhone(),
+            "address" =>$result->getAddress()
         ];
-        $form->populate($data);
+        //$form->populate($data);
+        
+        $this->view->student = $result;
     }
 
     public function indexAction() {
@@ -58,9 +65,17 @@ class Student_ProfileController extends Zend_Controller_Action {
         return $paginator->paginate($currentPageNumber, $itemPerPage);
     }
 
-    public function createAction() {
+    public function createProfileAction() {
         $this->view->headTitle("create profile");
-        $form = new Student_Form_Create();
+        $form = new Student_Form_CreateProfile();
+        /* @var $request Zend_Controller_Request_Http*/
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            if($form->isValid($request->getPost()))
+            {
+                echo "Ok you done";
+            }
+        }
         $this->view->form = $form;
     }
 
@@ -120,5 +135,4 @@ class Student_ProfileController extends Zend_Controller_Action {
             'address' => $result->getAddress()
         ]);
     }
-
 }
