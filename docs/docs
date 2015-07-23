@@ -2,6 +2,7 @@ Yều cầu:
 - form create teacher cần có:
     + input teacherName: chỉ chứa chữ, viết hoa chữ cái đầu, khoảng cách giữa các chữ là 1 dấu cách,
 maxlength = 50, min =6.
+    + file teacherAvatar: không bắt buộc
     + input teacherId: chỉ chứa số, length=8.[readonly]
     + select teacherGender:
     + input teacherDateOfBirthDay:
