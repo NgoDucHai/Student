@@ -1,35 +1,56 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <?php echo $this->headTitle(); ?>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    </head>
-    <body>
-        <div class="jumbotron">
-            <div class="row">
-                <div class="col-xs-6 col-md-2 col-md-offset-2">
-                    <a href="#" style="height: 200px" class="thumbnail">
-                        <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcT-fxRi-wrR7muP_naLzdF4svQVoSDib-lXawGZ1MeEqXCOk487VA" alt="avata">
-                    </a>
-                    <button type="button" class="btn btn-success center-block">Follow me</button>
-                </div>
-                <div class="col-md-6">
-                    <div class="panel panel-default">
-                        <div class="panel-heading text-center"><h4>Profile</h4></div>
-                        <div class="panel-body">
-                            <?php
-                        
-                            echo $this->form; ?>
- 
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</body>
-</html>
+
+<?php echo $this->headTitle(); ?>
+
+
+<h1>Show Profile</h1><br>
+<div id="message_box">
+    <?php
+    if (isset($this->messages[0]))
+        echo $this->messages[0];
+    ?>
+</div>
+<table>
+    <thead>
+        <tr>
+            <th></th>
+            <th></th>
+            <th>Show Profile</th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Mã sinh viên: </td>
+            <td><?php echo $this->escape($this->student->getStudentId()) ?></td>
+        </tr>
+         <tr>
+            <td>Họ và tên: </td>
+            <td><?php echo $this->escape($this->student->getStudentName()) ?></td>
+        </tr>
+         <tr>
+            <td>Ngày sinh: </td>
+            <td><?php echo $this->escape($this->student->getDateOfBirth()) ?></td>
+        </tr>
+         <tr>
+            <td>Giới tính: </td>
+            <td><?php if(1 == $this->student->getGender() )
+                echo "Nam";
+                else
+                    echo "Nữ";
+                ?></td>
+        </tr>
+         <tr>
+            <td>Số điện thoại: </td>
+            <td><?php echo $this->escape($this->student->getPhone()) ?></td>
+        </tr>
+         <tr>
+            <td>Địa chỉ: </td>
+            <td><?php echo $this->escape($this->student->getAddress()) ?></td>
+        </tr>
+        
+    </tbody>
+</table>
+
+
