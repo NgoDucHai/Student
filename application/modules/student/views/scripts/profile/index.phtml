@@ -6,7 +6,7 @@ if (!count($this->listStudents)):
     return;
 endif;
 ?>
-<table border='1' >
+<table  class="table table-striped" >
     <thead>
         <tr>
             <th>Mã sinh viên</th>
@@ -22,7 +22,7 @@ endif;
         <?php foreach ($this->listStudents as $student): ?>
             <?php
             $deleteUrl = $this->url(["action" => "delete", "id" => $student->studentId]);
-            $editUrl = $this->url(["action" => "edit", "id" => $student->studentId]);
+            $editUrl = $this->url(["action" => "update-profile", "id" => $student->studentId]);
             ?>
             <tr>
                 <td><?= $this->escape($student->studentId) ?></td>
@@ -36,6 +36,8 @@ endif;
             </tr>
         <?php endforeach; ?>
 </table>
-<section id="paginator">
+<div class="col-md-12 text-center">
+    <ul class="pagination">
     <?= $this->paginationControl($this->listStudents, 'Sliding', '/profile/paginator.phtml'); ?>
-</section>
+    </ul>
+</div>

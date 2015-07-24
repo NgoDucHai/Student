@@ -3,7 +3,7 @@
 /**
  * create form create teacher profile
  */
-class Teacher_Form_CreateTeacherProfile extends Zend_Form {
+class Teacher_Form_CreateTeacherProfile extends Twitter_Bootstrap3_Form_Horizontal {
 
     public function init() {
         //set action, method id form
@@ -22,19 +22,53 @@ class Teacher_Form_CreateTeacherProfile extends Zend_Form {
                             'isEmpty' => 'Bạn cần nhập mã cho giảng viên'
                         ]
                     ]
+                ],
+                [
+                    'Int', true, [
+                        'messages' => [
+                            'notInt' => 'Mã quản trị viên chỉ chứa số'
+                        ]
+                    ]
                 ]
             ]
         ]);
-        
+
         //create teacherName element
         $this->addElement('text', 'teacherName', [
-            'label' => "Họ và tên"
+            'label' => "Họ và tên",
+            'required' => true,
+            'validators' => [
+                [
+                    'NotEmpty', true, [
+                        "messages" => [
+                            'isEmpty' => 'Bạn cần nhập tên giảng viên'
+                        ]
+                    ]
+                ],
+                [
+                    'Alpha',true,[
+                        'messages'=>[
+                            'notAlpha'=>'Tên giảng viên chứa kí tự đặc biệt'
+                        ]
+                    ]
+                ]
+            ]
         ]);
-        
+
         //create dateOfBirth element
         $this->addElement('text', 'dateOfBirth', [
-            'placeholder'=>'mm/dd/yy',
-            'label' => "Ngày sinh"
+            'placeholder' => 'mm/dd/yy',
+            'label' => "Ngày sinh",
+            'required' => true,
+            'validators' => [
+                [
+                    'NotEmpty', true, [
+                        "messages" => [
+                            'isEmpty' => 'Bạn cần nhập ngày sinh giảng viên'
+                        ]
+                    ]
+                ]
+            ]
         ]);
 
         //create gender element
@@ -48,19 +82,48 @@ class Teacher_Form_CreateTeacherProfile extends Zend_Form {
 
         //create diploma element
         $this->addElement('text', 'diploma', [
-            'label' => "Bằng cấp"
+            'label' => "Bằng cấp",
+            'required' => true,
+            'validators' => [
+                [
+                    'NotEmpty', true, [
+                        "messages" => [
+                            'isEmpty' => 'Bạn cần nhập bằng cấp giảng viên'
+                        ]
+                    ]
+                ]
+            ]
         ]);
 
         //create phone element
         $this->addElement('text', 'phone', [
-            'label' => "Số điện thoại"
+            'label' => "Số điện thoại",
+            'required' => true,
+            'validators' => [
+                [
+                    'NotEmpty', true, [
+                        "messages" => [
+                            'isEmpty' => 'Bạn cần nhập số điện thoại giảng viên'
+                        ]
+                    ]
+                ]
+            ]
         ]);
 
         //create address element
         $this->addElement('text', 'address', [
-            'label' => "Địa chỉ"
+            'label' => "Địa chỉ",
+            'required' => true,
+            'validators' => [
+                [
+                    'NotEmpty', true, [
+                        "messages" => [
+                            'isEmpty' => 'Bạn cần nhập địa chỉ giảng viên'
+                        ]
+                    ]
+                ]
+            ]
         ]);
-
         //create rule element
         $this->addElement('select', 'rule', [
             'label' => "Phân quyền",
@@ -75,7 +138,9 @@ class Teacher_Form_CreateTeacherProfile extends Zend_Form {
         ]);
 
         //create button create element
-        $this->addElement('submit', 'create');
+        $this->addElement('submit', 'create',[
+            'class'=>'btn btn-default dropdown-toggle disabled'
+        ]);
     }
 
 }

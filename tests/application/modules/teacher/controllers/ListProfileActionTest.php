@@ -7,7 +7,7 @@
  */
 class ListProfileActionTest extends Vms_Test_PHPUnit_ControllerWithDatabaseFixturesTestCase {
 
-    protected $truncateFixturesWhenTearDown = false;
+    protected $truncateFixturesWhenTearDown = true;
 
     protected function getDataSet() {
 
