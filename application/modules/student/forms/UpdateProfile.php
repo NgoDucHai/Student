@@ -6,8 +6,7 @@
 class Student_Form_UpdateProfile extends Zend_Form {
 
     public function init() {
-        $this->setMethod('POST')
-                ->setAttrib('id', 'update-profile');
+        $this->setMethod('POST')->setAttrib('id', 'update-profile');
 
         $id = new Zend_Form_Element_Hidden('id');
 
@@ -16,16 +15,17 @@ class Student_Form_UpdateProfile extends Zend_Form {
                 ->setLabel('Mã sinh viên');
 
         $studentName = new Zend_Form_Element_Text('studentName');
-        $studentName->setLabel('Họ và tên')
-                ->setRequired();
+        $studentName->setLabel('Họ và tên');
+        $studentName->setRequired();
+        $validateOfStudentName = new Zend_Validate_NotEmpty();
+        $validateOfStudentName->setMessage('khong de trong', Zend_Validate_NotEmpty::IS_EMPTY);
+        $studentName->addValidator($validateOfStudentName);
 
         $dateOfBirth = new Zend_Form_Element_Text('dateOfBirth');
-        $dateOfBirth->setLabel('Ngày sinh')
-                ->setRequired();
+        $dateOfBirth->setLabel('Ngày sinh')->setRequired();
 
         $gender = new Zend_Form_Element_Select('gender');
-        $gender->setLabel('Giới tính')
-                ->setRequired();
+        $gender->setLabel('Giới tính')->setRequired();
         $gender->addMultiOptions([
             '1' => 'Nam',
             '0' => 'Nữ'
@@ -33,12 +33,10 @@ class Student_Form_UpdateProfile extends Zend_Form {
         $gender->setValue('1');
 
         $phone = new Zend_Form_Element_Text('phone');
-        $phone->setLabel('Số điện thoại')
-                ->setRequired();
+        $phone->setLabel('Số điện thoại')->setRequired();
 
         $address = new Zend_Form_Element_Textarea('address');
-        $address->setLabel('Địa chỉ')
-                ->setRequired();
+        $address->setLabel('Địa chỉ')->setRequired();
 
         $submit = new Zend_Form_Element_Submit('submit');
 

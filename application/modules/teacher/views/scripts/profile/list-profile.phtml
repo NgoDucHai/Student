@@ -1,0 +1,45 @@
+<?php
+/* @var $this Zend_View */
+
+echo $this->headTitle();
+
+if (!count($this->listTeacher)):
+    echo "<h2>Page not found</h2>";
+    return;
+endif;
+?>
+
+<table>
+    <thead>
+        <tr>
+            <th>Stt</th>
+            <th>Ảnh đại diện</th>
+            <th>Mã giáo viên</th>
+            <th>Tên giáo viên</th>
+            <th>Ngày sinh</th>
+            <th>Giới tính</th>
+            <th>Trình độ</th>
+            <th>Số điện thoại</th>
+            <th>Địa chỉ</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($this->listTeacher as $stt => $teacher): ?> 
+            <tr>
+                <td><?= $stt ?></td>
+                <td><?= $this->escape($teacher->avatar) ?></td>
+                <td><?= $this->escape($teacher->teacherId) ?></td>
+                <td><?= $this->escape($teacher->teacherName) ?></td>
+                <td><?= $this->escape($teacher->dateOfBirth) ?></td>
+                <td><?= $this->escape($teacher->gender) ?></td>
+                <td><?= $this->escape($teacher->diploma) ?></td>
+                <td><?= $this->escape($teacher->phone) ?></td>
+                <td><?= $this->escape($teacher->address) ?></td>
+                <td>Edit</td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table> 
+<?= $this->paginationControl($this->listTeacher, 'Sliding', '/profile/paginator.phtml') ?>
+
