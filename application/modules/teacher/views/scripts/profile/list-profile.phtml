@@ -9,7 +9,7 @@ if (!count($this->listTeacher)):
 endif;
 ?>
 
-<table>
+<table class="table table-striped">
     <thead>
         <tr>
             <th>Stt</th>
@@ -41,5 +41,8 @@ endif;
         <?php endforeach; ?>
     </tbody>
 </table> 
-<?= $this->paginationControl($this->listTeacher, 'Sliding', '/profile/paginator.phtml') ?>
-
+<div class="col-md-12 text-center">
+    <ul class="pagination">
+        <?= $this->paginationControl($this->listTeacher, 'Sliding', '/profile/paginator.phtml') ?>
+    </ul>
+</div>

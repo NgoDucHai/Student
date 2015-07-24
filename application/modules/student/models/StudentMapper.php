@@ -71,7 +71,7 @@ class Student_Model_StudentMapper {
     public function save(Student_Model_Student $student) {
         $table = $this->getDbTable(); /* @var $table Student_Model_DbTable_Student */
         $data = $this->__getDataFormObjectStudent($student);
-        var_dump($data);
+        
         if (NULL === ($id = $student->getStudentId())) {
             
         } else {
