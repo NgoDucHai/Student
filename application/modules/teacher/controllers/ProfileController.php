@@ -16,7 +16,7 @@ class Teacher_ProfileController extends Zend_Controller_Action {
         $currentPageNumber = $this->getParam('page', 1);
         $itemPerPage = $this->getParam('size', 5);
 
-        $paginator = $this->__getFactoryTeacher($currentPageNumber, $itemPerPage);
+        $paginator = $this->__getFactoryListTeacher($currentPageNumber, $itemPerPage);
 
         $this->view->listTeacher = $paginator;
     }
@@ -27,7 +27,7 @@ class Teacher_ProfileController extends Zend_Controller_Action {
      * @param integer $itemPerPage
      * @return Zend_paginator
      */
-    private function __getFactoryTeacher($currentPageNumber, $itemPerPage) {
+    private function __getFactoryListTeacher($currentPageNumber, $itemPerPage) {
         $dbMapper = new Teacher_Model_TeacherMapper();
         return Application_Service_Paginator::factory($dbMapper, $currentPageNumber, $itemPerPage);
     }
