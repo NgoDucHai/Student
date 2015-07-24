@@ -32,4 +32,15 @@ class Teacher_ProfileController extends Zend_Controller_Action {
         return Application_Service_Paginator::factory($dbMapper, $currentPageNumber, $itemPerPage);
     }
 
+    public function deleteProfileAction() {
+        $id = (int) $this->getParam('id', '');
+        !$id ? $this->_helper->redirector('list-profile') : true;
+
+        $teacherMapper = new Teacher_Model_TeacherMapper();
+        $result = $teacherMapper->findId($id);
+        
+        !$result ? $this->_helper->redirector('list-profile') : $teacherMapper->deleteId($id);
+        $this->_helper->redirector('list-profile');
+    }
+
 }

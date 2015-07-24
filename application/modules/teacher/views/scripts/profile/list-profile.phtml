@@ -9,7 +9,7 @@ if (!count($this->listTeacher)):
 endif;
 ?>
 
-<table class="table table-striped">
+<table class="table table-hover">
     <thead>
         <tr>
             <th>Stt</th>
@@ -21,13 +21,19 @@ endif;
             <th>Trình độ</th>
             <th>Số điện thoại</th>
             <th>Địa chỉ</th>
-            <th>Hành động</th>
+            <th colspan="2">Hành động</th>
         </tr>
     </thead>
     <tbody>
         <?php foreach ($this->listTeacher as $stt => $teacher): ?> 
+            <?php
+            $urlEdit = $this->url(['module' => 'teacher', 'controller' => 'profile',
+                'action' => 'edit-profile', 'id' => $teacher->teacherId]);
+            $urlDelete = $this->url(['module' => 'teacher', 'controller' => 'profile',
+                'action' => 'delete-profile', 'id' => $teacher->teacherId]);
+            ?>
             <tr>
-                <td><?= $stt ?></td>
+                <td><?= ++$stt ?></td>
                 <td><?= $this->escape($teacher->avatar) ?></td>
                 <td><?= $this->escape($teacher->teacherId) ?></td>
                 <td><?= $this->escape($teacher->teacherName) ?></td>
@@ -36,13 +42,14 @@ endif;
                 <td><?= $this->escape($teacher->diploma) ?></td>
                 <td><?= $this->escape($teacher->phone) ?></td>
                 <td><?= $this->escape($teacher->address) ?></td>
-                <td>Edit</td>
+                <td><a href="<?= $urlEdit ?>"><span class="text-warning">Edit</span></a></td>
+                <td><a href="<?= $urlDelete ?>"><span class="text-danger">Delete</span></a></td>
             </tr>
         <?php endforeach; ?>
     </tbody>
 </table> 
 <div class="col-md-12 text-center">
     <ul class="pagination">
-        <?= $this->paginationControl($this->listTeacher, 'Sliding', '/profile/paginator.phtml') ?>
+        <?= $this->paginationControl($this->listTeacher)?>
     </ul>
 </div>

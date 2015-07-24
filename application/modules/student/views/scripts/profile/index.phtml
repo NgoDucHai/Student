@@ -36,6 +36,8 @@ endif;
             </tr>
         <?php endforeach; ?>
 </table>
-<section id="paginator">
-    <?= $this->paginationControl($this->listStudents, 'Sliding', '/profile/paginator.phtml'); ?>
-</section>
+<div class="col-md-12 text-center">
+    <ul class="pagination">
+        <?= $this->paginationControl($this->listStudents); ?>
+    </ul>
+</div>
