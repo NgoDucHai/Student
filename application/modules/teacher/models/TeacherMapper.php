@@ -14,10 +14,11 @@ class Teacher_Model_TeacherMapper {
                 ->setTeacherName($data->teacherName)
                 ->setDateOfBirth($data->dateOfBirth)
                 ->setGender($data->gender)
-                ->setDiploma($$data->diploma)
+                ->setDiploma($data->diploma)
                 ->setPhone($data->phone)
                 ->setAddress($data->address)
-                ->setRule($data->rule);
+                ->setRule($data->rule)
+                ->setAvatar($data->avatar);
     }
 
     /**
@@ -25,7 +26,8 @@ class Teacher_Model_TeacherMapper {
      * @param Teacher_Model_Teacher $teacher
      * @return array $data
      */
-    private function __getDataFormObjectStudent(Teacher_Model_Teacher $teacher) {
+    private function __getDataFormObjectTeacher(Teacher_Model_Teacher $teacher) {
+//        $teacher = new Teacher_Model_Teacher();
         $data['teacherId'] = $teacher->getTeacherId();
         $data['teacherName'] = $teacher->getTeacherName();
         $data['dateOfBirth'] = $teacher->getDateOfBirth();
@@ -34,6 +36,9 @@ class Teacher_Model_TeacherMapper {
         $data['phone'] = $teacher->getPhone();
         $data['address'] = $teacher->getAddress();
         $data['rule'] = $teacher->getRule();
+        $data['avatar'] = $teacher->getAvatar() ? $teacher->getAvatar() :
+                realpath(APPLICATION_PATH . '/../public/images/avatar/defaultAvatar.png');
+
         return $data;
     }
 
@@ -53,6 +58,44 @@ class Teacher_Model_TeacherMapper {
             $this->setDbTable('Teacher_Model_DbTable_Teacher');
         }
         return $this->_dbTable;
+    }
+
+    /**
+     * insert teacher profile
+     * @param Teacher_Model_Teacher $teacher
+     */
+    public function save($teacher) {
+        $data = $this->__getDataFormObjectTeacher($teacher);
+        if($this->getDbTable()->insert($data))
+            return true;
+    }
+
+    /**
+     * @param number $id
+     * @return \Teacher_Model_Teacher|boolean
+     */
+    public function findId($id) {
+        $table = $this->getDbTable(); /* @var $table Teacher_Model_DbTable_Teacher */
+        $result = $table->find($id); /* @var $result Zend_Db_Table_Rowset */
+        if (count($result) == 0) {
+            return false;
+        }
+        $data = $result->current();
+        $student = new Teacher_Model_Teacher();
+        $this->__setObjectStudentFromArray($student, $data);
+        return $student;
+    }
+
+    /**
+     * 
+     * @param integer $id
+     * @return boolean
+     */
+    public function deleteId($id) {
+        $table = $this->getDbTable(); /* @var $table Teacher_Model_DbTable_Teacher */
+        $result = $table->delete(['teacherId = ?' => $id]);
+
+        return count($result) ? true : false;
     }
 
 }
