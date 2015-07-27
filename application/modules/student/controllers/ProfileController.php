@@ -4,6 +4,9 @@ class Student_ProfileController extends Zend_Controller_Action {
 
     public function init() {
         /* Initialize action controller here */
+        $data['dateOfBirth'] = '22-10-1993';
+        $this->__changeFormatDateOfBirth($data);
+        die;
     }
 
     /**
@@ -118,6 +121,15 @@ class Student_ProfileController extends Zend_Controller_Action {
             'phone' => $result->getPhone(),
             'address' => $result->getAddress()
         ]);
+    }
+
+    private function __changeFormatDateOfBirth($data) {
+        if (!($dateOfBirth = $data['dateOfBirth'])) {
+            return;
+        }
+        $listDate = preg_split('/[-\/.]/', $dateOfBirth);
+        var_dump($listDate);die;
+        $data['dateOfBirth'] = $listDate[2] . "-" . $listDate[1] . "-" . $listDate;
     }
 
 }

@@ -21,12 +21,12 @@ class Student_Form_UpdateProfile extends Twitter_Bootstrap3_Form_Horizontal {
             'required' => true,
             'validator' => ['NotEmpty', true],
         ]);
-
+        
         $this->addElement('date', 'dateOfBirth', [
             'label' => 'Ngày sinh',
             'required' => true,
             'validators' => [
-                ['Date', true]
+                ['Date', true, ['options' => ['format' => 'yyyy-MM-dd']]]
             ]
         ]);
 
@@ -43,7 +43,8 @@ class Student_Form_UpdateProfile extends Twitter_Bootstrap3_Form_Horizontal {
             'label' => 'Số điện thoại',
             'required' => true,
             'validators' => [
-                [new Zend_Validate_StringLength(['min' => 10, 'max' => 12]), true]
+                [new Zend_Validate_StringLength(['min' => 10, 'max' => 12]), true],
+                [new Zend_Validate_Digits(), true]
             ]
         ]);
 
