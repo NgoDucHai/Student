@@ -1,18 +1,22 @@
 <?php
 
-class Student_Form_CreateProfile extends Zend_Form {
+/**
+ * @author Ngo Anh Long <ngoanhlong@gmail.com>
+ */
+class Student_Form_CreateProfileStudent extends Twitter_Bootstrap3_Form_Horizontal {
 
     public function init() {
 
         // Add some Attributes for this form
         // Name of form is: createProfile and method is POST to itsefl
         $this->addAttribs(['name' => 'createProfile']);
-        $this->setMethod("POST");
+        $this->setMethod("POST")->setAttrib('id', 'create-profile');
         //Student Id
         //Not empty
         // Just contains number
         // Max length: 25
         // Min length: 6
+        
         $studentId = $this->createElement('Text', 'studentId');
         $studentId->setLabel('Mã sinh viên: ');
         $studentId->setRequired();
@@ -38,7 +42,7 @@ class Student_Form_CreateProfile extends Zend_Form {
         // Just contains: Alphabet and allow white space in it
         // Max length: 50
         // Min length: 6
-        
+
         $studentName = $this->createElement('Text', 'studentName');
         $studentName->setLabel("Your studentName");
         $studentName->setRequired();
@@ -63,7 +67,7 @@ class Student_Form_CreateProfile extends Zend_Form {
         // dateOf birth: 
         // 1. Not Empty
         // 2. Must follow this format: dd/mm/YYYY
-        
+
         $dateOfBirth = $this->createElement('Text', 'dateOfBirth');
         $dateOfBirth->setLabel("Date of birth: ");
         $dateOfBirth->setAttrib('placeholder', 'dd/mm/YYYY');
@@ -73,7 +77,7 @@ class Student_Form_CreateProfile extends Zend_Form {
                 'isEmpty' => 'Ngày sinh yêu cầu không được để trống'
             ]
         ]);
-        
+
         $dateValidator = new Zend_Validate_Date();
         $dateValidator->setFormat('dd-MM-yyyy');
         $dateValidator->setMessage("Ngày sinh của bạn phải theo định dạng: dd/mm/yyyy", Zend_Validate_Date::FALSEFORMAT);
@@ -98,7 +102,6 @@ class Student_Form_CreateProfile extends Zend_Form {
 //                'isEmpty' => 'Giới tính yêu cầu không được để trống'
 //            ]
 //        ]);
-
         // Phone number
         // Must: 
         // 1. Not empty
@@ -115,16 +118,16 @@ class Student_Form_CreateProfile extends Zend_Form {
                 'isEmpty' => 'Số điện thoại yêu cầu không để trống'
             ]
         ]);
-        $phoneDigitValidator = new Zend_Validate_Int();
-        $phoneDigitValidator->setMessage('Số điện thoại chỉ bao gồm các chữ số nguyên', Zend_Validate_Int::NOT_INT);
+        $phoneIntValidator = new Zend_Validate_Int();
+        $phoneIntValidator->setMessage('Số điện thoại chỉ bao gồm các chữ số nguyên', Zend_Validate_Int::NOT_INT);
         $phoneLengthValidator = new Zend_Validate_StringLength();
         $phoneLengthValidator->setMax(12);
         $phoneLengthValidator->setMin(11);
         $phoneLengthValidator->setMessage('Số điện thoại tối thiểu 11 chữ số', Zend_Validate_StringLength::TOO_SHORT);
         $phoneLengthValidator->setMessage("Số điện thoại chỉ tối đa 12 chữ số", Zend_Validate_StringLength::TOO_LONG);
-        $phone->addValidator($phoneDigitValidator);
+        $phone->addValidator($phoneIntValidator);
         $phone->addValidator($phoneLengthValidator);
-        
+
         // Address
         // Contains: 40 columns and 10 rows
         // Address can empty is Ok
@@ -145,6 +148,4 @@ class Student_Form_CreateProfile extends Zend_Form {
         $this->addElements([$studentId, $studentName, $dateOfBirth, $gender, $phone, $address, $submit]);
     }
 
-    
-    
 }

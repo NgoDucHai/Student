@@ -61,8 +61,7 @@ class Student_ProfileController extends Zend_Controller_Action {
     public function createProfileAction() {
         /* @var $request Zend_Controller_Request_Http */
         $this->view->headTitle("create profile");
-
-        $form = new Student_Form_CreateProfile();
+        $form = new Student_Form_CreateProfileStudent();
         $request = $this->getRequest();
 
         // Get handle request or post invalid profile then show profile form
@@ -72,7 +71,6 @@ class Student_ProfileController extends Zend_Controller_Action {
         if ($userVistCreateProfilePage) {
             return; //Render profile form now
         }
-
         //Post handler request:
         $userPostInvalidProfile = !$form->isValid($request->getPost());
         if ($userPostInvalidProfile) {
