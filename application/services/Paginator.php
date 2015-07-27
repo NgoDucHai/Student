@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @author TranVanHoang
  */
@@ -8,13 +7,13 @@ class Application_Service_Paginator {
     private $_dbMapper;
 
     public function __construct($dbMapper) {
-        $this->__setDbMapper($dbMapper);
+        $this->setDbMapper($dbMapper);
     }
 
     /**
      * @return \_dbMapper
      */
-    private function __getDbMapper() {
+    private function getDbMapper() {
         $dbMapper = $this->_dbMapper;
         return new $dbMapper();
     }
@@ -22,7 +21,7 @@ class Application_Service_Paginator {
     /**
      * @param string $dbMapper
      */
-    private function __setDbMapper($dbMapper) {
+    private function setDbMapper($dbMapper) {
         $this->_dbMapper = $dbMapper;
     }
 
@@ -33,29 +32,17 @@ class Application_Service_Paginator {
      * @return Zend_Paginator
      */
     public function paginate($currentPageNumber, $itemPerPage) {
-
-        $table = $this->_dbMapper;
+        $table = $this->getDbMapper();
         $select = $table->getDbTable()->select();
-
         $paginator = Zend_Paginator::factory($select);
         $paginator->setCurrentPageNumber($currentPageNumber);
         $paginator->setItemCountPerPage($itemPerPage);
+<<<<<<< HEAD
         $paginator->setView();
         
+=======
+>>>>>>> b6d5b6c74dbb0b8cc7c49cfaf1f655f4518c7fe7
         return $paginator;
-    }
-
-    /**
-     * 
-     * @param object $dbMapper
-     * @param integer $currentPageNumber
-     * @param integer $itemPerPage
-     * @return Zend_Paginator
-     */
-    static function factory($dbMapper, $currentPageNumber, $itemPerPage) {
-        $pagination = new Application_Service_Paginator($dbMapper);
-
-        return $pagination->paginate($currentPageNumber, $itemPerPage);
     }
 
 }

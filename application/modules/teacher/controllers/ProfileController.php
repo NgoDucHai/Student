@@ -31,6 +31,20 @@ class Teacher_ProfileController extends Zend_Controller_Action {
         $dbMapper = new Teacher_Model_TeacherMapper();
         return Application_Service_Paginator::factory($dbMapper, $currentPageNumber, $itemPerPage);
     }
+    
+    public function createAction(){
+        $this->view->headTitle('Create teacher profile');
+        $form = new Teacher_Form_CreateTeacherProfile();
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+            if ($form->isValid($request->getPost())) {
+                
+            }
+        }
+        $this->view->form = $form;
+        
+    }
 
     public function deleteProfileAction() {
         $id = (int) $this->getParam('id', '');
