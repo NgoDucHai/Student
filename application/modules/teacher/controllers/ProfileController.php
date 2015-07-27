@@ -42,7 +42,7 @@ class Teacher_ProfileController extends Zend_Controller_Action {
 
         if ($request->isPost()) {
             if ($form->isValid($request->getPost())) {
-                
+
                 //begin upload avatar image
                 $adapter = new Zend_File_Transfer_Adapter_Http();
                 $uploadPath = APPLICATION_PATH . '/../public/images/avatar';
@@ -52,12 +52,11 @@ class Teacher_ProfileController extends Zend_Controller_Action {
                     $messages = $adapter->getMessages();
                 }
                 //end upload avatar image
-                
                 //begin insert data to database
                 $avatar = $adapter->getFileName();
                 $teacher = $this->__setData(new Teacher_Model_Teacher, $request, $avatar);
                 $dbMapper = new Teacher_Model_TeacherMapper();
-                if(!$dbMapper->save($teacher))
+                if (!$dbMapper->save($teacher))
                     $this->_helper->redirector('list-profile');
                 //end insert data to database
             }
@@ -84,8 +83,19 @@ class Teacher_ProfileController extends Zend_Controller_Action {
                 ->setRule($request->getParam('rule'))
                 ->setAvatar($avatar)
         ;
-        
+
         return $teacher;
+    }
+
+    public function deleteProfileAction() {
+        $id = (int) $this->getParam('id', '');
+        !$id ? $this->_helper->redirector('list-profile') : true;
+
+        $teacherMapper = new Teacher_Model_TeacherMapper();
+        $result = $teacherMapper->findId($id);
+
+        !$result ? $this->_helper->redirector('list-profile') : $teacherMapper->deleteId($id);
+        $this->_helper->redirector('list-profile');
     }
 
 }

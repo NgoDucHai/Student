@@ -7,7 +7,7 @@
  */
 class ListProfileActionTest extends Vms_Test_PHPUnit_ControllerWithDatabaseFixturesTestCase {
 
-    protected $truncateFixturesWhenTearDown = true;
+    protected $truncateFixturesWhenTearDown = false;
 
     protected function getDataSet() {
 
@@ -21,6 +21,7 @@ class ListProfileActionTest extends Vms_Test_PHPUnit_ControllerWithDatabaseFixtu
             $data['phone'] = '123476543' . $i;
             $data['address'] = 'hoa binh ' . $i;
             $data['rule'] = 1;
+            $data['avatar'] = '';
 
             $arr[] = $data;
         }

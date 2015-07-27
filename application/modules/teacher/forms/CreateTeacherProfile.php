@@ -32,9 +32,9 @@ class Teacher_Form_CreateTeacherProfile extends Twitter_Bootstrap3_Form_Horizont
                     ]
                 ],
                 [
-                    'Digits',true,[
-                        'messages'=>[
-                            'notDigits'=>'Mã quản trị viên chỉ chứa số'
+                    'Digits', true, [
+                        'messages' => [
+                            'notDigits' => 'Mã quản trị viên chỉ chứa số'
                         ]
                     ]
                 ]
@@ -77,10 +77,10 @@ class Teacher_Form_CreateTeacherProfile extends Twitter_Bootstrap3_Form_Horizont
                     ]
                 ],
                 [
-                    'Date',true,[
-                        'format'=>'Y-M-D',
-                        'messages'=>[
-                            'dateFalseFormat'=>'Nhập sai định dạng ngày'
+                    'Date', true, [
+                        'format' => 'Y-M-D',
+                        'messages' => [
+                            'dateFalseFormat' => 'Nhập sai định dạng ngày'
                         ]
                     ]
                 ]
@@ -124,9 +124,9 @@ class Teacher_Form_CreateTeacherProfile extends Twitter_Bootstrap3_Form_Horizont
                     ]
                 ],
                 [
-                    'Digits',true,[
-                        'messages'=>[
-                            'notDigits'=>'So dien thoai chi co chua ki tu khong phai la so'
+                    'Digits', true, [
+                        'messages' => [
+                            'notDigits' => 'So dien thoai chi co chua ki tu khong phai la so'
                         ]
                     ]
                 ],
