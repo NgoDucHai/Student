@@ -87,11 +87,12 @@ class Student_Model_StudentMapper {
     public function save(Student_Model_Student $student) {
         $table = $this->getDbTable(); /* @var $table Student_Model_DbTable_Student */
         $data = $this->__getDataFormObjectStudent($student);
+        $studentId = $data['studentId'];
         var_dump($data);
-        if (NULL === ($id = $student->getStudentId())) {
-            
+        if (FALSE == $this->findId($studentId)) {
+            $this->getDbTable()->insert($data);
         } else {
-            $table->update($data, ['studentId = ?' => $id]);
+            $table->update($data, ['studentId = ?' => $studentId]);
         }
     }
 
