@@ -13,7 +13,7 @@
   + textarea teacherAddress: max:150
   + select teacherRule: số
  */
-class Teacher_Form_UpdateProfile extends Zend_Form {
+class Teacher_Form_UpdateProfile extends Twitter_Bootstrap3_Form_Horizontal {
 
     public function init() {
         $this->setMethod('POST')
