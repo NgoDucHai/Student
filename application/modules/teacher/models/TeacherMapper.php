@@ -1,4 +1,5 @@
 <?php
+
 class Teacher_Model_TeacherMapper {
 
     protected $_dbTable;
@@ -16,7 +17,8 @@ class Teacher_Model_TeacherMapper {
                 ->setDiploma($data->diploma)
                 ->setPhone($data->phone)
                 ->setAddress($data->address)
-                ->setRule($data->rule);
+                ->setRule($data->rule)
+                ->setAvater($data->avatar);
     }
 
     /**
@@ -25,6 +27,7 @@ class Teacher_Model_TeacherMapper {
      * @return array $data
      */
     private function __getDataFormObjectTeacher(Teacher_Model_Teacher $teacher) {
+
         $data['teacherId'] = $teacher->getTeacherId();
         $data['teacherName'] = $teacher->getTeacherName();
         $data['dateOfBirth'] = $teacher->getDateOfBirth();
@@ -33,6 +36,9 @@ class Teacher_Model_TeacherMapper {
         $data['phone'] = $teacher->getPhone();
         $data['address'] = $teacher->getAddress();
         $data['rule'] = $teacher->getRule();
+        if ($teacher->getAvatar())
+            $data['avatar'] = $teacher->getAvatar();
+
         return $data;
     }
 
@@ -53,8 +59,16 @@ class Teacher_Model_TeacherMapper {
         }
         return $this->_dbTable;
     }
-    
-    
+
+    /**
+     * insert teacher profile
+     * @param Teacher_Model_Teacher $teacher
+     */
+    public function save($teacher) {
+        $data = $this->__getDataFormObjectTeacher($teacher);
+        $this->getDbTable()->insert($data);
+    }
+
     /**
      * 
      * @param number $id
@@ -72,7 +86,19 @@ class Teacher_Model_TeacherMapper {
         return $teacher;
     }
 
-    public function save(Teacher_Model_Teacher $teacher) {
+    /**
+     * 
+     * @param integer $id
+     * @return boolean
+     */
+    public function deleteId($id) {
+        $table = $this->getDbTable(); /* @var $table Teacher_Model_DbTable_Teacher */
+        $result = $table->delete(['teacherId = ?' => $id]);
+
+        return count($result) ? true : false;
+    }
+
+    public function saveProfile(Teacher_Model_Teacher $teacher) {
         $table = $this->getDbTable(); /* @var $table Teacher_Model_DbTable_Teacher */
         $data = $this->__getDataFormObjectTeacher($teacher);
         if (NULL === ($id = $teacher->getTeacherId())) {
@@ -81,4 +107,5 @@ class Teacher_Model_TeacherMapper {
             $table->update($data, ['teacherId = ?' => $id]);
         }
     }
+
 }
