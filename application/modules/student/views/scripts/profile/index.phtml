@@ -1,0 +1,43 @@
+<?php
+/* @var $this Zend_View */
+echo $this->headTitle();
+if (!count($this->listStudents)):
+    echo "Empty list student";
+    return;
+endif;
+?>
+<table border='1' >
+    <thead>
+        <tr>
+            <th>Mã sinh viên</th>
+            <th>Họ và tên</th>
+            <th>Ngày sinh</th>
+            <th>Giới tính</th>
+            <th>Số điện thoại</th>
+            <th>Địa chỉ</th>
+            <th colspan="2">Tác vụ</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($this->listStudents as $student): ?>
+            <?php
+            $deleteUrl = $this->url(["action" => "delete", "id" => $student->studentId]);
+            $editUrl = $this->url(["action" => "edit", "id" => $student->studentId]);
+            ?>
+            <tr>
+                <td><?= $this->escape($student->studentId) ?></td>
+                <td><?= $this->escape($student->studentName) ?></td>
+                <td><?= $this->escape($student->dateOfBirth) ?></td>
+                <td><?= ($student->gender == 1) ? 'nam' : 'nữ' ?></td>
+                <td><?= $this->escape($student->phone) ?></td>
+                <td><?= $this->escape($student->address) ?></td>
+                <td><a href="<?= $deleteUrl ?>">Xóa</a></td>
+                <td><a href="<?= $editUrl ?>">Sửa</a></td>
+            </tr>
+        <?php endforeach; ?>
+</table>
+<div class="col-md-12 text-center">
+    <ul class="pagination">
+        <?= $this->paginationControl($this->listStudents); ?>
+    </ul>
+</div>
