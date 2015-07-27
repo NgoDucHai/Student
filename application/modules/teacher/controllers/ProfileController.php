@@ -98,4 +98,27 @@ class Teacher_ProfileController extends Zend_Controller_Action {
         $this->_helper->redirector('list-profile');
     }
 
+    /**
+     * @author Ngo Anh Long <ngoanhlong@gmail.com>
+     * show profile of a Teacher
+     */
+    public function showProfileAction() {
+        
+        $this->view->headTitle("show profile of teacher");
+        $id = (int) $this->getParam('id', '');
+
+        if (!$id) {
+            $this->_helper->redirector('list-profile');
+        }
+        
+        $mapper = new Teacher_Model_TeacherMapper();
+        $result = $mapper->findId($id);
+        if (!$result) {
+            $this->view->errorMessage = "Profile not found";
+        }
+        
+        $this->view->title = "Profile of teacher";
+        $this->view->profileTeacher = $result;
+    }
+
 }
