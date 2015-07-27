@@ -6,28 +6,26 @@ class Student_ProfileController extends Zend_Controller_Action {
         /* Initialize action controller here */
     }
 
-    public function showAction() {
+    /**
+     * Display profile student
+     * @return Student_Model_Student
+     */
+    public function showProfileAction() {
         $this->view->headTitle('Show Profile');
-        $form = new Student_Form_ShowProfile();
-        $student = new Student_Model_Student();
-        $studentM = new Student_Model_StudentMapper();
+
         //kiem tra id tu request
-        $id = $this->getParam("i", '');
-        if ($id == '')
-            echo "Chua nhap vao id";
-        $result = $studentM->find($id, $student);
-        if (!$result) {
-            echo "Id khong ton tai";
+        $id = $this->getParam("id", '');
+        if ($id == '') {
+            $this->_helper->redirector('index');
         }
-        $data = [
-            "studentId" => $student->getStudentId(),
-            'studentName' => $student->getStudentName(),
-            'dateOfBirth' => $student->getDateOfBirth(),
-            "gender" => $student->getGender(),
-            "phone" => $student->getPhone(),
-            "address" => $student->getAddress()
-        ];
-        $form->populate($data);
+        $studentM = new Student_Model_StudentMapper();
+        $result = $studentM->findId($id);
+        if (!$result) {
+            $this->view->message = "Page not found information";
+            return;
+        }
+        /* @var $result Student_Model_Student */
+        $this->view->student = $result;
     }
 
     public function indexAction() {
@@ -35,60 +33,34 @@ class Student_ProfileController extends Zend_Controller_Action {
 
         $currentPageNumber = $this->getParam("page", 1);
         $itemPerPage = $this->getParam("size", 3);
-        $paginator = $this->__paginator($currentPageNumber, $itemPerPage);
+
+        $paginator = $this->__factoryPaginator($currentPageNumber, $itemPerPage);
 
         $this->view->listStudents = $paginator;
     }
 
     /**
-     * @return \Application_Service_Paginator
-     */
-    private function __factoryPaginator() {
-        return new Application_Service_Paginator('Student_Model_StudentMapper');
-    }
-
-    /**
-     * paginate
-     * @param int $currentPageNumber
-     * @param int $itemPerPage
+     * 
+     * @param integer $currentPageNumber
+     * @param integer $itemPerPage
      * @return Zend_Paginator
      */
-    private function __paginator($currentPageNumber, $itemPerPage) {
-        $paginator = $this->__factoryPaginator();
-        return $paginator->paginate($currentPageNumber, $itemPerPage);
+    private function __factoryPaginator($currentPageNumber, $itemPerPage) {
+        $studentMapper = new Student_Model_StudentMapper();
+        return Application_Service_Paginator::factory($studentMapper, $currentPageNumber, $itemPerPage);
     }
 
     public function createProfileAction() {
-        /* @var $request Zend_Controller_Request_Http */
         $this->view->headTitle("create profile");
-        $form = new Student_Form_CreateProfileStudent();
+        $form = new Student_Form_CreateProfile();
+        /* @var $request Zend_Controller_Request_Http */
         $request = $this->getRequest();
-
-        // Get handle request or post invalid profile then show profile form
+        if ($request->isPost()) {
+            if ($form->isValid($request->getPost())) {
+                echo "Ok you done";
+            }
+        }
         $this->view->form = $form;
-
-        $userVistCreateProfilePage = !$request->isPost();
-        if ($userVistCreateProfilePage) {
-            return; //Render profile form now
-        }
-        //Post handler request:
-        $userPostInvalidProfile = !$form->isValid($request->getPost());
-        if ($userPostInvalidProfile) {
-            return; //Render profile form with error messages now
-        }
-
-        $profileUser = $request->getPost();
-        
-        $mapper = new Student_Model_StudentMapper();
-        if (!$mapper->findId($profileUser['studentId'])) {
-            
-            $studentObj = new Student_Model_Student($profileUser);
-            $mapper->save($studentObj);
-            $this->view->message = "Ok you've created a User";
-            return;
-        }
-        
-        $this->view->message = "Your studentId is Exists";
     }
 
     public function updateProfileAction() {
@@ -148,5 +120,4 @@ class Student_ProfileController extends Zend_Controller_Action {
         ]);
     }
 
-    
 }
