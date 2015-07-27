@@ -5,7 +5,7 @@
  */
 class updateProfileActionTest extends Vms_Test_PHPUnit_ControllerWithDatabaseFixturesTestCase {
 
-    protected $truncateFixturesWhenTearDown = false;
+    protected $truncateFixturesWhenTearDown = true;
 
     protected function getDataSet() {
         return new PHPUnit_Extensions_Database_DataSet_ArrayDataSet([

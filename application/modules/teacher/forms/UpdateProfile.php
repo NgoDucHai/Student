@@ -16,65 +16,168 @@
 class Teacher_Form_UpdateProfile extends Twitter_Bootstrap3_Form_Horizontal {
 
     public function init() {
+
         $this->setMethod('POST')
                 ->setAttrib('id', 'update-profile');
 
-        $id = new Zend_Form_Element_Hidden('id');
-
-        $teacherId = new Zend_Form_Element_Text('teacherId');
-        $teacherId->setAttrib('readonly', 'true')
-                ->setLabel('Mã giảng viên');
-
-        $teacherName = new Zend_Form_Element_Text('teacherName');
-        $teacherName->setLabel('Họ và tên')
-                ->setRequired();
-
-        $dateOfBirth = new Zend_Form_Element_Text('dateOfBirth');
-        $dateOfBirth->setLabel('Ngày sinh')
-                ->setRequired();
-
-        $gender = new Zend_Form_Element_Select('gender');
-        $gender->setLabel('Giới tính')
-                ->setRequired();
-        $gender->addMultiOptions([
-            '1' => 'Nam',
-            '0' => 'Nữ'
+        $this->addElement('text','teacherId', [
+            'label' => "Mã giảng viên",
+            'readonly' => true,
+            'required' => true,
+            'validators' => [
+                [
+                    'NotEmpty', true, [
+                        "messages" => [
+                            'isEmpty' => 'Bạn cần nhập mã cho giảng viên'
+                        ]
+                    ]
+                ],
+                [
+                    'Digits', true, [
+                        'messages' => [
+                            'notDigits' => 'Mã quản trị viên chỉ chứa số'
+                        ]
+                    ]
+                ]
+            ]
         ]);
-        $gender->setValue('1');
 
-        $diploma = new Zend_Form_Element_Select('diploma');
-        $diploma->setLabel('Chức vụ')
-                ->setRequired();
-        $diploma->addMultiOptions([
-            '2' => 'Khoa',
-            '1' => 'Giảng viên',
-            '0' => 'Sinh viên'
+
+        $this->addElement('text', 'teacherName', [
+            'label' => "Họ và tên",
+            'required' => true,
+            'validators' => [
+                [
+                    'NotEmpty', true, [
+                        "messages" => [
+                            'isEmpty' => 'Bạn cần nhập họ tên cho giảng viên'
+                        ]
+                    ]
+                ],
+                [
+                    'Alpha', true, [
+                        'messages' => [
+                            'notAlpha' => 'Tên giảng viên chỉ chứa chữ'
+                        ]
+                    ]
+                ]
+            ]
         ]);
-        $diploma->setValue('1');
 
-        $phone = new Zend_Form_Element_Text('phone');
-        $phone->setLabel('Số điện thoại')
-                ->setRequired();
-
-        $address = new Zend_Form_Element_Textarea('address');
-        $address->setAttrib('rows', 5);
-        $address->setLabel('Địa chỉ')
-                ->setRequired();
-
-        $rule = new Zend_Form_Element_Select('rule');
-        $rule->setLabel('Phân quyền')
-                ->setRequired();
-        $rule->addMultiOptions([
-            '2' => 'Quản trị',
-            '1' => 'Người dùng',
-            '0' => 'Khách'
+        $this->addElement('text', 'dateOfBirth', [
+            'placeholder' => 'yyyy/mm/dd',
+            'label' => "Ngày sinh",
+            'required' => true,
+            'validators' => [
+                [
+                    'NotEmpty', true, [
+                        "messages" => [
+                            'isEmpty' => 'Bạn cần nhập ngày sinh giảng viên'
+                        ]
+                    ]
+                ],
+                [
+                    'Date', true, [
+                        'format' => 'Y-M-D',
+                        'messages' => [
+                            'dateFalseFormat' => 'Nhập sai định dạng ngày'
+                        ]
+                    ]
+                ]
+            ]
         ]);
-        $rule->setValue('1');
-        
-        $submit = new Zend_Form_Element_Submit('submit');
 
-        $this->addElements([$id, $teacherId, $teacherName,
-            $dateOfBirth, $gender, $diploma, $phone, $address, $rule, $submit]);
+        //create gender element
+        $this->addElement('select', 'gender', [
+            'label' => "Giới tính",
+            'multiOptions' => [
+                '1' => 'Nam',
+                '0' => 'Nữ'
+            ]
+        ]);
+
+        //create diploma element
+        $this->addElement('text', 'diploma', [
+            'label' => "Bằng cấp",
+            'required' => true,
+            'validators' => [
+                [
+                    'NotEmpty', true, [
+                        "messages" => [
+                            'isEmpty' => 'Bạn cần nhập bằng cấp giảng viên'
+                        ]
+                    ]
+                ]
+            ]
+        ]);
+        //create phone element
+        $dit = new Zend_Validate_Digits();
+        $this->addElement('text', 'phone', [
+            'label' => "Số điện thoại",
+            'required' => true,
+            'validators' => [
+                [
+                    'NotEmpty', true, [
+                        "messages" => [
+                            'isEmpty' => 'Bạn cần nhập số điện thoại giảng viên'
+                        ]
+                    ]
+                ],
+                [
+                    'Digits', true, [
+                        'messages' => [
+                            'notDigits' => 'So dien thoai chi co chua ki tu khong phai la so'
+                        ]
+                    ]
+                ],
+                [
+                    'StringLength', true, [
+                        [
+                            'min' => 10,
+                            'max' => 11,
+                            'messages' => [
+                                'stringLengthInvalid' => 'Số điện thoại phải chứa từ 10 đến 11 ký tự'
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ]);
+
+        //create address element
+        $this->addElement('textarea', 'address', [
+            'label' => "Địa chỉ",
+            'rows' => 5,
+            'required' => true,
+            'validators' => [
+                [
+                    'NotEmpty', true, [
+                        "messages" => [
+                            'isEmpty' => 'Bạn cần nhập địa chỉ giảng viên'
+                        ]
+                    ]
+                ]
+            ]
+        ]);
+        //create rule element
+        $this->addElement('select', 'rule', [
+            'label' => "Phân quyền",
+            'multiOptions' => [
+                '1' => 'Khoa',
+                '2' => 'Giảng viên',
+                '3' => 'Sinh viên'
+            ]
+        ]);
+
+        //create avata element
+        $this->addElement('file', 'avata', [
+            'label' => "Avatar"
+        ]);
+
+        //create button create element
+        $this->addElement('submit', 'Update', [
+            'class' => 'btn'
+        ]);
     }
 
 }

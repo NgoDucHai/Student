@@ -6,7 +6,7 @@
 class CreateStudentProfileTest extends Vms_Test_PHPUnit_ControllerWithDatabaseFixturesTestCase {
 
     // prepare 4 records to intergrate with db 
-    protected $truncateFixturesWhenTearDown = false;
+    protected $truncateFixturesWhenTearDown = true;
 
     // Male is true OR 1 
     // Female is false OR 0

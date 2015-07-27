@@ -27,7 +27,7 @@ class UpdateProfileTeacherActionTest extends Vms_Test_PHPUnit_ControllerWithData
         ]);
     }
 
-
+    
     public function testWhenAccessUrlThenReturnHttpCode200() {
         $this->dispatch('/teacher/profile/update-profile/id/1');
         $this->assertResponseCode(200);
@@ -46,15 +46,15 @@ class UpdateProfileTeacherActionTest extends Vms_Test_PHPUnit_ControllerWithData
 
         $this->assertQuery('form#update-profile');
 
-        $this->assertQuery('input[@name="teacherId"][@readonly="readonly"]');
+        $this->assertQuery('input[@name="teacherId"]');
         $this->assertQuery('input[@name="teacherName"]');
         $this->assertQuery('input[@name="dateOfBirth"]');
         $this->assertQuery('select[@name="gender"]');
         $this->assertQuery('input[@name="phone"]');
         $this->assertQuery('textarea[@name="address"]');
-        $this->assertQuery('select[@name="diploma"]');
+        $this->assertQuery('input[@name="diploma"]');
         $this->assertQuery('select[@name="rule"]');
-        //$this->assertQuery('input[@name="avata"]');
+        $this->assertQuery('input[@name="avata"]');
     }
     
     public function testWhenAccessPageUpdateProfileThenDisplayInformation() {
@@ -64,7 +64,7 @@ class UpdateProfileTeacherActionTest extends Vms_Test_PHPUnit_ControllerWithData
         $this->assertQueryContentContains('label', 'Họ và tên');
         $this->assertQueryContentContains('label', 'Ngày sinh');
         $this->assertQueryContentContains('label', 'Giới tính');
-        $this->assertQueryContentContains('label', 'Chức vụ');
+        $this->assertQueryContentContains('label', 'Bằng cấp');
         $this->assertQueryContentContains('label', 'Số điện thoại');
         $this->assertQueryContentContains('label', 'Địa chỉ');
         $this->assertQueryContentContains('label', 'Phân quyền');
@@ -79,6 +79,30 @@ class UpdateProfileTeacherActionTest extends Vms_Test_PHPUnit_ControllerWithData
     public function testWhenAccessPageUpdateWidthIdNotFindOnDbThenDispLayPageNotFoundInformation() {
         $this->dispatch('/teacher/profile/update-profile/id/3');
 
-        $this->assertQueryContentContains('body', 'Page not found information');
+        $this->assertQueryContentContains('body', 'Giang vien khong ton tai ');
+    }
+    
+    public function testShowInformationOldBeforeUpdateInformation() {
+        $this->request->setMethod('POST')
+                ->setPost([
+                    "teacherId" => '1',
+                    "teacherName" => "NgoDucHai",
+                    "dateOfBirth" => '1994-03-06',
+                    "gender" => '1',
+                    "diploma" => '1',
+                    "phone" => '1234567898',
+                    "rule" => '1',
+                    "address" => 'ha noi'
+        ]);
+        $this->dispatch('/teacher/profile/update-profile/id/1');
+        $this->assertQuery('input[@value="1"]');
+        $this->assertQuery('input[@value="NgoDucHai"]');
+        $this->assertQuery('input[@value="1994-03-06"]');
+        $this->assertQuery('option[@value="1"]');
+        $this->assertQuery('input[@value="1234567898"]');
+        $this->assertQueryContentContains("textarea", 'ha noi');
+        $this->assertQuery('option[@value="1"]');
+        $this->assertQuery('option[@value="1"]');
+        //$this->assertQuery('input[@value="avata"]');
     }
 }

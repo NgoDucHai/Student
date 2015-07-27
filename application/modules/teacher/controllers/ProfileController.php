@@ -10,19 +10,23 @@ class Teacher_ProfileController extends Zend_Controller_Action {
         
     }
 
+    /**
+     * Update profile Teacher
+     * @return type
+     */
     public function updateProfileAction() {
         $this->view->headTitle('Update Profile');
         $form = new Teacher_Form_UpdateProfile();
 
-        $id = $this->getParam('id', '');
-        if ($id == '') {
+        $id = (int) $this->getParam('id', '');
+        if (!$id) {
             $this->_helper->redirector('index');
         }
 
         $teacherMapper = new Teacher_Model_TeacherMapper();
         $result = $teacherMapper->findId($id);
         if (!$result) {
-            $this->view->message = "Page not found information";
+            $this->view->message = "Giang vien khong ton tai ";
             return;
         }
         $this->view->form = $form;
@@ -31,7 +35,7 @@ class Teacher_ProfileController extends Zend_Controller_Action {
     }
 
     /**
-     * luu thong tin sua doi vao database
+     * save infomation new into database
      * @param Teacher_Form_UpdateProfile $form
      * @return type
      */
@@ -52,13 +56,13 @@ class Teacher_ProfileController extends Zend_Controller_Action {
     }
 
     /**
-     * hien thi form update
+     * display form update
      * @param Teacher_Form_UpdateProfile $form
      * @param Teacher_Model_Teacher $result
      */
     protected function _processShowForm(Teacher_Form_UpdateProfile $form, Teacher_Model_Teacher $result) {
         $form->populate([
-            'teachertId' => $result->getTeacherId(),
+            'teacherId' => $result->getTeacherId(),
             'teacherName' => $result->getTeacherName(),
             'dateOfBirth' => $result->getDateOfBirth(),
             'diploma' => $result->getDiploma(),
