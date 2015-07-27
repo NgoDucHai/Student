@@ -50,6 +50,22 @@ class Student_Model_StudentMapper {
         }
         return $this->_dbTable;
     }
+    
+    public function find($id, Student_Model_Student $student) {
+       
+        $result = $this->getDbTable()->find($id);
+        if (0 == count($result)) {
+            return false;
+        }
+        $row = $result->current();
+        $student->setStudentId($row->studentId);
+        $student->setStudentName($row->studentName);
+        $student->setDateOfBirth($row->dateOfBirth);
+        $student->setGender($row->gender);
+        $student->setPhone($row->phone);
+        $student->setAddress($row->address);
+        return TRUE;
+    }
 
     /**
      * 
@@ -71,7 +87,7 @@ class Student_Model_StudentMapper {
     public function save(Student_Model_Student $student) {
         $table = $this->getDbTable(); /* @var $table Student_Model_DbTable_Student */
         $data = $this->__getDataFormObjectStudent($student);
-        
+        var_dump($data);
         if (NULL === ($id = $student->getStudentId())) {
             
         } else {
