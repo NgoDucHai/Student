@@ -17,7 +17,8 @@ class Teacher_Model_TeacherMapper {
                 ->setDiploma($$data->diploma)
                 ->setPhone($data->phone)
                 ->setAddress($data->address)
-                ->setRule($data->rule);
+                ->setRule($data->rule)
+                ->setAvater($data->avatar);
     }
 
     /**
@@ -25,7 +26,8 @@ class Teacher_Model_TeacherMapper {
      * @param Teacher_Model_Teacher $teacher
      * @return array $data
      */
-    private function __getDataFormObjectStudent(Teacher_Model_Teacher $teacher) {
+    private function __getDataFormObjectTeacher(Teacher_Model_Teacher $teacher) {
+//        $teacher = new Teacher_Model_Teacher();
         $data['teacherId'] = $teacher->getTeacherId();
         $data['teacherName'] = $teacher->getTeacherName();
         $data['dateOfBirth'] = $teacher->getDateOfBirth();
@@ -34,7 +36,11 @@ class Teacher_Model_TeacherMapper {
         $data['phone'] = $teacher->getPhone();
         $data['address'] = $teacher->getAddress();
         $data['rule'] = $teacher->getRule();
+        if($teacher->getAvatar())
+            $data['avatar'] = $teacher->getAvatar();
+       
         return $data;
+        
     }
 
     public function setDbTable($dbTable) {
@@ -53,6 +59,15 @@ class Teacher_Model_TeacherMapper {
             $this->setDbTable('Teacher_Model_DbTable_Teacher');
         }
         return $this->_dbTable;
+    }
+    
+    /**
+     * insert teacher profile
+     * @param Teacher_Model_Teacher $teacher
+     */
+    public function save($teacher) {
+        $data = $this->__getDataFormObjectTeacher($teacher);
+        $this->getDbTable()->insert($data);
     }
 
 }

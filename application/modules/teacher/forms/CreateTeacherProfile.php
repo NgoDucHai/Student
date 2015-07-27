@@ -9,7 +9,15 @@ class Teacher_Form_CreateTeacherProfile extends Twitter_Bootstrap3_Form_Horizont
         //set action, method id form
         $this->setAction('/teacher/profile/create')
                 ->setMethod('post')
-                ->setAttrib('id', 'createTeacherProfile');
+                ->setAttribs([
+                    'id' => 'createTeacherProfile',
+                    'enctype' => "multipart / form-data"
+                ])
+        ;
+
+        $this->addElement('hidden', 'MAX_FILE_SIZE', [
+            'value' => 100000
+        ]);
 
         //create teacherId element
         $this->addElement('text', 'teacherId', [
@@ -24,9 +32,9 @@ class Teacher_Form_CreateTeacherProfile extends Twitter_Bootstrap3_Form_Horizont
                     ]
                 ],
                 [
-                    'Int', true, [
-                        'messages' => [
-                            'notInt' => 'Mã quản trị viên chỉ chứa số'
+                    'Digits',true,[
+                        'messages'=>[
+                            'notDigits'=>'Mã quản trị viên chỉ chứa số'
                         ]
                     ]
                 ]
@@ -46,9 +54,9 @@ class Teacher_Form_CreateTeacherProfile extends Twitter_Bootstrap3_Form_Horizont
                     ]
                 ],
                 [
-                    'Alpha',true,[
-                        'messages'=>[
-                            'notAlpha'=>'Tên giảng viên chứa kí tự đặc biệt'
+                    'Alpha', true, [
+                        'messages' => [
+                            'notAlpha' => 'Tên giảng viên chứa kí tự đặc biệt'
                         ]
                     ]
                 ]
@@ -57,7 +65,7 @@ class Teacher_Form_CreateTeacherProfile extends Twitter_Bootstrap3_Form_Horizont
 
         //create dateOfBirth element
         $this->addElement('text', 'dateOfBirth', [
-            'placeholder' => 'mm/dd/yy',
+            'placeholder' => 'yyyy/mm/dd',
             'label' => "Ngày sinh",
             'required' => true,
             'validators' => [
@@ -65,6 +73,14 @@ class Teacher_Form_CreateTeacherProfile extends Twitter_Bootstrap3_Form_Horizont
                     'NotEmpty', true, [
                         "messages" => [
                             'isEmpty' => 'Bạn cần nhập ngày sinh giảng viên'
+                        ]
+                    ]
+                ],
+                [
+                    'Date',true,[
+                        'format'=>'Y-M-D',
+                        'messages'=>[
+                            'dateFalseFormat'=>'Nhập sai định dạng ngày'
                         ]
                     ]
                 ]
@@ -94,8 +110,8 @@ class Teacher_Form_CreateTeacherProfile extends Twitter_Bootstrap3_Form_Horizont
                 ]
             ]
         ]);
-
         //create phone element
+        $dit = new Zend_Validate_Digits();
         $this->addElement('text', 'phone', [
             'label' => "Số điện thoại",
             'required' => true,
@@ -104,6 +120,24 @@ class Teacher_Form_CreateTeacherProfile extends Twitter_Bootstrap3_Form_Horizont
                     'NotEmpty', true, [
                         "messages" => [
                             'isEmpty' => 'Bạn cần nhập số điện thoại giảng viên'
+                        ]
+                    ]
+                ],
+                [
+                    'Digits',true,[
+                        'messages'=>[
+                            'notDigits'=>'So dien thoai chi co chua ki tu khong phai la so'
+                        ]
+                    ]
+                ],
+                [
+                    'StringLength', true, [
+                        [
+                            'min' => 10,
+                            'max' => 11,
+                            'messages' => [
+                                'stringLengthInvalid' => 'Số điện thoại phải chứa từ 10 đến 11 ký tự'
+                            ]
                         ]
                     ]
                 ]
@@ -138,8 +172,8 @@ class Teacher_Form_CreateTeacherProfile extends Twitter_Bootstrap3_Form_Horizont
         ]);
 
         //create button create element
-        $this->addElement('submit', 'create',[
-            'class'=>'btn btn-default dropdown-toggle disabled'
+        $this->addElement('submit', 'create', [
+            'class' => 'btn btn-primary'
         ]);
     }
 

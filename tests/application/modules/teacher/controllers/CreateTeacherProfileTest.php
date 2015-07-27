@@ -78,15 +78,36 @@ class CreateTeacherProfileTest extends Zend_Test_PHPUnit_ControllerTestCase {
                 ->setPost([
                     'teacherId' => '09e5drcgvhbjnkl',
                     'teacherName' => 'iojhoio5-09uj0j0w340-o',
-                    'dateOfBirth' => '1993/2/31',
+                    'dateOfBirth' => '19/22/31',
                     'phone' => '86yui09jio'
         ]);
         $this->dispatch('/teacher/profile/create');
-        
+
         $this->assertQueryContentContains('li', 'Mã quản trị viên chỉ chứa số');
         $this->assertQueryContentContains('li', 'Tên giảng viên chứa kí tự đặc biệt');
-        $this->assertQueryContentContains('li', 'Nhập sai định dạng dd/mm/yy');
-        $this->assertQueryContentContains('li', 'Nhập sai số điện thoại');
+        $this->assertQueryContentContains('li', 'Nhập sai định dạng ngày');
+        $this->assertQueryContentContains('li', 'So dien thoai chi co chua ki tu khong phai la so');
+    }
+
+    /**
+     * test when submit with good data, page will be 
+     * redirected to list teacher profile page
+     */
+    public function testSubmitWithGoodData() {
+        $this->request->setMethod('POST')
+                ->setPost([
+                    'teacherId' => '1195',
+                    'teacherName' => 'hoangtestbon',
+                    'dateOfBirth' => '1111/12/01',
+                    'gender' => '0',
+                    'diploma'=>'mba',
+                    'phone'=>'1234567890',
+                    'address'=>'dasd',
+                    'rule'=>'0'
+        ]);
+        $this->dispatch('/teacher/profile/create');
+        
+        $this->assertResponseCode(302);
     }
 
 }

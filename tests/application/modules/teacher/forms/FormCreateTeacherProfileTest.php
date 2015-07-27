@@ -16,7 +16,7 @@ class FormCreateTeacherProfileTest extends PHPUnit_Framework_TestCase{
         $form = $this->__createTeacherProfileForm;
 
         $data=[
-            'teacherId'=>''
+            'teacherId'=>'ưerfer'
         ];
         $this->assertFalse($form->isValid($data));
         

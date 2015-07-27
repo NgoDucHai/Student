@@ -10,6 +10,7 @@ class Teacher_Model_Teacher {
     protected $_phone;
     protected $_address;
     protected $_rule;
+    protected $_avatar;
 
     public function __construct(array $options = null) {
         if (is_array($options)) {
@@ -75,7 +76,10 @@ class Teacher_Model_Teacher {
     public function getRule() {
         return $this->_rule;
     }
-
+    
+    public function getAvatar(){
+        return $this->_avatar;
+    }
     public function setTeacherId($teacherId) {
         $this->_teacherId = $teacherId;
         return $this;
@@ -113,6 +117,11 @@ class Teacher_Model_Teacher {
 
     public function setRule($rule) {
         $this->_rule = $rule;
+        return $this;
+    }
+    
+    public function setAvatar($avatar){
+        $this->_avatar = $avatar;
         return $this;
     }
 
