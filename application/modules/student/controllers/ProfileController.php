@@ -28,6 +28,9 @@ class Student_ProfileController extends Zend_Controller_Action {
         $this->view->student = $result;
     }
 
+    /**
+     * show list student profile paginated
+     */
     public function indexAction() {
         $this->view->headTitle('List Student');
 
@@ -35,7 +38,6 @@ class Student_ProfileController extends Zend_Controller_Action {
         $itemPerPage = $this->getParam("size", 3);
 
         $paginator = $this->__factoryPaginator($currentPageNumber, $itemPerPage);
-
         $this->view->listStudents = $paginator;
     }
 
