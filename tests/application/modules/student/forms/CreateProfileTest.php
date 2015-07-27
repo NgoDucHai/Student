@@ -13,7 +13,7 @@ class Student_Form_CreateProfileTest extends PHPUnit_Framework_TestCase {
         parent::setUp();
         $application = new Zend_Application(APPLICATION_ENV, APPLICATION_PATH . '/configs/application.ini');
         $application->getBootstrap()->bootstrap();
-        $this->_form = new Student_Form_CreateProfileStudent();
+        $this->_form = new Student_Form_CreateStudentProfile();
     }
 
     public function testIsValidWillReturnFallWhenInjectBadProfile() {

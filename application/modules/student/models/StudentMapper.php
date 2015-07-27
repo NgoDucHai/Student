@@ -43,7 +43,10 @@ class Student_Model_StudentMapper {
         $this->_dbTable = $dbTable;
         return $this;
     }
-
+    /**
+     * 
+     * @return Zend_Db_Table
+     */
     public function getDbTable() {
         if (null === $this->_dbTable) {
             $this->setDbTable('Student_Model_DbTable_Student');
@@ -71,9 +74,9 @@ class Student_Model_StudentMapper {
     public function save(Student_Model_Student $student) {
         $table = $this->getDbTable(); /* @var $table Student_Model_DbTable_Student */
         $data = $this->__getDataFormObjectStudent($student);
-        
-        if (NULL === ($id = $student->getStudentId())) {
-            
+        $id = $data['studentId'];
+        if (FALSE === $this->findId($id)) {
+            $table->insert($data);
         } else {
             $table->update($data, ['studentId = ?' => $id]);
         }
