@@ -151,7 +151,6 @@ class Student_ProfileController extends Zend_Controller_Action {
         ]);
     }
 
-<<<<<<< HEAD
     private function __changeFormatDateOfBirth($data) {
         if (!($dateOfBirth = $data['dateOfBirth'])) {
             return;
@@ -161,7 +160,5 @@ class Student_ProfileController extends Zend_Controller_Action {
         $data['dateOfBirth'] = $listDate[2] . "-" . $listDate[1] . "-" . $listDate;
     }
 
-=======
     
->>>>>>> b6d5b6c74dbb0b8cc7c49cfaf1f655f4518c7fe7
 }
