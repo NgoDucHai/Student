@@ -4,9 +4,9 @@ class Student_ProfileController extends Zend_Controller_Action {
 
     public function init() {
         /* Initialize action controller here */
-        $data['dateOfBirth'] = '22-10-1993';
-        $this->__changeFormatDateOfBirth($data);
-        die;
+//        $data['dateOfBirth'] = '22-10-1993';
+//        $this->__changeFormatDateOfBirth($data);
+//        die;
     }
 
     public function showAction() {

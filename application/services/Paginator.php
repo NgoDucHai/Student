@@ -35,13 +35,10 @@ class Application_Service_Paginator {
         $table = $this->getDbMapper();
         $select = $table->getDbTable()->select();
         $paginator = Zend_Paginator::factory($select);
+        
         $paginator->setCurrentPageNumber($currentPageNumber);
         $paginator->setItemCountPerPage($itemPerPage);
-<<<<<<< HEAD
-        $paginator->setView();
         
-=======
->>>>>>> b6d5b6c74dbb0b8cc7c49cfaf1f655f4518c7fe7
         return $paginator;
     }
 
