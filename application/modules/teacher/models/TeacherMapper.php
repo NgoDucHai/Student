@@ -1,6 +1,5 @@
 <?php
-
-class Teacher_Model_StudentMapper {
+class Teacher_Model_TeacherMapper {
 
     protected $_dbTable;
 
@@ -9,12 +8,12 @@ class Teacher_Model_StudentMapper {
      * @param Teacher_Model_Teacher $teacher
      * @param array $data
      */
-    private function __setObjectStudentFromArray(Teacher_Model_Teacher $teacher, $data) {
+    private function __setObjectTeacherFromArray(Teacher_Model_Teacher $teacher, $data) {
         $teacher->setTeacherId($data->teacherId)
                 ->setTeacherName($data->teacherName)
                 ->setDateOfBirth($data->dateOfBirth)
                 ->setGender($data->gender)
-                ->setDiploma($$data->diploma)
+                ->setDiploma($data->diploma)
                 ->setPhone($data->phone)
                 ->setAddress($data->address)
                 ->setRule($data->rule);
@@ -25,7 +24,7 @@ class Teacher_Model_StudentMapper {
      * @param Teacher_Model_Teacher $teacher
      * @return array $data
      */
-    private function __getDataFormObjectStudent(Teacher_Model_Teacher $teacher) {
+    private function __getDataFormObjectTeacher(Teacher_Model_Teacher $teacher) {
         $data['teacherId'] = $teacher->getTeacherId();
         $data['teacherName'] = $teacher->getTeacherName();
         $data['dateOfBirth'] = $teacher->getDateOfBirth();
@@ -54,5 +53,32 @@ class Teacher_Model_StudentMapper {
         }
         return $this->_dbTable;
     }
+    
+    
+    /**
+     * 
+     * @param number $id
+     * @return \Teacher_Model_Teacher|boolean
+     */
+    public function findId($id) {
+        $table = $this->getDbTable(); /* @var $table Teacher_Model_DbTable_Teacher */
+        $result = $table->find($id); /* @var $result Zend_Db_Table_Rowset */
+        if (count($result) == 0) {
+            return false;
+        }
+        $data = $result->current();
+        $teacher = new Teacher_Model_Teacher();
+        $this->__setObjectTeacherFromArray($teacher, $data);
+        return $teacher;
+    }
 
+    public function save(Teacher_Model_Teacher $teacher) {
+        $table = $this->getDbTable(); /* @var $table Teacher_Model_DbTable_Teacher */
+        $data = $this->__getDataFormObjectTeacher($teacher);
+        if (NULL === ($id = $teacher->getTeacherId())) {
+            
+        } else {
+            $table->update($data, ['teacherId = ?' => $id]);
+        }
+    }
 }

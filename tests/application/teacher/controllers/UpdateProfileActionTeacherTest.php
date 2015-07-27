@@ -1,0 +1,84 @@
+<?php
+
+/**
+ * Description of update-profile
+ *
+ * @author haingo
+ */
+class UpdateProfileTeacherActionTest extends Vms_Test_PHPUnit_ControllerWithDatabaseFixturesTestCase {
+
+    protected $truncateFixturesWhenTearDown = false;
+
+    protected function getDataSet() {
+        return new PHPUnit_Extensions_Database_DataSet_ArrayDataSet([
+            "teacher" => [
+                [
+                    "teacherId" => '1',
+                    "teacherName" => "Ngo Duc Hai",
+                    "dateOfBirth" => '1994-03-06',
+                    "gender" => '1',
+                    "diploma" => '1',
+                    "phone" => '1234567898',
+                    "rule" => '1',
+                    "address" => 'ha noi',
+                   
+                ],
+            ]
+        ]);
+    }
+
+
+    public function testWhenAccessUrlThenReturnHttpCode200() {
+        $this->dispatch('/teacher/profile/update-profile/id/1');
+        $this->assertResponseCode(200);
+    }
+
+    public function testWhenCallActionThenGoToUrlTeacherProfileUpdate() {
+        $this->dispatch('/teacher/profile/update-profile');
+        $this->assertModule('teacher');
+        $this->assertController('profile');
+        $this->assertAction('update-profile');
+    }
+    
+    
+    public function testWhenAccessPageUpdateProfileThenDisplayForm() {
+        $this->dispatch('/teacher/profile/update-profile/id/1');
+
+        $this->assertQuery('form#update-profile');
+
+        $this->assertQuery('input[@name="teacherId"][@readonly="readonly"]');
+        $this->assertQuery('input[@name="teacherName"]');
+        $this->assertQuery('input[@name="dateOfBirth"]');
+        $this->assertQuery('select[@name="gender"]');
+        $this->assertQuery('input[@name="phone"]');
+        $this->assertQuery('textarea[@name="address"]');
+        $this->assertQuery('select[@name="diploma"]');
+        $this->assertQuery('select[@name="rule"]');
+        //$this->assertQuery('input[@name="avata"]');
+    }
+    
+    public function testWhenAccessPageUpdateProfileThenDisplayInformation() {
+        $this->dispatch('/teacher/profile/update-profile/id/1');
+
+        $this->assertQueryContentContains('label', 'Mã giảng viên');
+        $this->assertQueryContentContains('label', 'Họ và tên');
+        $this->assertQueryContentContains('label', 'Ngày sinh');
+        $this->assertQueryContentContains('label', 'Giới tính');
+        $this->assertQueryContentContains('label', 'Chức vụ');
+        $this->assertQueryContentContains('label', 'Số điện thoại');
+        $this->assertQueryContentContains('label', 'Địa chỉ');
+        $this->assertQueryContentContains('label', 'Phân quyền');
+    }
+
+    public function testWhenAccessPageUpdateProfileWidthIdNullThenRedirectPageIndex() {
+        $this->dispatch('/teacher/profile/update-profile');
+
+        $this->assertRedirectTo('/teacher/profile');
+    }
+
+    public function testWhenAccessPageUpdateWidthIdNotFindOnDbThenDispLayPageNotFoundInformation() {
+        $this->dispatch('/teacher/profile/update-profile/id/3');
+
+        $this->assertQueryContentContains('body', 'Page not found information');
+    }
+}
