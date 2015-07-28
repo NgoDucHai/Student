@@ -33,11 +33,21 @@ class Employee_Model_EmployeeMapper {
         return $this;
     }
 
+    /**
+     * 
+     * @return Zend_Db_Table
+     */
     public function getDbTable() {
         if (null === $this->_dbTable) {
             $this->setDbTable('Employee_Model_Employee');
         }
         return $this->_dbTable;
+    }
+    
+    public function getAllEmployeeProfiles()
+    {
+        $dataRowSet = $this->getDbTable()->fetchAll();
+        
     }
 
 }
