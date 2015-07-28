@@ -19,7 +19,18 @@ class Employee_Model_EmployeeMapper {
      * @return array
      */
     private function __getArrayFromObjectEmployee(Employee_Model_Employee $employee) {
-        return (array) $employee;
+        $data['employeeId'] = $employee->getEmployeeId();
+        $data['employeeName'] = $employee->getEmployeeName();
+        $data['dateOfBirth'] = $employee->getDateOfBirth();
+        $data['gender'] = $employee->getGender();
+        $data['faculltyId'] = $employee->getFaculltyId();
+        $data['position'] = $employee->getPosition();
+        $data['phone'] = $employee->getPhone();
+        $data['address'] = $employee->getAddress();
+        $data['role'] = $employee->getRole();
+        $data['avatar'] = $employee->getAvatar();
+        
+        return $data;
     }
 
     public function setDbTable($dbTable) {
@@ -39,5 +50,10 @@ class Employee_Model_EmployeeMapper {
         }
         return $this->_dbTable;
     }
+    
+//    public function save(Employee_Model_Employee $employee){
+//        $data = $this->__getArrayFromObjectEmployee($employee);
+//        var_dump($data);die;
+//    }
 
 }
