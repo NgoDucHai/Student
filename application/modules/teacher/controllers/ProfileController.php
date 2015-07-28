@@ -20,7 +20,7 @@ class Teacher_ProfileController extends Zend_Controller_Action {
 
         $id = (int) $this->getParam('id', '');
         if (!$id) {
-            $this->_helper->redirector('index');
+            $this->_helper->redirector('list-profile');
         }
 
         $teacherMapper = new Teacher_Model_TeacherMapper();
@@ -31,28 +31,36 @@ class Teacher_ProfileController extends Zend_Controller_Action {
         }
         $this->view->form = $form;
         $this->_processShowForm($form, $result);
-        $this->_processUpdateFormProfile($form);
+        if ($this->_processUpdateFormProfile($form)) {
+            $this->view->message = "Update success";
+            $params = array('id' => $id);
+            $this->_helper->redirector("show-profile", 'profile', 'teacher', $params);
+        }
     }
 
     /**
      * save infomation new into database
      * @param Teacher_Form_UpdateProfile $form
-     * @return type
+     * @return true or false
      */
     protected function _processUpdateFormProfile(Teacher_Form_UpdateProfile $form) {
         $request = $this->getRequest(); /* @var $request Zend_Controller_Request_Http */
 
         if (!$request->isPost()) {
-            return;
+            return false;
         }
 
         if (!$form->isValid($request->getPost())) {
-            return;
+            return false;
         }
 
         $teacher = new Teacher_Model_Teacher($request->getPost());
         $teacherMapper = new Teacher_Model_TeacherMapper();
-        $teacherMapper->saveProfile($teacher);
+        if ($teacherMapper->saveProfile($teacher)) {
+            return true;
+        } else {
+            return FALSE;
+        }
     }
 
     /**
@@ -166,20 +174,20 @@ class Teacher_ProfileController extends Zend_Controller_Action {
      * show profile of a Teacher
      */
     public function showProfileAction() {
-        
+
         $this->view->headTitle("show profile of teacher");
         $id = (int) $this->getParam('id', '');
 
         if (!$id) {
             $this->_helper->redirector('list-profile');
         }
-        
+
         $mapper = new Teacher_Model_TeacherMapper();
         $result = $mapper->findId($id);
         if (!$result) {
             $this->view->errorMessage = "Profile not found";
         }
-        
+
         $this->view->title = "Profile of teacher";
         $this->view->profileTeacher = $result;
     }

@@ -73,7 +73,7 @@ class UpdateProfileTeacherActionTest extends Vms_Test_PHPUnit_ControllerWithData
     public function testWhenAccessPageUpdateProfileWidthIdNullThenRedirectPageIndex() {
         $this->dispatch('/teacher/profile/update-profile');
 
-        $this->assertRedirectTo('/teacher/profile');
+        $this->assertRedirectTo('/teacher/profile/list-profile');
     }
 
     public function testWhenAccessPageUpdateWidthIdNotFindOnDbThenDispLayPageNotFoundInformation() {
@@ -103,6 +103,25 @@ class UpdateProfileTeacherActionTest extends Vms_Test_PHPUnit_ControllerWithData
         $this->assertQueryContentContains("textarea", 'ha noi');
         $this->assertQuery('option[@value="1"]');
         $this->assertQuery('option[@value="1"]');
+        
         //$this->assertQuery('input[@value="avata"]');
     }
+    
+    
+//    public function testIfInformationOkThenImportRequestIntoBD() {
+//        $this->request->setMethod('POST')
+//                ->setPost([
+//                    "teacherId" => '1',
+//                    "teacherName" => "NgoDucHaiedit",
+//                    "dateOfBirth" => '1994-03-06',
+//                    "gender" => '1',
+//                    "diploma" => '1',
+//                    "phone" => '1234567898',
+//                    "rule" => '1',
+//                    "address" => 'ha noi'
+//        ]);
+//        $this->dispatch('/teacher/profile/update-profile/id/1');
+//        $this->assertRedirectTo("teacher/profile/show-profile/id/1");
+//        
+//    }
 }
