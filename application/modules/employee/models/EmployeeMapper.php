@@ -9,7 +9,7 @@ class Employee_Model_EmployeeMapper {
      * @param array $data
      * @return Employee_Model_Employee
      */
-    private function __setObjectTeacherFromArray($data) {
+    private function __setObjectEmployeeFromArray($data) {
         return new Employee_Model_Employee($data);
     }
 
@@ -18,7 +18,7 @@ class Employee_Model_EmployeeMapper {
      * @param Employee_Model_Employee $employee
      * @return array
      */
-    private function __getDataFormObjectTeacher(Employee_Model_Employee $employee) {
+    private function __getArrayFromObjectEmployee(Employee_Model_Employee $employee) {
         return (array) $employee;
     }
 
