@@ -18,7 +18,7 @@ class Teacher_ProfileController extends Zend_Controller_Action {
         $this->view->headTitle('Update Profile');
         $form = new Teacher_Form_UpdateProfile();
 
-        $id = (int) $this->getParam('id', '');
+        $id = $this->getParam('id', '');
         if (!$id) {
             $this->_helper->redirector('list-profile');
         }
@@ -135,7 +135,7 @@ class Teacher_ProfileController extends Zend_Controller_Action {
     }
 
     public function deleteProfileAction() {
-        $id = (int) $this->getParam('id', '');
+        $id = $this->getParam('id', '');
         !$id ? $this->_helper->redirector('list-profile') : true;
 
         $teacherMapper = new Teacher_Model_TeacherMapper();
@@ -152,7 +152,7 @@ class Teacher_ProfileController extends Zend_Controller_Action {
     public function showProfileAction() {
 
         $this->view->headTitle("show profile of teacher");
-        $id = (int) $this->getParam('id', '');
+        $id = $this->getParam('id', '');
 
         if (!$id) {
             $this->_helper->redirector('list-profile');

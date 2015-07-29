@@ -77,6 +77,7 @@ class Teacher_Model_TeacherMapper {
     public function findId($id) {
         $table = $this->getDbTable(); /* @var $table Teacher_Model_DbTable_Teacher */
         $result = $table->find($id); /* @var $result Zend_Db_Table_Rowset */
+
         if (!count($result)) {
             return false;
         }
