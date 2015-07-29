@@ -23,7 +23,7 @@ class Employee_Model_EmployeeMapper {
         $data['employeeName'] = $employee->getEmployeeName();
         $data['dateOfBirth'] = $employee->getDateOfBirth();
         $data['gender'] = $employee->getGender();
-        $data['faculltyId'] = $employee->getFaculltyId();
+        $data['facultyId'] = $employee->getFacultyId();
         $data['position'] = $employee->getPosition();
         $data['phone'] = $employee->getPhone();
         $data['address'] = $employee->getAddress();
@@ -72,37 +72,62 @@ class Employee_Model_EmployeeMapper {
      * @return boolean "if id is not found"
      * @return Zend_Db_Table_Rowset_Abstract "If id is found" 
      */
-    public function findById($id)
-    {
+    public function findById($id) {
         $rowGettedById = $this->getDbTable()->find($id);
         $foundId = count($rowGettedById);
-        if(!$foundId)
-        {
+        if (!$foundId) {
             return FALSE;
         }
         return $rowGettedById;
     }
-    
+
     /**
      * 
      * @param int/string $id
      * @return int number of rows are deleted
      */
-    public function deleteById($id)
-    {
+    public function deleteById($id) {
         $dbTable = $this->getDbTable();
         $deleteOk = $dbTable->delete(['employeeId = ?' => $id]);
         return $deleteOk;
     }
-    
-    /**
+    /*
      * 
-     * @param Employee_Model_Employee $employee
+     * @param number $id
+     * @return \Employee_Model_Employee|boolean
      */
+
+    public function findId($id) {
+        $table = $this->getDbTable(); /* @var $table Employee_Model_DbTable_Employee */
+        $result = $table->find($id); /* @var $result Zend_Db_Table_Rowset */
+        if (!count($result)) {
+            return false;
+        }
+        $data = $result->current();
+        $student = $this->__setObjectEmployeeFromArray($data);
+        return $student;
+    }
+
     public function save(Employee_Model_Employee $employee) {
+        $table = $this->getDbTable(); /* @var $table Employee_Model_DbTable_Employee */
+        $this->__setDefaultAvatar($employee);
         $data = $this->__getArrayFromObjectEmployee($employee);
-        var_dump($data);
-        die;
+        $result = $this->findId($employee->getEmployeeId());
+
+        if (FALSE === $result) {
+            return $table->insert($data) ? true : false;
+        }
+    }
+
+    /**
+     * set default avatar if avatar null
+     * @param \Employee_Model_Employee $employee
+     */
+    private function __setDefaultAvatar(Employee_Model_Employee $employee) {
+        if ($employee->getAvatar() === NULL) {
+            $avatar = realpath(APPLICATION_PATH . '/../public/images/avatar/avatarDefault.png');
+            $employee->setAvatar($avatar);
+        }
     }
 
 }

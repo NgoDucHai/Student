@@ -94,20 +94,30 @@ class CreateTeacherProfileTest extends Zend_Test_PHPUnit_ControllerTestCase {
      * redirected to list teacher profile page
      */
     public function testSubmitWithGoodData() {
+        $data = [
+            'teacherId' => '1212332322132',
+            'teacherName' => 'tetststststs',
+            'dateOfBirth' => '1999/11/1',
+            'gender' => '1',
+            'diploma' => '111',
+            'phone' => '1233213231',
+            'address' => 'sfdrgk',
+            'rule' => '1'
+        ];
+
+
         $this->request->setMethod('POST')
-                ->setPost([
-                    'teacherId' => '1195',
-                    'teacherName' => 'hoangtestbon',
-                    'dateOfBirth' => '1111/12/01',
-                    'gender' => '0',
-                    'diploma'=>'mba',
-                    'phone'=>'1234567890',
-                    'address'=>'dasd',
-                    'rule'=>'0'
-        ]);
+                ->setPost($data);
+
         $this->dispatch('/teacher/profile/create');
-        
         $this->assertResponseCode(302);
+    }
+    
+    /**
+     * removing data after testing create teacher profile with good data
+     */
+    public function tearDown() {
+        $this->dispatch('/teacher/profile/delete-profile/id/1212332322132');
     }
 
 }

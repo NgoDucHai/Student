@@ -80,7 +80,7 @@ class deleteEmployeeProfileTest extends Vms_Test_PHPUnit_ControllerWithDatabaseF
 
     public function testWhenUserInputAExistsIdThenRedirectThemToListProfilePage()
     {
-        $this->dispatch('/employee/profile/delete/id/12020535');
+        $this->dispatch('/employee/profile/delete/id/12023232');
         $this->assertRedirectTo('/employee/profile/list-profile');
     }
     

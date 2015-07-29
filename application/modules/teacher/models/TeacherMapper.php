@@ -17,8 +17,9 @@ class Teacher_Model_TeacherMapper {
                 ->setDiploma($data->diploma)
                 ->setPhone($data->phone)
                 ->setAddress($data->address)
-                ->setRule($data->rule);
-        //->setAvater($data->avatar);
+                ->setRule($data->rule)
+                ->setAvatar($data->avatar);
+
     }
 
     /**
@@ -27,7 +28,6 @@ class Teacher_Model_TeacherMapper {
      * @return array $data
      */
     private function __getDataFormObjectTeacher(Teacher_Model_Teacher $teacher) {
-
         $data['teacherId'] = $teacher->getTeacherId();
         $data['teacherName'] = $teacher->getTeacherName();
         $data['dateOfBirth'] = $teacher->getDateOfBirth();
@@ -36,8 +36,8 @@ class Teacher_Model_TeacherMapper {
         $data['phone'] = $teacher->getPhone();
         $data['address'] = $teacher->getAddress();
         $data['rule'] = $teacher->getRule();
-        if ($teacher->getAvatar())
-            $data['avatar'] = $teacher->getAvatar();
+        $data['avatar'] = $teacher->getAvatar() ? $teacher->getAvatar() :
+                realpath(APPLICATION_PATH . '/../public/images/avatar/defaultAvatar.png');
 
         return $data;
     }
@@ -66,17 +66,18 @@ class Teacher_Model_TeacherMapper {
      */
     public function save($teacher) {
         $data = $this->__getDataFormObjectTeacher($teacher);
-        $this->getDbTable()->insert($data);
+        if($this->getDbTable()->insert($data))
+            return true;
     }
-
+    
     /**
-     * 
      * @param number $id
      * @return \Teacher_Model_Teacher|boolean
      */
     public function findId($id) {
         $table = $this->getDbTable(); /* @var $table Teacher_Model_DbTable_Teacher */
         $result = $table->find($id); /* @var $result Zend_Db_Table_Rowset */
+
         if (!count($result)) {
             return false;
         }
