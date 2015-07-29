@@ -62,9 +62,9 @@ class Employee_Model_EmployeeMapper {
         if (!count($result)) {
             return false;
         }
-        $data = $result->current();
-        $student = $this->__setObjectEmployeeFromArray($data);
-        return $student;
+//        $data = $result->current();
+//        $student = $this->__setObjectEmployeeFromArray($data);
+//        return $student;
     }
 
     public function save(Employee_Model_Employee $employee) {

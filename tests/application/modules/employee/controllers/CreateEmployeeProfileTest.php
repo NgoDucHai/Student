@@ -8,6 +8,15 @@ class CreateEmployeeProfileTest extends Zend_Test_PHPUnit_ControllerTestCase {
     public function setUp() {
         $this->bootstrap = new Zend_Application(APPLICATION_ENV, APPLICATION_PATH . '/configs/application.ini');
         parent::setUp();
+        $_FILES = array(
+            'file' => array(
+                'name' => '1.png',
+                'type' => 'image/png',
+                'size' => 47566,
+                'tmp_name' => '/home/linux/Desktop/1.png',
+                'error' => 0
+            )
+        );
     }
 
     public function testWhenAccessPageCreateEmployeeThenReturnHttpCode200() {
@@ -61,25 +70,6 @@ class CreateEmployeeProfileTest extends Zend_Test_PHPUnit_ControllerTestCase {
 
         $this->assertQueryContentContains('body', "Value is required and can't be empty");
         $this->assertQueryCount('ul.help-block > li', 8);
-    }
-
-    public function testWhenPostDataThenInsertDataToDb() {
-        $request = $this->getRequest();
-        $request->setMethod('POST')
-                ->setPost([
-                    'employeeId' => rand(100000, 999999),
-                    'employeeName' => 'domanhdat',
-                    'dateOfBirth' => '1993-12-01',
-                    'gender' => 1,
-                    'facultyId' => '1',
-                    'position' => '1',
-                    'phone' => '1234567890',
-                    'address' => 'ha noi',
-                    'role' => '1'
-        ]);
-        $this->dispatch('/employee/profile/create-profile');
-
-        $this->assertRedirect();
     }
 
 }
