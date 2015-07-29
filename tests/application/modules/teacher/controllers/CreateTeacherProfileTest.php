@@ -95,7 +95,7 @@ class CreateTeacherProfileTest extends Zend_Test_PHPUnit_ControllerTestCase {
      */
     public function testSubmitWithGoodData() {
         $data = [
-            'teacherId' => '12123323221321',
+            'teacherId' => '1212332322132',
             'teacherName' => 'tetststststs',
             'dateOfBirth' => '1999/11/1',
             'gender' => '1',
@@ -117,7 +117,7 @@ class CreateTeacherProfileTest extends Zend_Test_PHPUnit_ControllerTestCase {
      * removing data after testing create teacher profile with good data
      */
     public function tearDown() {
-        $this->dispatch('/teacher/profile/delete-profile/id/12121212125');
+        $this->dispatch('/teacher/profile/delete-profile/id/1212332322132');
     }
 
 }
