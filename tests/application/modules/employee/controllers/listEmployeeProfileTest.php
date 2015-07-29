@@ -73,12 +73,12 @@ class ListEmployeeProfileTest extends Vms_Test_PHPUnit_ControllerWithDatabaseFix
 
     public function testWhenUserAccessThenExpectedTitlePageFollowIdeaOfCustomer() {
         $this->dispatch('/employee/profile/list-profile');
-        $this->assertQueryContentContains('title', 'List Employee Profile Page');
+        $this->assertQueryContentContains('title', 'Trang danh sách nhân viên');
     }
 
     public function testWhenUserAccessThenExpectedTitleContentFollowIdeaOfCustomer() {
         $this->dispatch('/employee/profile/list-profile');
-        $this->assertQueryContentContains('h1', 'List Of Employee Profile');
+        $this->assertQueryContentContains('h1', 'Danh sách thông tin cá nhân của nhân viên');
     }
 
     public function testWhenUserAccessThenExpectedContentContainsATableWithBootstrap3() {
@@ -89,24 +89,35 @@ class ListEmployeeProfileTest extends Vms_Test_PHPUnit_ControllerWithDatabaseFix
     public function testWhenUserAccessThenExpectedContentContainsATableHas12Columns() {
         $this->dispatch('/employee/profile/list-profile');
 
-        $this->assertQueryContentContains('th', 'employeeId');
-        $this->assertQueryContentContains('th', 'employeeName');
-        $this->assertQueryContentContains('th', 'dateOfBirth');
-        $this->assertQueryContentContains('th', 'gender');
-        $this->assertQueryContentContains('th', 'facultyId');
-        $this->assertQueryContentContains('th', 'position');
-        $this->assertQueryContentContains('th', 'phone');
-        $this->assertQueryContentContains('th', 'address');
-        $this->assertQueryContentContains('th', 'role');
-        $this->assertQueryContentContains('th', 'avatar');
-        $this->assertQuery('th');
-        $this->assertQuery('th');
+        $this->assertQueryContentContains('th', 'Mã khoa');
+        $this->assertQueryContentContains('th', 'Mã nhân viên');
+        $this->assertQueryContentContains('th', 'Tên nhân viên');
+        $this->assertQueryContentContains('th', 'Ngày sinh');
+        $this->assertQueryContentContains('th', 'Giới tính');
+        $this->assertQueryContentContains('th', 'Vị trí');
+        $this->assertQueryContentContains('th', 'Số điện thoại');
+        $this->assertQueryContentContains('th', 'Địa chỉ');
+        $this->assertQueryContentContains('th', 'Vai trò');
+        $this->assertQueryContentContains('th', 'Avatar');
+        $this->assertQueryContentContains('a', "Sửa");
+        $this->assertQueryContentContains('a', "Xóa");
     }
 
     public function testWhenUserAccessThenExpectedContentContains4Records() {
         $this->dispatch('/employee/profile/list-profile');
         // 4 records and 1 row is header
-        $this->assertQueryCount('tr', 5);
+        $this->assertQueryCount('tr', 4);
+        $this->assertXpath('//div[@class="col-md-12 text-center"]');
+        $this->assertXpath('//ul[@class="pagination"]');
     }
-
+    
+    public function testWhenUserAccessThenExpectedPageIsPaginatedFollowIdeaOfCustomer()
+    {
+        $this->dispatch('/employee/profile/list-profile/page/1/records/3');
+        // 4 records and 1 row is header
+        $this->assertQueryCount('tr', 3);
+        $this->assertXpath('//div[@class="col-md-12 text-center"]');
+        $this->assertXpath('//ul[@class="pagination"]');
+        $this->assertXpathContentContains('//a[@href="#"]', '1');
+    }
 }

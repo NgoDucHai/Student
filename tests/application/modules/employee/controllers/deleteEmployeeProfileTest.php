@@ -61,25 +61,28 @@ class deleteEmployeeProfileTest extends Vms_Test_PHPUnit_ControllerWithDatabaseF
         ]]);
     }
 
-    public function testWhenUserAccessThenExpectedHttpCodeIs200() {
-        $this->dispatch('/employee/profile/list-profile');
+    public function testWhenUserAccessThenExpectedHttpCodeIs302() {
+        $this->dispatch('/employee/profile/delete');
         
-        $this->assertAction('list-profile');
+        $this->assertAction('delete');
         $this->assertModule('employee');
         $this->assertController('profile');
-        $this->assertResponseCode(200);
+        $this->assertRedirectTo('/employee/profile/list-profile');
     }
     
-    public function testWhenUserAccessThenExpectedTitlePageFollowIdeaOfCustomer()
+    public function testWhenUserInputANotExistsIdThenExpectedTitlePageFollowIdeaOfCustomer()
     {
-        $this->dispatch('/employee/profile/list-profile');
-        $this->assertQueryContentContains('title', 'List Employee Profile Page');
+        $this->dispatch('/employee/profile/delete/id/1202');
+        $this->assertQueryContentContains('title', 'Trang xóa thông tin người dùng');
+        $this->assertQueryContentContains('h1', 'ID không tồn tại');
+        
     }
 
-    public function testWhenUserAccessThenExpectedTitleContentFollowIdeaOfCustomer()
+    public function testWhenUserInputAExistsIdThenRedirectThemToListProfilePage()
     {
-        $this->dispatch('/employee/profile/list-profile');
-        $this->assertQueryContentContains('h1', 'List Of Employee Profile');
+        $this->dispatch('/employee/profile/delete/id/12020535');
+        $this->assertRedirectTo('/employee/profile/list-profile');
     }
+    
     
 }

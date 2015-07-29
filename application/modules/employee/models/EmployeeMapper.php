@@ -19,7 +19,18 @@ class Employee_Model_EmployeeMapper {
      * @return array
      */
     private function __getArrayFromObjectEmployee(Employee_Model_Employee $employee) {
-        return (array) $employee;
+        $data['employeeId'] = $employee->getEmployeeId();
+        $data['employeeName'] = $employee->getEmployeeName();
+        $data['dateOfBirth'] = $employee->getDateOfBirth();
+        $data['gender'] = $employee->getGender();
+        $data['faculltyId'] = $employee->getFaculltyId();
+        $data['position'] = $employee->getPosition();
+        $data['phone'] = $employee->getPhone();
+        $data['address'] = $employee->getAddress();
+        $data['role'] = $employee->getRole();
+        $data['avatar'] = $employee->getAvatar();
+
+        return $data;
     }
 
     public function setDbTable($dbTable) {
@@ -39,15 +50,59 @@ class Employee_Model_EmployeeMapper {
      */
     public function getDbTable() {
         if (null === $this->_dbTable) {
-            $this->setDbTable('Employee_Model_Employee');
+            $this->setDbTable('Employee_Model_DbTable_Employee');
         }
         return $this->_dbTable;
     }
-    
-    public function getAllEmployeeProfiles()
+
+    /**
+     * @author Ngo Anh Long <ngoanhlong@gmail.com>
+     * Get all profiles 
+     * @return Zend_Db_Table_Rowset_Abstract
+     */
+    public function getAllProfiles() {
+        $sql = $this->getDbTable()->select();
+        $result = $this->getDbTable()->fetchAll($sql);
+        return $result;
+    }
+
+    /**
+     * @author Ngo Anh Long <ngoanhlong@gmail.com>
+     * @param int/string $id
+     * @return boolean "if id is not found"
+     * @return Zend_Db_Table_Rowset_Abstract "If id is found" 
+     */
+    public function findById($id)
     {
-        $dataRowSet = $this->getDbTable()->fetchAll();
-        
+        $rowGettedById = $this->getDbTable()->find($id);
+        $foundId = count($rowGettedById);
+        if(!$foundId)
+        {
+            return FALSE;
+        }
+        return $rowGettedById;
+    }
+    
+    /**
+     * 
+     * @param int/string $id
+     * @return int number of rows are deleted
+     */
+    public function deleteById($id)
+    {
+        $dbTable = $this->getDbTable();
+        $deleteOk = $dbTable->delete(['employeeId = ?' => $id]);
+        return $deleteOk;
+    }
+    
+    /**
+     * 
+     * @param Employee_Model_Employee $employee
+     */
+    public function save(Employee_Model_Employee $employee) {
+        $data = $this->__getArrayFromObjectEmployee($employee);
+        var_dump($data);
+        die;
     }
 
 }
