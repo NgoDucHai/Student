@@ -44,6 +44,10 @@ class Employee_Model_EmployeeMapper {
         return $this;
     }
 
+    /**
+     * 
+     * @return Zend_Db_Table
+     */
     public function getDbTable() {
         if (null === $this->_dbTable) {
             $this->setDbTable('Employee_Model_DbTable_Employee');
@@ -52,10 +56,47 @@ class Employee_Model_EmployeeMapper {
     }
 
     /**
+     * @author Ngo Anh Long <ngoanhlong@gmail.com>
+     * Get all profiles 
+     * @return Zend_Db_Table_Rowset_Abstract
+     */
+    public function getAllProfiles() {
+        $sql = $this->getDbTable()->select();
+        $result = $this->getDbTable()->fetchAll($sql);
+        return $result;
+    }
+
+    /**
+     * @author Ngo Anh Long <ngoanhlong@gmail.com>
+     * @param int/string $id
+     * @return boolean "if id is not found"
+     * @return Zend_Db_Table_Rowset_Abstract "If id is found" 
+     */
+    public function findById($id) {
+        $rowGettedById = $this->getDbTable()->find($id);
+        $foundId = count($rowGettedById);
+        if (!$foundId) {
+            return FALSE;
+        }
+        return $rowGettedById;
+    }
+
+    /**
+     * 
+     * @param int/string $id
+     * @return int number of rows are deleted
+     */
+    public function deleteById($id) {
+        $dbTable = $this->getDbTable();
+        $deleteOk = $dbTable->delete(['employeeId = ?' => $id]);
+        return $deleteOk;
+    }
+    /*
      * 
      * @param number $id
      * @return \Employee_Model_Employee|boolean
      */
+
     public function findId($id) {
         $table = $this->getDbTable(); /* @var $table Employee_Model_DbTable_Employee */
         $result = $table->find($id); /* @var $result Zend_Db_Table_Rowset */
