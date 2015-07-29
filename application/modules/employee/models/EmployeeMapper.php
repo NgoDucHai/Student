@@ -57,17 +57,6 @@ class Employee_Model_EmployeeMapper {
 
     /**
      * @author Ngo Anh Long <ngoanhlong@gmail.com>
-     * Get all profiles 
-     * @return Zend_Db_Table_Rowset_Abstract
-     */
-    public function getAllProfiles() {
-        $sql = $this->getDbTable()->select();
-        $result = $this->getDbTable()->fetchAll($sql);
-        return $result;
-    }
-
-    /**
-     * @author Ngo Anh Long <ngoanhlong@gmail.com>
      * @param int/string $id
      * @return boolean "if id is not found"
      * @return Zend_Db_Table_Rowset_Abstract "If id is found" 
@@ -91,6 +80,17 @@ class Employee_Model_EmployeeMapper {
         $deleteOk = $dbTable->delete(['employeeId = ?' => $id]);
         return $deleteOk;
     }
+    /**
+     * 
+     * @param int/string $id
+     * @return string avatar's link is stored in db
+     */
+    public function getAvatarById($id)
+    {
+        $rowResult = $this->getDbTable()->fetchRow(['employeeId = ?'=>$id]);
+        return $rowResult->avatar;
+    }
+    
     /*
      * 
      * @param number $id

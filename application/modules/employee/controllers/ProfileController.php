@@ -23,7 +23,7 @@ class Employee_ProfileController extends Zend_Controller_Action {
         /**
          * default records is 5, and default current page is 1
          */
-        $result = $mapper->getAllProfiles();
+        $result = $mapper->getDbTable()->select();
         $page = $this->_getParam('page', 1);
         $record = $this->_getParam('records', 5);
         $paginator = Zend_Paginator::factory($result);
@@ -54,8 +54,9 @@ class Employee_ProfileController extends Zend_Controller_Action {
             $this->view->deleteMessage = "ID không tồn tại";
             return;
         }
-        
+        // Delete avatar then delete profile in db
         if (FALSE !== $idExists) {
+            unlink($mapper->getAvatarById($id));
             $mapper->deleteById($id);
             $this->_helper->redirector('list-profile');
         }

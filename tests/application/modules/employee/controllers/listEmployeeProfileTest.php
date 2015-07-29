@@ -21,7 +21,7 @@ class ListEmployeeProfileTest extends Vms_Test_PHPUnit_ControllerWithDatabaseFix
                     'phone' => '01663669281',
                     'address' => 'Quang Ninh',
                     'role' => 2,
-                    'avatar' => 'no avatar',
+                    'avatar' => 'defaultAvatar.jpg',
                 ],
                 [
                     'employeeId' => '12020533',
@@ -33,7 +33,7 @@ class ListEmployeeProfileTest extends Vms_Test_PHPUnit_ControllerWithDatabaseFix
                     'phone' => '01663669281',
                     'address' => 'Hoa Binh',
                     'role' => 2,
-                    'avatar' => 'no avatar',
+                    'avatar' => 'defaultAvatar.jpg',
                 ],
                 [
                     'employeeId' => '12023232',
@@ -45,7 +45,7 @@ class ListEmployeeProfileTest extends Vms_Test_PHPUnit_ControllerWithDatabaseFix
                     'phone' => '01663669381',
                     'address' => 'Bac Giang',
                     'role' => 2,
-                    'avatar' => 'no avatar',
+                    'avatar' => 'defaultAvatar.jpg',
                 ],
                 [
                     'employeeId' => '12023262',
@@ -57,7 +57,7 @@ class ListEmployeeProfileTest extends Vms_Test_PHPUnit_ControllerWithDatabaseFix
                     'phone' => '01663669323',
                     'address' => 'Hai Phong',
                     'role' => 2,
-                    'avatar' => 'no avatar',
+                    'avatar' => 'defaultAvatar.jpg',
                 ]
         ]]);
     }
