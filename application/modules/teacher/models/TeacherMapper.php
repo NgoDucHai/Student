@@ -17,10 +17,8 @@ class Teacher_Model_TeacherMapper {
                 ->setDiploma($data->diploma)
                 ->setPhone($data->phone)
                 ->setAddress($data->address)
-
                 ->setRule($data->rule)
                 ->setAvatar($data->avatar);
-
 
     }
 
@@ -104,14 +102,15 @@ class Teacher_Model_TeacherMapper {
      * Save data from updata-profile Form into DB
      * @param Teacher_Model_Teacher $teacher
      */
-
     public function saveProfile(Teacher_Model_Teacher $teacher) {
         $table = $this->getDbTable(); /* @var $table Teacher_Model_DbTable_Teacher */
         $data = $this->__getDataFormObjectTeacher($teacher);
         if (NULL === ($id = $teacher->getTeacherId())) {
             
         } else {
-            $table->update($data, ['teacherId = ?' => $id]);
+            $rows = $table->update($data, ['teacherId = ?' => $id]);
+            $result = ($rows > 0) ? TRUE : FALSE;
+            return $result;
         }
     }
 
