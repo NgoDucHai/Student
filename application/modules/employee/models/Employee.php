@@ -6,7 +6,7 @@ class Employee_Model_Employee {
     protected $_employeeName;
     protected $_dateOfBirth;
     protected $_gender;
-    protected $_faculltyId;
+    protected $_facultyId;
     protected $_position;
     protected $_phone;
     protected $_address;
@@ -15,6 +15,8 @@ class Employee_Model_Employee {
 
     public function __construct(array $options = null) {
         if (is_array($options)) {
+//            var_dump($options);
+//            die;
             $this->setOptions($options);
         }
     }
@@ -62,8 +64,8 @@ class Employee_Model_Employee {
         return $this->_gender;
     }
 
-    public function getFaculltyId() {
-        return $this->_faculltyId;
+    public function getFacultyId() {
+        return $this->_facultyId;
     }
 
     public function getPosition() {
@@ -106,8 +108,8 @@ class Employee_Model_Employee {
         return $this;
     }
 
-    public function setFaculltyId($faculltyId) {
-        $this->_faculltyId = $faculltyId;
+    public function setFacultyId($facultyId) {
+        $this->_facultyId = $facultyId;
         return $this;
     }
 

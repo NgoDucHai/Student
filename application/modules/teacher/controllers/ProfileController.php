@@ -25,6 +25,7 @@ class Teacher_ProfileController extends Zend_Controller_Action {
 
         $teacherMapper = new Teacher_Model_TeacherMapper();
         $result = $teacherMapper->findId($id);
+        
         if (!$result) {
             $this->view->message = "Giang vien khong ton tai ";
             return;

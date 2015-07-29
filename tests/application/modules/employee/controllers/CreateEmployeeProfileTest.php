@@ -5,7 +5,7 @@
  */
 class CreateEmployeeProfileTest extends Vms_Test_PHPUnit_ControllerWithDatabaseFixturesTestCase {
 
-    protected $truncateFixturesWhenTearDown = true;
+    protected $truncateFixturesWhenTearDown = false;
 
     protected function getDataSet() {
         return new PHPUnit_Extensions_Database_DataSet_ArrayDataSet([

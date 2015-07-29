@@ -8,6 +8,10 @@ defined('APPLICATION_PATH')
 defined('APPLICATION_ENV')
     || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'testing'));
 
+// Define path upload
+defined('APPLICATION_UPLOADS_DIR')
+    || define('APPLICATION_UPLOADS_DIR', realpath(dirname(__FILE__) . '/../data/uploads'));
+
 // Ensure library/ is on include_path
 set_include_path(implode(PATH_SEPARATOR, array(
     realpath(APPLICATION_PATH . '/../library'),
