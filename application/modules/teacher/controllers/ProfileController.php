@@ -18,7 +18,7 @@ class Teacher_ProfileController extends Zend_Controller_Action {
         $this->view->headTitle('Update Profile');
         $form = new Teacher_Form_UpdateProfile();
 
-        $id = (int) $this->getParam('id', '');
+        $id = $this->getParam('id', '');
         if (!$id) {
             $this->_helper->redirector('list-profile');
         }
@@ -87,18 +87,17 @@ class Teacher_ProfileController extends Zend_Controller_Action {
         $currentPageNumber = $this->getParam('page', 1);
         $itemPerPage = $this->getParam('size', 5);
 
-        $paginator = $this->__getFactoryListTeacher($currentPageNumber, $itemPerPage);
+        $paginator = $this->__getFactoryPaginateTeacher($currentPageNumber, $itemPerPage);
 
         $this->view->listTeacher = $paginator;
     }
 
     /**
-     * 
      * @param integer $currentPageNumber
      * @param integer $itemPerPage
      * @return Zend_paginator
      */
-    private function __getFactoryListTeacher($currentPageNumber, $itemPerPage) {
+    private function __getFactoryPaginateTeacher($currentPageNumber, $itemPerPage) {
         $dbMapper = new Teacher_Model_TeacherMapper();
         return Application_Service_Paginator::factory($dbMapper, $currentPageNumber, $itemPerPage);
     }
@@ -108,58 +107,35 @@ class Teacher_ProfileController extends Zend_Controller_Action {
      */
     public function createAction() {
         $this->view->headTitle('Create teacher profile');
+
         $form = new Teacher_Form_CreateTeacherProfile();
-        $request = $this->getRequest();
-
-        if ($request->isPost()) {
-            if ($form->isValid($request->getPost())) {
-
-//begin upload avatar image
-                $adapter = new Zend_File_Transfer_Adapter_Http();
-                $uploadPath = APPLICATION_PATH . '/../public/images/avatar';
-                $adapter->setDestination($uploadPath);
-
-                if (!$adapter->receive()) {
-                    $messages = $adapter->getMessages();
-                }
-//end upload avatar image
-//begin insert data to database
-                $avatar = $adapter->getFileName();
-                $teacher = $this->__setData(new Teacher_Model_Teacher, $request, $avatar);
-                $dbMapper = new Teacher_Model_TeacherMapper();
-                if (!$dbMapper->save($teacher))
-                    $this->_helper->redirector('list-profile');
-//end insert data to database
-            }
-        }
+        $request = $this->getRequest(); /* @var $request Zend_Controller_Request_Http */
 
         $this->view->form = $form;
-    }
 
-    /**
-     * set data teacher profile
-     * @param Teacher_Model_Teacher $teacher
-     * @param Zend_Controller_Request_Abstract $request
-     * @param string $avatar
-     * @return \Teacher_Model_Teacher
-     */
-    private function __setData(Teacher_Model_Teacher $teacher, $request, $avatar) {
-        $teacher->setTeacherId($request->getParam('teacherId'))
-                ->setTeacherName($request->getParam('teacherName'))
-                ->setDateOfBirth($request->getParam('dateOfBirth'))
-                ->setGender($request->getParam('gender'))
-                ->setDiploma($request->getParam('diploma'))
-                ->setPhone($request->getParam('phone'))
-                ->setAddress($request->getParam('address'))
-                ->setRule($request->getParam('rule'))
-                ->setAvatar($avatar)
-        ;
+        if (!$request->isPost()) {
+            return;
+        }
 
-        return $teacher;
+        if (!$form->isValidPartial($request->getPost())) {
+            return;
+        }
+
+        $adapter = new Zend_File_Transfer_Adapter_Http();
+        $teacher = new Teacher_Model_Teacher($request->getPost());
+        $teacher->setAvatar($adapter->getFileName());
+
+        //if data is inserted into database successfully, image will be uploaded
+        //and page will be redirected to index teacher profile page
+        $dbMapper = new Teacher_Model_TeacherMapper();
+        if ($dbMapper->save($teacher)) {
+            $adapter->receive();
+            $this->_helper->redirector('list-profile');
+        }
     }
 
     public function deleteProfileAction() {
-        $id = (int) $this->getParam('id', '');
+        $id = $this->getParam('id', '');
         !$id ? $this->_helper->redirector('list-profile') : true;
 
         $teacherMapper = new Teacher_Model_TeacherMapper();
@@ -176,7 +152,7 @@ class Teacher_ProfileController extends Zend_Controller_Action {
     public function showProfileAction() {
 
         $this->view->headTitle("show profile of teacher");
-        $id = (int) $this->getParam('id', '');
+        $id = $this->getParam('id', '');
 
         if (!$id) {
             $this->_helper->redirector('list-profile');

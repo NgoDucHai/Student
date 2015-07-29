@@ -44,6 +44,10 @@ class Employee_Model_EmployeeMapper {
         return $this;
     }
 
+    /**
+     * 
+     * @return Zend_Db_Table
+     */
     public function getDbTable() {
         if (null === $this->_dbTable) {
             $this->setDbTable('Employee_Model_DbTable_Employee');
@@ -52,19 +56,57 @@ class Employee_Model_EmployeeMapper {
     }
 
     /**
+     * @author Ngo Anh Long <ngoanhlong@gmail.com>
+     * @param int/string $id
+     * @return boolean "if id is not found"
+     * @return Zend_Db_Table_Rowset_Abstract "If id is found" 
+     */
+    public function findById($id) {
+        $rowGettedById = $this->getDbTable()->find($id);
+        $foundId = count($rowGettedById);
+        if (!$foundId) {
+            return FALSE;
+        }
+        return $rowGettedById;
+    }
+
+    /**
+     * 
+     * @param int/string $id
+     * @return int number of rows are deleted
+     */
+    public function deleteById($id) {
+        $dbTable = $this->getDbTable();
+        $deleteOk = $dbTable->delete(['employeeId = ?' => $id]);
+        return $deleteOk;
+    }
+
+    /**
+     * 
+     * @param int/string $id
+     * @return string avatar's link is stored in db
+     */
+    public function getAvatarById($id) {
+        $rowResult = $this->getDbTable()->fetchRow(['employeeId = ?' => $id]);
+        return $rowResult->avatar;
+    }
+
+    /*
      * 
      * @param number $id
      * @return \Employee_Model_Employee|boolean
      */
+
     public function findId($id) {
         $table = $this->getDbTable(); /* @var $table Employee_Model_DbTable_Employee */
         $result = $table->find($id); /* @var $result Zend_Db_Table_Rowset */
         if (!count($result)) {
             return false;
         }
-//        $data = $result->current();
-//        $student = $this->__setObjectEmployeeFromArray($data);
-//        return $student;
+
+        $data = $result->current();
+        $student = $this->__setObjectEmployeeFromArray($data->toArray());
+        return $student;
     }
 
     public function save(Employee_Model_Employee $employee) {

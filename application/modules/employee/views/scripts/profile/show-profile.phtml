@@ -1,0 +1,44 @@
+<?php
+$employee = $this->employee;
+$employeeAvatar = $this->escape($employee->getAvatar());
+$employeeId = $this->escape($employee->getEmployeeId());
+$employeeName = $this->escape($employee->getEmployeeName());
+$employeeDateOfBirth = $this->escape($employee->getDateOfBirth());
+$employeeGender = $this->escape($employee->getGender());
+$employeeFaculty = $this->escape($employee->getFacultyId());
+$employeePosition = $this->escape($employee->getPosition());
+$employeePhone = $this->escape($employee->getPhone());
+$employeeAddress = $this->escape($employee->getAddress());
+$employeeRole = $employee->getRole();
+
+?>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Avatar</th>
+            <th>Mã nhân viên</th>
+            <th>Họ và tên</th>
+            <th>Ngày sinh</th>
+            <th>Giới tính</th>
+            <th>Khoa</th>
+            <th>Vị trí</th>
+            <th>Số điện thoại</th>
+            <th>Địa chỉ</th>
+            <th>Role</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><?=$employeeAvatar?></td>
+            <td><?=$employeeId?></td>
+            <td><?=$employeeName?></td>
+            <td><?=$employeeDateOfBirth?></td>
+            <td><?=$employeeGender?></td>
+            <td><?=$employeeFaculty?></td>
+            <td><?=$employeePosition?></td>
+            <td><?=$employeePhone?></td>
+            <td><?=$employeeAddress?></td>
+            <td><?=$employeeRole?></td>
+        </tr>
+    </tbody>
+</table>
