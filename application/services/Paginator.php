@@ -40,7 +40,8 @@ class Application_Service_Paginator {
         $paginator = Zend_Paginator::factory($select);
         $paginator->setCurrentPageNumber($currentPageNumber);
         $paginator->setItemCountPerPage($itemPerPage);
-
+        $paginator->setView();
+        
         return $paginator;
     }
 

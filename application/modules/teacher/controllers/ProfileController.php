@@ -10,6 +10,69 @@ class Teacher_ProfileController extends Zend_Controller_Action {
         
     }
 
+    /**
+     * Update profile Teacher
+     * @return type
+     */
+    public function updateProfileAction() {
+        $this->view->headTitle('Update Profile');
+        $form = new Teacher_Form_UpdateProfile();
+
+        $id = (int) $this->getParam('id', '');
+        if (!$id) {
+            $this->_helper->redirector('index');
+        }
+
+        $teacherMapper = new Teacher_Model_TeacherMapper();
+        $result = $teacherMapper->findId($id);
+        if (!$result) {
+            $this->view->message = "Giang vien khong ton tai ";
+            return;
+        }
+        $this->view->form = $form;
+        $this->_processShowForm($form, $result);
+        $this->_processUpdateFormProfile($form);
+    }
+
+    /**
+     * save infomation new into database
+     * @param Teacher_Form_UpdateProfile $form
+     * @return type
+     */
+    protected function _processUpdateFormProfile(Teacher_Form_UpdateProfile $form) {
+        $request = $this->getRequest(); /* @var $request Zend_Controller_Request_Http */
+
+        if (!$request->isPost()) {
+            return;
+        }
+
+        if (!$form->isValid($request->getPost())) {
+            return;
+        }
+
+        $teacher = new Teacher_Model_Teacher($request->getPost());
+        $teacherMapper = new Teacher_Model_TeacherMapper();
+        $teacherMapper->saveProfile($teacher);
+    }
+
+    /**
+     * display form update
+     * @param Teacher_Form_UpdateProfile $form
+     * @param Teacher_Model_Teacher $result
+     */
+    protected function _processShowForm(Teacher_Form_UpdateProfile $form, Teacher_Model_Teacher $result) {
+        $form->populate([
+            'teacherId' => $result->getTeacherId(),
+            'teacherName' => $result->getTeacherName(),
+            'dateOfBirth' => $result->getDateOfBirth(),
+            'diploma' => $result->getDiploma(),
+            'gender' => $result->getGender(),
+            'phone' => $result->getPhone(),
+            'address' => $result->getAddress(),
+            'rule' => $result->getRule()
+        ]);
+    }
+
     public function listProfileAction() {
         $this->view->headTitle('List profile teacher');
 
@@ -41,38 +104,26 @@ class Teacher_ProfileController extends Zend_Controller_Action {
         $request = $this->getRequest(); /* @var $request Zend_Controller_Request_Http */
 
         $this->view->form = $form;
-        
+
         if (!$request->isPost()) {
             return;
         }
-        
-        if (!$form->isValid($request->getPost())) {
-            var_dump($request->getPost());exit;
+
+        if (!$form->isValidPartial($request->getPost())) {
             return;
         }
-        
-        $adapter = $this->__uploadImage();
 
+        $adapter = new Zend_File_Transfer_Adapter_Http();
         $teacher = new Teacher_Model_Teacher($request->getPost());
         $teacher->setAvatar($adapter->getFileName());
 
+        //if data is inserted into database successfully, image will be uploaded
+        //and page will be redirected to index teacher profile page
         $dbMapper = new Teacher_Model_TeacherMapper();
         if ($dbMapper->save($teacher)) {
             $adapter->receive();
             $this->_helper->redirector('list-profile');
         }
-    }
-
-    /**
-     * upload avatar image 
-     * @return \Zend_File_Transfer_Adapter_Http
-     */
-    private function __uploadImage() {
-        $adapter = new Zend_File_Transfer_Adapter_Http();
-        $uploadPath = realpath(APPLICATION_PATH . '/../public/images/avatar');
-        $adapter->setDestination($uploadPath);
-
-        return $adapter;
     }
 
     public function deleteProfileAction() {
@@ -84,6 +135,29 @@ class Teacher_ProfileController extends Zend_Controller_Action {
 
         !$result ? $this->_helper->redirector('list-profile') : $teacherMapper->deleteId($id);
         $this->_helper->redirector('list-profile');
+    }
+
+    /**
+     * @author Ngo Anh Long <ngoanhlong@gmail.com>
+     * show profile of a Teacher
+     */
+    public function showProfileAction() {
+
+        $this->view->headTitle("show profile of teacher");
+        $id = (int) $this->getParam('id', '');
+
+        if (!$id) {
+            $this->_helper->redirector('list-profile');
+        }
+
+        $mapper = new Teacher_Model_TeacherMapper();
+        $result = $mapper->findId($id);
+        if (!$result) {
+            $this->view->errorMessage = "Profile not found";
+        }
+
+        $this->view->title = "Profile of teacher";
+        $this->view->profileTeacher = $result;
     }
 
 }

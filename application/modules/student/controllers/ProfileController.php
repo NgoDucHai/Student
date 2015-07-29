@@ -28,6 +28,9 @@ class Student_ProfileController extends Zend_Controller_Action {
         $this->view->student = $result;
     }
 
+    /**
+     * show list student profile paginated
+     */
     public function indexAction() {
         $this->view->headTitle('List Student');
 
@@ -35,7 +38,6 @@ class Student_ProfileController extends Zend_Controller_Action {
         $itemPerPage = $this->getParam("size", 3);
 
         $paginator = $this->__factoryPaginator($currentPageNumber, $itemPerPage);
-
         $this->view->listStudents = $paginator;
     }
 
@@ -51,16 +53,33 @@ class Student_ProfileController extends Zend_Controller_Action {
     }
 
     public function createProfileAction() {
-        $this->view->headTitle("create profile");
-        $form = new Student_Form_CreateProfile();
         /* @var $request Zend_Controller_Request_Http */
+        $this->view->headTitle("create profile");
+        $form = new Student_Form_CreateStudentProfile();
         $request = $this->getRequest();
-        if ($request->isPost()) {
-            if ($form->isValid($request->getPost())) {
-                echo "Ok you done";
-            }
-        }
+        // Get handle request or post invalid profile then show profile form
         $this->view->form = $form;
+        $userVisitCreateProfilePage = !$request->isPost();
+        if ($userVisitCreateProfilePage) {
+            return; //Render profile form now
+        }
+        //Post handler request:
+        $userPostInvalidProfile = !$form->isValid($request->getPost());
+        if ($userPostInvalidProfile) {
+            return; //Render profile form with error messages now
+        }
+        $profileUser = $request->getPost();
+        $mapper = new Student_Model_StudentMapper();
+
+        if (FALSE === $mapper->findId($profileUser['studentId'])) {
+            $studentObj = new Student_Model_Student($profileUser);
+            $mapper->save($studentObj);
+            $this->view->message = "Ok you've created a User";
+
+            return;
+        }
+
+        $this->view->message = "Your studentId is Exists";
     }
 
     public function updateProfileAction() {

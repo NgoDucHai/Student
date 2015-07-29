@@ -1,0 +1,48 @@
+<?php
+/* @var $this Zend_View */
+/* @var $profileTeacher Teacher_Model_Teacher */
+echo $this->headTitle();
+
+if (isset($this->errorMessage)):
+    echo "<h2>" . $this->errorMessage . "</h2>";
+    return;
+endif;
+echo "<h1>" . $this->title . "</h1>";
+$profileTeacher = $this->profileTeacher;
+?>
+<table>
+    <tbody>
+        <tr>
+            <td>Teacher ID: </td>
+            <td><?= $this->escape($profileTeacher->getTeacherId()); ?></td>
+        </tr>
+        <tr>
+            <td>Teacher Name: </td>
+            <td><?php echo $this->escape($profileTeacher->getTeacherName()); ?></td>
+        </tr>
+        <tr>
+            <td>Address : </td>
+            <td><?php echo $this->escape($profileTeacher->getAddress()); ?></td>
+        </tr>
+        <tr>
+            <td>Date of Birth : </td>
+            <td><?php echo $this->escape($profileTeacher->getDateOfBirth()); ?></td>
+        </tr>
+        <tr>
+            <td>Diploma : </td>
+            <td><?php echo $this->escape($profileTeacher->getDiploma()); ?></td>
+        </tr>
+        <tr>
+            <td>Gender : </td>
+            <td><?php echo $this->escape($profileTeacher->getGender()); ?></td>
+        </tr>
+        <tr>
+            <td>Phone : </td>
+            <td><?php echo $this->escape($profileTeacher->getPhone()); ?></td>
+        </tr>
+        <tr>
+            <td>Rule : </td>
+            <td><?php echo $this->escape($profileTeacher->getRule()); ?></td>
+        </tr>
+    </tbody>
+</table>

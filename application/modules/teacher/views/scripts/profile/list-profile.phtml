@@ -2,14 +2,20 @@
 /* @var $this Zend_View */
 
 echo $this->headTitle();
-
+$urlCreate = $this->url(['module' => 'teacher',
+    'controller' => 'profile', 'action' => 'create']);
+?>
+<div class="col-md-12 text-right">
+    <a class="btn btn-primary" href="<?= $urlCreate ?>">Create profile</a>
+</div>
+<?php
 if (!count($this->listTeacher)):
     echo "<h2>Page not found</h2>";
     return;
 endif;
 ?>
 
-<table>
+<table class="table table-hover">
     <thead>
         <tr>
             <th>Stt</th>
@@ -21,14 +27,22 @@ endif;
             <th>Trình độ</th>
             <th>Số điện thoại</th>
             <th>Địa chỉ</th>
-            <th>Hành động</th>
+            <th colspan="3">Hành động</th>
         </tr>
     </thead>
     <tbody>
         <?php foreach ($this->listTeacher as $stt => $teacher): ?> 
+            <?php
+            $urlView = $this->url(['module' => 'teacher', 'controller' => 'profile',
+                'action' => 'show-profile', 'id' => $teacher->teacherId]);
+            $urlUpdate = $this->url(['module' => 'teacher', 'controller' => 'profile',
+                'action' => 'update-profile', 'id' => $teacher->teacherId]);
+            $urlDelete = $this->url(['module' => 'teacher', 'controller' => 'profile',
+                'action' => 'delete-profile', 'id' => $teacher->teacherId]);
+            ?>
             <tr>
-                <td><?= $stt ?></td>
-                <td><?= $this->escape($teacher->avatar) ?></td>
+                <td><?= ++$stt ?></td>
+                <td><img src="<?= $this->escape($teacher->avatar) ?>"></td>
                 <td><?= $this->escape($teacher->teacherId) ?></td>
                 <td><?= $this->escape($teacher->teacherName) ?></td>
                 <td><?= $this->escape($teacher->dateOfBirth) ?></td>
@@ -36,10 +50,27 @@ endif;
                 <td><?= $this->escape($teacher->diploma) ?></td>
                 <td><?= $this->escape($teacher->phone) ?></td>
                 <td><?= $this->escape($teacher->address) ?></td>
-                <td>Edit</td>
+                <td>
+                    <a href="<?= $urlView ?>">
+                        <span class="text-warning">View</span>
+                    </a>
+                </td>
+                <td>
+                    <a href="<?= $urlUpdate ?>">
+                        <span class="text-warning">Update</span>
+                    </a>
+                </td>
+                <td>
+                    <a href="<?= $urlDelete ?>">
+                        <span class="text-danger">Delete</span>
+                    </a>
+                </td>
             </tr>
         <?php endforeach; ?>
     </tbody>
 </table> 
-<?= $this->paginationControl($this->listTeacher, 'Sliding', '/profile/paginator.phtml') ?>
-
+<div class="col-md-12 text-center">
+    <ul class="pagination">
+        <?= $this->paginationControl($this->listTeacher) ?>
+    </ul>
+</div>

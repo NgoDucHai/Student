@@ -1,26 +1,28 @@
 <?php
 
 /**
- * create form create teacher profile
+ * @author haingo
+ *  + input teacherName: chỉ chứa chữ, viết hoa chữ cái đầu, khoảng cách giữa các chữ là 1 dấu cách,
+  maxlength = 50, min =6.
+  + file teacherAvatar: không bắt buộc
+  + input teacherId: chỉ chứa số, length=8.[readonly]
+  + select teacherGender:
+  + input teacherDateOfBirthDay:
+  + input teacherDiploma: số
+  + input teacherPhone: số
+  + textarea teacherAddress: max:150
+  + select teacherRule: số
  */
-class Teacher_Form_CreateTeacherProfile extends Twitter_Bootstrap3_Form_Horizontal {
+class Teacher_Form_UpdateProfile extends Twitter_Bootstrap3_Form_Horizontal {
 
     public function init() {
-        //set action, method id form
 
-        $this->setMethod('post');
+        $this->setMethod('POST')
+                ->setAttrib('id', 'update-profile');
 
-        $this->setAction('/teacher/profile/create')
-                ->setMethod('post')
-                ->setAttribs([
-                    'id' => 'createTeacherProfile',
-                    'enctype' => "multipart/form-data"
-                ])
-        ;
-
-        //create teacherId element
-        $this->addElement('text', 'teacherId', [
+        $this->addElement('text','teacherId', [
             'label' => "Mã giảng viên",
+            'readonly' => true,
             'required' => true,
             'validators' => [
                 [
@@ -40,7 +42,7 @@ class Teacher_Form_CreateTeacherProfile extends Twitter_Bootstrap3_Form_Horizont
             ]
         ]);
 
-        //create teacherName element
+
         $this->addElement('text', 'teacherName', [
             'label' => "Họ và tên",
             'required' => true,
@@ -48,23 +50,20 @@ class Teacher_Form_CreateTeacherProfile extends Twitter_Bootstrap3_Form_Horizont
                 [
                     'NotEmpty', true, [
                         "messages" => [
-                            'isEmpty' => 'Bạn cần nhập tên giảng viên'
+                            'isEmpty' => 'Bạn cần nhập họ tên cho giảng viên'
                         ]
                     ]
                 ],
                 [
                     'Alpha', true, [
-
-                        'allowWhiteSpace' => true,
                         'messages' => [
-                            'notAlpha' => 'Tên giảng viên chứa kí tự đặc biệt'
+                            'notAlpha' => 'Tên giảng viên chỉ chứa chữ'
                         ]
                     ]
                 ]
             ]
         ]);
 
-        //create dateOfBirth element
         $this->addElement('text', 'dateOfBirth', [
             'placeholder' => 'yyyy/mm/dd',
             'label' => "Ngày sinh",
@@ -111,8 +110,8 @@ class Teacher_Form_CreateTeacherProfile extends Twitter_Bootstrap3_Form_Horizont
                 ]
             ]
         ]);
-
         //create phone element
+        $dit = new Zend_Validate_Digits();
         $this->addElement('text', 'phone', [
             'label' => "Số điện thoại",
             'required' => true,
@@ -146,8 +145,9 @@ class Teacher_Form_CreateTeacherProfile extends Twitter_Bootstrap3_Form_Horizont
         ]);
 
         //create address element
-        $this->addElement('text', 'address', [
+        $this->addElement('textarea', 'address', [
             'label' => "Địa chỉ",
+            'rows' => 5,
             'required' => true,
             'validators' => [
                 [
@@ -159,26 +159,24 @@ class Teacher_Form_CreateTeacherProfile extends Twitter_Bootstrap3_Form_Horizont
                 ]
             ]
         ]);
-
         //create rule element
         $this->addElement('select', 'rule', [
             'label' => "Phân quyền",
             'multiOptions' => [
-                '1' => 'Quản trị'
+                '1' => 'Khoa',
+                '2' => 'Giảng viên',
+                '3' => 'Sinh viên'
             ]
         ]);
 
-//        $file = new Zend_Validate_File_IsImage();
-        //create avatar element
-        $this->addElement('file', 'avatar', [
-            'label' => "Avatar",
-            'destination' => realpath(APPLICATION_PATH . '/../public/images/avatar'),
-            'required' => true
+        //create avata element
+        $this->addElement('file', 'avata', [
+            'label' => "Avatar"
         ]);
 
         //create button create element
-        $this->addElement('submit', 'create', [
-            'class' => 'btn btn-primary'
+        $this->addElement('submit', 'Update', [
+            'class' => 'btn'
         ]);
     }
 

@@ -3,45 +3,58 @@
 /**
  * @author domanhdat
  */
-class Student_Form_UpdateProfile extends Zend_Form {
+class Student_Form_UpdateProfile extends Twitter_Bootstrap3_Form_Horizontal {
 
     public function init() {
+        
         $this->setMethod('POST')->setAttrib('id', 'update-profile');
+        
+        $this->addElement('hidden', 'id');
 
-        $id = new Zend_Form_Element_Hidden('id');
-
-        $studentId = new Zend_Form_Element_Text('studentId');
-        $studentId->setAttrib('readonly', 'true')
-                ->setLabel('Mã sinh viên');
-
-        $studentName = new Zend_Form_Element_Text('studentName');
-        $studentName->setLabel('Họ và tên');
-        $studentName->setRequired();
-        $validateOfStudentName = new Zend_Validate_NotEmpty();
-        $validateOfStudentName->setMessage('khong de trong', Zend_Validate_NotEmpty::IS_EMPTY);
-        $studentName->addValidator($validateOfStudentName);
-
-        $dateOfBirth = new Zend_Form_Element_Text('dateOfBirth');
-        $dateOfBirth->setLabel('Ngày sinh')->setRequired();
-
-        $gender = new Zend_Form_Element_Select('gender');
-        $gender->setLabel('Giới tính')->setRequired();
-        $gender->addMultiOptions([
-            '1' => 'Nam',
-            '0' => 'Nữ'
+        $this->addElement('text', 'studentId', [
+            'readonly' => true,
+            'label' => 'Mã sinh viên'
         ]);
-        $gender->setValue('1');
 
-        $phone = new Zend_Form_Element_Text('phone');
-        $phone->setLabel('Số điện thoại')->setRequired();
+        $this->addElement('text', 'studentName', [
+            'label' => 'Họ và tên',
+            'required' => true,
+            'validator' => ['NotEmpty', true],
+        ]);
 
-        $address = new Zend_Form_Element_Textarea('address');
-        $address->setLabel('Địa chỉ')->setRequired();
+        $this->addElement('date', 'dateOfBirth', [
+            'label' => 'Ngày sinh',
+            'required' => true,
+            'validators' => [
+                ['Date', true]
+            ]
+        ]);
 
-        $submit = new Zend_Form_Element_Submit('submit');
+        $this->addElement('select', 'gender', [
+            'label' => 'Giới tính',
+            'multiOptions' => [
+                '1' => 'Nam',
+                '0' => 'Nữ'
+            ],
+            'value' => '1'
+        ]);
 
-        $this->addElements([$id, $studentId, $studentName,
-            $dateOfBirth, $gender, $phone, $address, $submit]);
+        $this->addElement('number', 'phone', [
+            'label' => 'Số điện thoại',
+            'required' => true,
+            'validators' => [
+                [new Zend_Validate_StringLength(['min' => 10, 'max' => 12]), true]
+            ]
+        ]);
+
+        $this->addElement('textarea', 'address', [
+            'label' => 'Địa chỉ',
+            'required' => true,
+            'rows' => 5,
+            'filter' => 'Alnum'
+        ]);
+
+        $this->addElement('submit', 'submit');
     }
 
 }

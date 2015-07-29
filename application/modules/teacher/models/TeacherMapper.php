@@ -9,7 +9,7 @@ class Teacher_Model_TeacherMapper {
      * @param Teacher_Model_Teacher $teacher
      * @param array $data
      */
-    private function __setObjectStudentFromArray(Teacher_Model_Teacher $teacher, $data) {
+    private function __setObjectTeacherFromArray(Teacher_Model_Teacher $teacher, $data) {
         $teacher->setTeacherId($data->teacherId)
                 ->setTeacherName($data->teacherName)
                 ->setDateOfBirth($data->dateOfBirth)
@@ -17,8 +17,11 @@ class Teacher_Model_TeacherMapper {
                 ->setDiploma($data->diploma)
                 ->setPhone($data->phone)
                 ->setAddress($data->address)
+
                 ->setRule($data->rule)
                 ->setAvatar($data->avatar);
+
+
     }
 
     /**
@@ -27,7 +30,6 @@ class Teacher_Model_TeacherMapper {
      * @return array $data
      */
     private function __getDataFormObjectTeacher(Teacher_Model_Teacher $teacher) {
-//        $teacher = new Teacher_Model_Teacher();
         $data['teacherId'] = $teacher->getTeacherId();
         $data['teacherName'] = $teacher->getTeacherName();
         $data['dateOfBirth'] = $teacher->getDateOfBirth();
@@ -69,7 +71,7 @@ class Teacher_Model_TeacherMapper {
         if($this->getDbTable()->insert($data))
             return true;
     }
-
+    
     /**
      * @param number $id
      * @return \Teacher_Model_Teacher|boolean
@@ -77,13 +79,13 @@ class Teacher_Model_TeacherMapper {
     public function findId($id) {
         $table = $this->getDbTable(); /* @var $table Teacher_Model_DbTable_Teacher */
         $result = $table->find($id); /* @var $result Zend_Db_Table_Rowset */
-        if (count($result) == 0) {
+        if (!count($result)) {
             return false;
         }
         $data = $result->current();
-        $student = new Teacher_Model_Teacher();
-        $this->__setObjectStudentFromArray($student, $data);
-        return $student;
+        $teacher = new Teacher_Model_Teacher();
+        $this->__setObjectTeacherFromArray($teacher, $data);
+        return $teacher;
     }
 
     /**
@@ -96,6 +98,21 @@ class Teacher_Model_TeacherMapper {
         $result = $table->delete(['teacherId = ?' => $id]);
 
         return count($result) ? true : false;
+    }
+
+    /**
+     * Save data from updata-profile Form into DB
+     * @param Teacher_Model_Teacher $teacher
+     */
+
+    public function saveProfile(Teacher_Model_Teacher $teacher) {
+        $table = $this->getDbTable(); /* @var $table Teacher_Model_DbTable_Teacher */
+        $data = $this->__getDataFormObjectTeacher($teacher);
+        if (NULL === ($id = $teacher->getTeacherId())) {
+            
+        } else {
+            $table->update($data, ['teacherId = ?' => $id]);
+        }
     }
 
 }

@@ -30,7 +30,7 @@ class ShowProfileActionTest extends Vms_Test_PHPUnit_ControllerWithDatabaseFixtu
         $this->assertResponseCode(200);
     }
 
-    public function testCallWithoutActionShouldPullFromIndexActionDefault() {
+    public function testCallWithoutActionShouldPullFromStudentProfileShow() {
         $this->dispatch('student/profile/show-profile');
 
         $this->assertModule('student');
