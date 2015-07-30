@@ -49,12 +49,10 @@ class Employee_Form_CreateProfile extends Twitter_Bootstrap3_Form_Horizontal {
             'required' => true
         ]);
 
+
         $this->addElement('select', 'facultyId', [
             'label' => 'Khoa',
-            'multiOptions' => [
-                '' => 'Chọn khoa',
-                '1' => 'CNTT'
-            ],
+            'multiOptions' => $this->__getDataFaculty(),
             'value' => '',
             'required' => true,
             'validators' => [
@@ -115,6 +113,20 @@ class Employee_Form_CreateProfile extends Twitter_Bootstrap3_Form_Horizontal {
         ]);
 
         $this->addElement('submit', 'submit');
+    }
+
+    private function __getDataFaculty() {
+        $facultyMapper = new Application_Model_FacultyMapper();
+        $listFaculty = $facultyMapper->fetchAll()->toArray();
+
+        $data[''] = 'Chọn khoa';
+        if ($listFaculty) {
+            foreach ($listFaculty as $faculty):
+                $data[$faculty['facultyId']] = $faculty['facultyName'];
+            endforeach;
+        }
+        
+        return $data;
     }
 
 }

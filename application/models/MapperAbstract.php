@@ -4,7 +4,7 @@
  *
  * @author domanhdat
  */
-class Application_Model_Mapper_Abstract {
+class Application_Model_MapperAbstract {
 
     protected $_dbTable;
 
@@ -21,7 +21,7 @@ class Application_Model_Mapper_Abstract {
 
     public function getDbTable() {
         if (null === $this->_dbTable) {
-            throw new Exception('You are could not set Dbtable');
+            return False;
         }
         return $this->_dbTable;
     }
