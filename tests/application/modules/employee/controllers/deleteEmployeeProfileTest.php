@@ -5,7 +5,7 @@
  */
 class deleteEmployeeProfileTest extends Vms_Test_PHPUnit_ControllerWithDatabaseFixturesTestCase {
 
-    protected $truncateFixturesWhenTearDown = true;
+    protected $truncateFixturesWhenTearDown = false;
 
     protected function getDataSet() {
 

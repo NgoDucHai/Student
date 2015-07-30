@@ -1,6 +1,6 @@
 <?php
 
-class Employee_Model_Employee {
+class Employee_Model_Employee extends Application_Model_Abstract {
 
     protected $_employeeId;
     protected $_employeeName;
@@ -12,47 +12,13 @@ class Employee_Model_Employee {
     protected $_address;
     protected $_role;
     protected $_avatar;
-    
+
 //    public function __construct($option){
 //        var_dump($option);die;
 //    }
 //    
-    
-    public function __construct(array $options = null) {
-        
-        if (is_array($options)) {
-//            var_dump($options);
-//            die;
-            $this->setOptions($options);
-        }
-    }
 
-    public function __set($name, $value) {
-        $method = 'set' . $name;
-        if (('mapper' == $name) || !method_exists($this, $method)) {
-            throw new Exception('Invalid guestbook property');
-        }
-        $this->$method($value);
-    }
 
-    public function __get($name) {
-        $method = 'get' . $name;
-        if (('mapper' == $name) || !method_exists($this, $method)) {
-            throw new Exception('Invalid guestbook property');
-        }
-        return $this->$method();
-    }
-
-    public function setOptions(array $options) {
-        $methods = get_class_methods($this);
-        foreach ($options as $key => $value) {
-            $method = 'set' . ucfirst($key);
-            if (in_array($method, $methods)) {
-                $this->$method($value);
-            }
-        }
-        return $this;
-    }
 
     public function getEmployeeId() {
         return $this->_employeeId;

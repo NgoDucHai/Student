@@ -1,8 +1,12 @@
 <?php
 
-class Teacher_Model_TeacherMapper {
+class Teacher_Model_TeacherMapper extends Application_Model_MapperAbstract{
 
-    protected $_dbTable;
+    public function __construct() {
+        if ($this->getDbTable() === False) {
+            $this->setDbTable('Teacher_Model_DbTable_Teacher');
+        }
+    }
 
     /**
      * lay du lieu tu mang 1 chieu va gan cho object
@@ -42,23 +46,7 @@ class Teacher_Model_TeacherMapper {
         return $data;
     }
 
-    public function setDbTable($dbTable) {
-        if (is_string($dbTable)) {
-            $dbTable = new $dbTable();
-        }
-        if (!$dbTable instanceof Zend_Db_Table_Abstract) {
-            throw new Exception('Invalid table data gateway provided');
-        }
-        $this->_dbTable = $dbTable;
-        return $this;
-    }
-
-    public function getDbTable() {
-        if (null === $this->_dbTable) {
-            $this->setDbTable('Teacher_Model_DbTable_Teacher');
-        }
-        return $this->_dbTable;
-    }
+   
 
     /**
      * insert teacher profile

@@ -1,6 +1,6 @@
 <?php
 
-class Teacher_Model_Teacher {
+class Teacher_Model_Teacher extends Application_Model_Abstract{
 
     protected $_teacherId;
     protected $_teacherName;
@@ -18,33 +18,7 @@ class Teacher_Model_Teacher {
         }
     }
 
-    public function __set($name, $value) {
-        $method = 'set' . $name;
-        if (('mapper' == $name) || !method_exists($this, $method)) {
-            throw new Exception('Invalid guestbook property');
-        }
-        $this->$method($value);
-    }
-
-    public function __get($name) {
-        $method = 'get' . $name;
-        if (('mapper' == $name) || !method_exists($this, $method)) {
-            throw new Exception('Invalid guestbook property');
-        }
-        return $this->$method();
-    }
-
-    public function setOptions(array $options) {
-        $methods = get_class_methods($this);
-        foreach ($options as $key => $value) {
-            $method = 'set' . ucfirst($key);
-            if (in_array($method, $methods)) {
-                $this->$method($value);
-            }
-        }
-        return $this;
-    }
-
+   
     public function getTeacherId() {
         return $this->_teacherId;
     }
