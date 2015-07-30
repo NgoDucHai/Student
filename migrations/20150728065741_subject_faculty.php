@@ -13,7 +13,7 @@ class SubjectFaculty extends AbstractMigration {
      * 4 normal columns:  subjectName(Ten mon hoc), numberOfUnit(so tin chi), semesterId(maHocKi), priceOfUnit(gia 1 tinchi)
      */
     public function change() {
-        $table = $this->table('subjectFaculty', ['id' => false, 'primary_key' => ['subjectId', 'facultyId']]);
+        $table = $this->table('subject', ['id' => false, 'primary_key' => ['subjectId', 'facultyId']]);
         $table->addColumn('subjectId', 'string', ['limit' => 25])
                 ->addColumn('facultyId', 'string', ['limit' => 25])
                 ->addColumn('subjectName', 'string', ['limit' => 50])
