@@ -62,10 +62,7 @@ class Employee_Form_CreateProfile extends Twitter_Bootstrap3_Form_Horizontal {
 
         $this->addElement('select', 'position', [
             'label' => 'Chức danh',
-            'multiOptions' => [
-                '' => 'Chọn chức danh',
-                '1' => 'Trưởng phòng'
-            ],
+            'multiOptions' => $this->__getDataPosition(),
             'value' => '',
             'required' => true,
             'validators' => [
@@ -125,7 +122,24 @@ class Employee_Form_CreateProfile extends Twitter_Bootstrap3_Form_Horizontal {
                 $data[$faculty['facultyId']] = $faculty['facultyName'];
             endforeach;
         }
-        
+
+        return $data;
+    }
+    
+    /**
+     * @return array contain list employee's position
+     */
+    private function __getDataPosition() {
+        $positionMapper = new Application_Model_PositionMapper();
+        $listPosition = $positionMapper->fetchAll();
+
+        $data[''] = 'Chọn chức vụ';
+        if ($listPosition) {
+            foreach ($listPosition as $position):
+                $data[$position->positionId] = $position->roleName;
+            endforeach;
+        }
+
         return $data;
     }
 
