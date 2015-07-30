@@ -12,7 +12,7 @@ class Student_ProfileController extends Zend_Controller_Action {
      */
     public function showProfileAction() {
         $this->view->headTitle('Show Profile');
-
+        
         //kiem tra id tu request
         $id = $this->getParam("id", '');
         if ($id == '') {

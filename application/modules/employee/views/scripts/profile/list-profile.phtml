@@ -1,0 +1,63 @@
+<?php /* @var $this Zend_View*/ ?>
+<?php /* @var $profile Employee_Model_Employee*/?>
+<?php echo $this->headTitle();?>
+<?php if(!count($this->paginator)):
+    echo "<h1 class='text-center'>Empty profile list</h1>";
+    return;
+endif;
+?>
+<h1><?php echo $this->titleContent;?></h1>
+
+<table class="table table-hover">
+    <th>Avatar</th>
+    <th>Mã khoa</th>
+    <th>Mã nhân viên</th>
+    <th>Tên nhân viên</th>
+    <th>Ngày sinh</th>
+    <th>Giới tính</th>
+    <th>Vị trí</th>
+    <th>Số điện thoại</th>
+    <th>Địa chỉ</th>
+    <th>Vai trò</th>
+    
+    <th></th>
+    <th></th>
+    <?php $paginator = $this->paginator; ?>
+    <?php foreach ($paginator as $profile):?>
+    <tr>
+        <td><img src="<?= $this->baseUrl('/images/avatar/'.$profile->avatar);?>" class="img-responsive" alt="avatar" width="40" height="40"></td>
+        <td><?php echo $this->escape($profile->facultyId);?></td>
+        <td><?php echo $this->escape($profile->employeeId);?></td>
+        <td><?php echo $this->escape($profile->employeeName);?></td>
+        <td><?php echo $this->escape($profile->dateOfBirth);?></td>
+        <td><?php echo $this->escape($profile->gender);?></td>
+        <td><?php echo $this->escape($profile->position);?></td>
+        <td><?php echo $this->escape($profile->phone);?></td>
+        <td><?php echo $this->escape($profile->address);?></td>
+        <td><?php echo $this->escape($profile->role);?></td>
+        
+        <?php $urlUpdate = $this->url([
+            'action' => 'update-profile',
+            'controller' => 'profile',
+            'module' => 'employee',
+            'id' => $profile->employeeId
+        ]);?> 
+        <?php $urlDelete = $this->url([
+            'action' => 'delete',
+            'controller' => 'profile',
+            'module' => 'employee',
+            'id' => $profile->employeeId
+        ]);?>
+        <td><a class="btn btn-warning" href="<?php echo $urlUpdate?>">Sửa</a></td>
+        <td><a class="btn btn-danger" href="<?php echo $urlDelete?>">Xóa</a></td>
+    </tr>
+    <?php endforeach;?>
+    
+    
+</table>
+
+<div class="col-md-12 text-center">
+    <ul class="pagination">
+        <?= $this->paginationControl($this->paginator); ?>
+    </ul>
+</div>

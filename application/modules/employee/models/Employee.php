@@ -12,8 +12,14 @@ class Employee_Model_Employee {
     protected $_address;
     protected $_role;
     protected $_avatar;
-
+    
+//    public function __construct($option){
+//        var_dump($option);die;
+//    }
+//    
+    
     public function __construct(array $options = null) {
+        
         if (is_array($options)) {
 //            var_dump($options);
 //            die;

@@ -7,17 +7,16 @@ class Teacher_Form_CreateTeacherProfile extends Twitter_Bootstrap3_Form_Horizont
 
     public function init() {
         //set action, method id form
+
+        $this->setMethod('post');
+
         $this->setAction('/teacher/profile/create')
                 ->setMethod('post')
                 ->setAttribs([
                     'id' => 'createTeacherProfile',
-                    'enctype' => "multipart / form-data"
+                    'enctype' => "multipart/form-data"
                 ])
         ;
-
-        $this->addElement('hidden', 'MAX_FILE_SIZE', [
-            'value' => 100000
-        ]);
 
         //create teacherId element
         $this->addElement('text', 'teacherId', [
@@ -55,6 +54,8 @@ class Teacher_Form_CreateTeacherProfile extends Twitter_Bootstrap3_Form_Horizont
                 ],
                 [
                     'Alpha', true, [
+
+                        'allowWhiteSpace' => true,
                         'messages' => [
                             'notAlpha' => 'Tên giảng viên chứa kí tự đặc biệt'
                         ]
@@ -110,8 +111,8 @@ class Teacher_Form_CreateTeacherProfile extends Twitter_Bootstrap3_Form_Horizont
                 ]
             ]
         ]);
+
         //create phone element
-        $dit = new Zend_Validate_Digits();
         $this->addElement('text', 'phone', [
             'label' => "Số điện thoại",
             'required' => true,
@@ -158,6 +159,7 @@ class Teacher_Form_CreateTeacherProfile extends Twitter_Bootstrap3_Form_Horizont
                 ]
             ]
         ]);
+
         //create rule element
         $this->addElement('select', 'rule', [
             'label' => "Phân quyền",
@@ -166,9 +168,12 @@ class Teacher_Form_CreateTeacherProfile extends Twitter_Bootstrap3_Form_Horizont
             ]
         ]);
 
-        //create avata element
-        $this->addElement('file', 'avata', [
-            'label' => "Avatar"
+//        $file = new Zend_Validate_File_IsImage();
+        //create avatar element
+        $this->addElement('file', 'avatar', [
+            'label' => "Avatar",
+            'destination' => realpath(APPLICATION_PATH . '/../public/images/avatar'),
+            'required' => true
         ]);
 
         //create button create element
