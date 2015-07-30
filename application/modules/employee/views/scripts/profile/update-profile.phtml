@@ -1,0 +1,15 @@
+<?php
+/* @var $this Zend_View */
+
+echo $this->headTitle();
+
+if (isset($this->message)) {
+    echo $this->message;
+}
+?>
+<img src='<?= $this->baseUrl('images/avatar/' . $this->fileName) ?>'  
+     alt="Avatar view" style="width:200px;height:200px;border:75px;
+     margin: 10px 250px;"/>
+<?php
+echo $this->form;
+?>

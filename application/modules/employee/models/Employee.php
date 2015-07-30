@@ -21,6 +21,8 @@ class Employee_Model_Employee {
     public function __construct(array $options = null) {
         
         if (is_array($options)) {
+//            var_dump($options);
+//            die;
             $this->setOptions($options);
         }
     }

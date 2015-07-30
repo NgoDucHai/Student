@@ -9,20 +9,23 @@ class Employee_Form_CreateProfile extends Twitter_Bootstrap3_Form_Horizontal {
     public function init() {
         $this->setMethod('POST');
         $this->setAttrib('id', 'create-profile');
+        $this->setEnctype('multipart/form-data');
 
         $this->addElement('text', 'employeeId', [
             'label' => 'Mã nhân viên',
             'required' => true,
             'validators' => [
-                ['NotEmpty', true]
+                ['NotEmpty', true],
+                ['Digits', true]
             ],
         ]);
-
+        new Zend_Validate_Alpha();
         $this->addElement('text', 'employeeName', [
             'label' => 'Tên nhân viên',
             'required' => true,
             'validators' => [
-                ['NotEmpty', true]
+                ['NotEmpty', true],
+                ['Alpha', true, ['allowWhiteSpace' => true]]
             ],
         ]);
 
@@ -77,6 +80,7 @@ class Employee_Form_CreateProfile extends Twitter_Bootstrap3_Form_Horizontal {
             'required' => true,
             'validators' => [
                 ['NotEmpty', true],
+                ['Digits', true],
                 [new Zend_Validate_StringLength(['min' => 10, 'max' => 12]), true]
             ]
         ]);
@@ -103,6 +107,11 @@ class Employee_Form_CreateProfile extends Twitter_Bootstrap3_Form_Horizontal {
 
         $this->addElement('file', 'avatar', [
             'label' => 'Ảnh đại diện',
+            'required' => true,
+            'validators' => [
+                ['ExcludeMimeType', true, 'image/png,image/jpeg,image/gif'],
+                ['FilesSize', true, ['min' => 0, 'max' => '4MB']]
+            ]
         ]);
 
         $this->addElement('submit', 'submit');

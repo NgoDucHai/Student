@@ -13,6 +13,19 @@ class Employee_Model_EmployeeMapper {
         return new Employee_Model_Employee($data);
     }
 
+    private function __setConvertObjectEmployeeFromArray(Employee_Model_Employee $employee, $data) {
+        $employee->setEmployeeId($data->employeeId)
+                ->setEmployeeName($data->employeeName)
+                ->setDateOfBirth($data->dateOfBirth)
+                ->setGender($data->gender)
+                ->setFacultyId($data->facultyId)
+                ->setPosition($data->position)
+                ->setPhone($data->phone)
+                ->setAddress($data->address)
+                ->setRole($data->role)
+                ->setAvatar($data->avatar);
+    }
+
     /**
      * lay du lieu tu object tra ve mot mang
      * @param Employee_Model_Employee $employee
@@ -56,6 +69,43 @@ class Employee_Model_EmployeeMapper {
     }
 
     /**
+     * Find in Db Id If have Id then return information
+     * @param type $id
+     * @return boolean|\Employee_Model_Employee
+     */
+    public function findId($id) {
+        $table = $this->getDbTable(); /* @var $table Employee_Model_DbTable_Employee */
+        $result = $table->find($id); /* @var $result Zend_Db_Table_Rowset */
+//        var_dump(count($result));
+//        die;
+        if (!count($result)) {
+            return false;
+        }
+        $data = $result->current();
+
+        $employee = new Employee_Model_Employee();
+        $this->__setConvertObjectEmployeeFromArray($employee, $data);
+        return $employee;
+    }
+
+    /**
+     * Save information into DB
+     * @param Employee_Model_Employee $employee
+     * @return boolean
+     */
+    public function saveProfile(Employee_Model_Employee $employee) {
+        $table = $this->getDbTable(); /* @var $table Employee_Model_DbTable_Employee */
+        $data = $this->__getArrayFromObjectEmployee($employee);
+        if (NULL === ($id = $employee->getEmployeeId())) {
+            
+        } else {
+            $rows = $table->update($data, ['employeeId = ?' => $id]);
+            $result = ($rows > 0) ? TRUE : FALSE;
+            return $result;
+        }
+    }
+
+    /**
      * @author Ngo Anh Long <ngoanhlong@gmail.com>
      * @param int/string $id
      * @return boolean "if id is not found"
@@ -80,35 +130,18 @@ class Employee_Model_EmployeeMapper {
         $deleteOk = $dbTable->delete(['employeeId = ?' => $id]);
         return $deleteOk;
     }
+
     /**
      * 
      * @param int/string $id
      * @return string avatar's link is stored in db
      */
-    public function getAvatarById($id)
-    {
-        $rowResult = $this->getDbTable()->fetchRow(['employeeId = ?'=>$id]);
+    public function getAvatarById($id) {
+        $rowResult = $this->getDbTable()->fetchRow(['employeeId = ?' => $id]);
         return $rowResult->avatar;
     }
-    
-    /*
-     * 
-     * @param number $id
-     * @return \Employee_Model_Employee|boolean
-     */
 
-    public function findId($id) {
-        $table = $this->getDbTable(); /* @var $table Employee_Model_DbTable_Employee */
-        $result = $table->find($id); /* @var $result Zend_Db_Table_Rowset */
-        if (!count($result)) {
-            return false;
-        }
-
-        $data = $result->current();
-        $data = $data->toArray();
-        $student = $this->__setObjectEmployeeFromArray($data);
-        return $student;
-    }
+ 
 
     public function save(Employee_Model_Employee $employee) {
         $table = $this->getDbTable(); /* @var $table Employee_Model_DbTable_Employee */
