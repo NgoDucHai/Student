@@ -121,11 +121,11 @@ class Teacher_ProfileController extends Zend_Controller_Action {
         if (!$form->isValidPartial($request->getPost())) {
             return;
         }
-
+        
         $adapter = new Zend_File_Transfer_Adapter_Http();
         $teacher = new Teacher_Model_Teacher($request->getPost());
         $teacher->setAvatar($adapter->getFileName());
-
+        
         //if data is inserted into database successfully, image will be uploaded
         //and page will be redirected to index teacher profile page
         $dbMapper = new Teacher_Model_TeacherMapper();

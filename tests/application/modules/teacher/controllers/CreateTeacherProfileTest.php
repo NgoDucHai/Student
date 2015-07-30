@@ -102,7 +102,7 @@ class CreateTeacherProfileTest extends Zend_Test_PHPUnit_ControllerTestCase {
             'diploma' => '111',
             'phone' => '1233213231',
             'address' => 'sfdrgk',
-            'rule' => '1'
+            'rule' => '101'
         ];
 
 

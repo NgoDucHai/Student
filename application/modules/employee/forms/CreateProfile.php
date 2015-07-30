@@ -61,10 +61,7 @@ class Employee_Form_CreateProfile extends Twitter_Bootstrap3_Form_Horizontal {
 
         $this->addElement('select', 'position', [
             'label' => 'Chức danh',
-            'multiOptions' => [
-                '' => 'Chọn chức danh',
-                '1' => 'Trưởng phòng'
-            ],
+            'multiOptions' => $this->__getDataPosition(),
             'value' => '',
             'required' => true,
             'validators' => [
@@ -91,10 +88,7 @@ class Employee_Form_CreateProfile extends Twitter_Bootstrap3_Form_Horizontal {
 
         $this->addElement('select', 'role', [
             'label' => 'Vị trí',
-            'multiOptions' => [
-                '' => 'Chọn vị trí',
-                '1' => 'Trưởng phòng'
-            ],
+            'multiOptions' => $this->__getDataRole(),
             'value' => '',
             'required' => true,
             'validators' => [
@@ -124,8 +118,38 @@ class Employee_Form_CreateProfile extends Twitter_Bootstrap3_Form_Horizontal {
                 $data[$faculty['facultyId']] = $faculty['facultyName'];
             endforeach;
         }
-        
+
         return $data;
+    }
+    
+    /**
+     * @return array contain list employee's position
+     */
+    private function __getDataPosition() {
+        $positionMapper = new Application_Model_PositionMapper();
+        $listPosition = $positionMapper->fetchAll();
+
+        $data[''] = 'Chọn chức vụ';
+        if ($listPosition) {
+            foreach ($listPosition as $position):
+                $data[$position->positionId] = $position->roleName;
+            endforeach;
+        }
+
+        return $data;
+    }
+    
+    private function __getDataRole() {
+        $roleMapper = new Application_Model_RoleMapper();
+        $listRole = $roleMapper->fetchAll();
+        $data[''] = 'Chọn quyền';
+        if ($listRole) {
+            foreach ($listRole->toArray() as $role):
+                $data[$role['roleId']] = $role['roleName'];
+            endforeach;
+        }
+        return $data;
+        
     }
 
 }

@@ -110,9 +110,8 @@ class ListEmployeeProfileTest extends Vms_Test_PHPUnit_ControllerWithDatabaseFix
         $this->assertXpath('//div[@class="col-md-12 text-center"]');
         $this->assertXpath('//ul[@class="pagination"]');
     }
-    
-    public function testWhenUserAccessThenExpectedPageIsPaginatedFollowIdeaOfCustomer()
-    {
+
+    public function testWhenUserAccessThenExpectedPageIsPaginatedFollowIdeaOfCustomer() {
         $this->dispatch('/employee/profile/list-profile/page/1/records/3');
         // 4 records and 1 row is header
         $this->assertQueryCount('tr', 3);
@@ -120,4 +119,5 @@ class ListEmployeeProfileTest extends Vms_Test_PHPUnit_ControllerWithDatabaseFix
         $this->assertXpath('//ul[@class="pagination"]');
         $this->assertXpathContentContains('//a[@href="#"]', '1');
     }
+
 }
