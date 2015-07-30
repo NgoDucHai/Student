@@ -162,11 +162,12 @@ class Teacher_Form_UpdateProfile extends Twitter_Bootstrap3_Form_Horizontal {
         //create rule element
         $this->addElement('select', 'rule', [
             'label' => "Phân quyền",
-            'multiOptions' => [
-                '1' => 'Khoa',
-                '2' => 'Giảng viên',
-                '3' => 'Sinh viên'
-            ]
+            'multiOptions' => $this->__getDataRole(),
+            'value' => '',
+            'required' => true,
+            'validators' => [
+                ['NotEmpty', true]
+            ],
         ]);
 
         //create avata element
@@ -179,5 +180,15 @@ class Teacher_Form_UpdateProfile extends Twitter_Bootstrap3_Form_Horizontal {
             'class' => 'btn'
         ]);
     }
-
+     private function __getDataRole() {
+        $roleMapper = new Application_Model_RoleMapper();
+        $listRole = $roleMapper->fetchAll();
+        $data[''] = 'Chọn quyền';
+        if ($listRole) {
+            foreach ($listRole->toArray() as $role):
+                $data[$role['roleId']] = $role['roleName'];
+            endforeach;
+        }
+        return $data;
+    }
 }

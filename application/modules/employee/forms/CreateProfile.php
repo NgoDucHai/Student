@@ -92,10 +92,7 @@ class Employee_Form_CreateProfile extends Twitter_Bootstrap3_Form_Horizontal {
 
         $this->addElement('select', 'role', [
             'label' => 'Vị trí',
-            'multiOptions' => [
-                '' => 'Chọn vị trí',
-                '1' => 'Trưởng phòng'
-            ],
+            'multiOptions' => $this->__getDataRole(),
             'value' => '',
             'required' => true,
             'validators' => [
@@ -127,6 +124,19 @@ class Employee_Form_CreateProfile extends Twitter_Bootstrap3_Form_Horizontal {
         }
         
         return $data;
+    }
+    
+    private function __getDataRole() {
+        $roleMapper = new Application_Model_RoleMapper();
+        $listRole = $roleMapper->fetchAll();
+        $data[''] = 'Chọn quyền';
+        if ($listRole) {
+            foreach ($listRole->toArray() as $role):
+                $data[$role['roleId']] = $role['roleName'];
+            endforeach;
+        }
+        return $data;
+        
     }
 
 }

@@ -163,9 +163,12 @@ class Teacher_Form_CreateTeacherProfile extends Twitter_Bootstrap3_Form_Horizont
         //create rule element
         $this->addElement('select', 'rule', [
             'label' => "Phân quyền",
-            'multiOptions' => [
-                '1' => 'Quản trị'
-            ]
+            'multiOptions' => $this->__getDataRole(),
+            'value' => '',
+            'required' => true,
+            'validators' => [
+                ['NotEmpty', true]
+            ],
         ]);
 
 //        $file = new Zend_Validate_File_IsImage();
@@ -181,5 +184,15 @@ class Teacher_Form_CreateTeacherProfile extends Twitter_Bootstrap3_Form_Horizont
             'class' => 'btn btn-primary'
         ]);
     }
-
+    private function __getDataRole() {
+        $roleMapper = new Application_Model_RoleMapper();
+        $listRole = $roleMapper->fetchAll();
+        $data[''] = 'Chọn quyền';
+        if ($listRole) {
+            foreach ($listRole->toArray() as $role):
+                $data[$role['roleId']] = $role['roleName'];
+            endforeach;
+        }
+        return $data;
+    }
 }

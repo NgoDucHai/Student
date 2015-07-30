@@ -89,11 +89,12 @@ class Employee_Form_UpdateProfile extends Twitter_Bootstrap3_Form_Horizontal {
 
         $this->addElement('select', 'facultyId', [
             'label' => "Khoa",
-            'multiOptions' => [
-                '' => 'Chọn khoa',
-                '1' => 'CNTT',
-                '2' => 'DTVT'
-            ]
+            'multiOptions' => $this->__getDataFaculty(),
+            'value' => '',
+            'required' => true,
+            'validators' => [
+                ['NotEmpty', true]
+            ],
         ]);
 
         $this->addElement('select', 'position', [
@@ -156,16 +157,15 @@ class Employee_Form_UpdateProfile extends Twitter_Bootstrap3_Form_Horizontal {
         //create rule element
         $this->addElement('select', 'role', [
             'label' => "Phân quyền",
-            'multiOptions' => [
-                
-                '' => 'Chọn',
-                '1' => 'Khoa',
-                '2' => 'Giảng viên',
-                '3' => 'Sinh viên'
-            ]
+            'multiOptions' => $this->__getDataRole(),
+            'value' => '',
+            'required' => true,
+            'validators' => [
+                ['NotEmpty', true]
+            ],
         ]);
-        
-        
+
+
         //create avata element
         $this->addElement('file', 'avatar', [
             'label' => "Avatar",
@@ -175,6 +175,32 @@ class Employee_Form_UpdateProfile extends Twitter_Bootstrap3_Form_Horizontal {
         $this->addElement('submit', 'Update', [
             'class' => 'btn'
         ]);
+    }
+
+    private function __getDataFaculty() {
+        $facultyMapper = new Application_Model_FacultyMapper();
+        $listFaculty = $facultyMapper->fetchAll();
+
+        $data[''] = 'Chọn khoa';
+        if ($listFaculty) {
+            foreach ($listFaculty->toArray() as $faculty):
+                $data[$faculty['facultyId']] = $faculty['facultyName'];
+            endforeach;
+        }
+
+        return $data;
+    }
+
+    private function __getDataRole() {
+        $roleMapper = new Application_Model_RoleMapper();
+        $listRole = $roleMapper->fetchAll();
+        $data[''] = 'Chọn quyền';
+        if ($listRole) {
+            foreach ($listRole->toArray() as $role):
+                $data[$role['roleId']] = $role['roleName'];
+            endforeach;
+        }
+        return $data;
     }
 
 }
