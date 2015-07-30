@@ -19,7 +19,7 @@ class DeleteProfileActionTest extends Vms_Test_PHPUnit_ControllerWithDatabaseFix
             $data['diploma'] = 1;
             $data['phone'] = '123476543' . $i;
             $data['address'] = 'hoa binh ' . $i;
-            $data['rule'] = 1;
+            $data['role'] = 1;
             $data['avatar'] = '';
 
             $arr[] = $data;

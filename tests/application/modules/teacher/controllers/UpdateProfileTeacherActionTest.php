@@ -19,7 +19,7 @@ class UpdateProfileTeacherActionTest extends Vms_Test_PHPUnit_ControllerWithData
                     "gender" => '1',
                     "diploma" => '1',
                     "phone" => '1234567898',
-                    "rule" => '1',
+                    "role" => '1',
                     "address" => 'ha noi',
                    
                 ],
@@ -53,7 +53,7 @@ class UpdateProfileTeacherActionTest extends Vms_Test_PHPUnit_ControllerWithData
         $this->assertQuery('input[@name="phone"]');
         $this->assertQuery('textarea[@name="address"]');
         $this->assertQuery('input[@name="diploma"]');
-        $this->assertQuery('select[@name="rule"]');
+        $this->assertQuery('select[@name="role"]');
         $this->assertQuery('input[@name="avata"]');
     }
     
@@ -91,7 +91,7 @@ class UpdateProfileTeacherActionTest extends Vms_Test_PHPUnit_ControllerWithData
                     "gender" => '1',
                     "diploma" => '1',
                     "phone" => '1234567898',
-                    "rule" => '1',
+                    "role" => '1',
                     "address" => 'ha noi'
         ]);
         $this->dispatch('/teacher/profile/update-profile/id/1');
@@ -117,7 +117,7 @@ class UpdateProfileTeacherActionTest extends Vms_Test_PHPUnit_ControllerWithData
 //                    "gender" => '1',
 //                    "diploma" => '1',
 //                    "phone" => '1234567898',
-//                    "rule" => '1',
+//                    "role" => '1',
 //                    "address" => 'ha noi'
 //        ]);
 //        $this->dispatch('/teacher/profile/update-profile/id/1');

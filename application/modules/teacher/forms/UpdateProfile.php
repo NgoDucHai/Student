@@ -11,7 +11,7 @@
   + input teacherDiploma: số
   + input teacherPhone: số
   + textarea teacherAddress: max:150
-  + select teacherRule: số
+  + select teacherRole: số
  */
 class Teacher_Form_UpdateProfile extends Twitter_Bootstrap3_Form_Horizontal {
 
@@ -159,8 +159,8 @@ class Teacher_Form_UpdateProfile extends Twitter_Bootstrap3_Form_Horizontal {
                 ]
             ]
         ]);
-        //create rule element
-        $this->addElement('select', 'rule', [
+        //create role element
+        $this->addElement('select', 'role', [
             'label' => "Phân quyền",
             'multiOptions' => $this->__getDataRole(),
             'value' => '',

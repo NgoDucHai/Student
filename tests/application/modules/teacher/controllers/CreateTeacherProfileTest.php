@@ -42,7 +42,7 @@ class CreateTeacherProfileTest extends Zend_Test_PHPUnit_ControllerTestCase {
         $this->assertQueryCount('input[name="diploma"]', 1);
         $this->assertQueryCount('input[name="phone"]', 1);
         $this->assertQueryCount('input[name="address"]', 1);
-        $this->assertQueryCount('select[name="rule"]', 1);
+        $this->assertQueryCount('select[name="role"]', 1);
         $this->assertQueryCount('input[type="file"]', 1);
     }
 
@@ -102,7 +102,7 @@ class CreateTeacherProfileTest extends Zend_Test_PHPUnit_ControllerTestCase {
             'diploma' => '111',
             'phone' => '1233213231',
             'address' => 'sfdrgk',
-            'rule' => '101'
+            'role' => '101'
         ];
 
 

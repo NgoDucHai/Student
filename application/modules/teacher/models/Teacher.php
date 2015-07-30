@@ -1,6 +1,6 @@
 <?php
 
-class Teacher_Model_Teacher extends Application_Model_Abstract{
+class Teacher_Model_Teacher extends Application_Model_Abstract {
 
     protected $_teacherId;
     protected $_teacherName;
@@ -9,17 +9,17 @@ class Teacher_Model_Teacher extends Application_Model_Abstract{
     protected $_diploma;
     protected $_phone;
     protected $_address;
-    protected $_rule;
+    protected $_role;
     protected $_avatar;
-
-    public function __construct(array $options = null) {
-        if (is_array($options)) {
-            $this->setOptions($options);
-        }
+    public function getAvatar() {
+        return $this->_avatar;
     }
 
-   
-    public function getTeacherId() {
+    public function setAvatar($avatar) {
+        $this->_avatar = $avatar;
+    }
+
+        public function getTeacherId() {
         return $this->_teacherId;
     }
 
@@ -47,13 +47,10 @@ class Teacher_Model_Teacher extends Application_Model_Abstract{
         return $this->_address;
     }
 
-    public function getRule() {
-        return $this->_rule;
+    public function getRole() {
+        return $this->_role;
     }
-    
-    public function getAvatar(){
-        return $this->_avatar;
-    }
+
     public function setTeacherId($teacherId) {
         $this->_teacherId = $teacherId;
         return $this;
@@ -89,13 +86,8 @@ class Teacher_Model_Teacher extends Application_Model_Abstract{
         return $this;
     }
 
-    public function setRule($rule) {
-        $this->_rule = $rule;
-        return $this;
-    }
-    
-    public function setAvatar($avatar){
-        $this->_avatar = $avatar;
+    public function setRole($role) {
+        $this->_role = $role;
         return $this;
     }
 

@@ -78,7 +78,7 @@ class Teacher_ProfileController extends Zend_Controller_Action {
             'gender' => $result->getGender(),
             'phone' => $result->getPhone(),
             'address' => $result->getAddress(),
-            'rule' => $result->getRule()
+            'role' => $result->getRole()
         ]);
     }
 

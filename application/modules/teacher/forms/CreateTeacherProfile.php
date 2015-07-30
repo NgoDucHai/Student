@@ -160,8 +160,8 @@ class Teacher_Form_CreateTeacherProfile extends Twitter_Bootstrap3_Form_Horizont
             ]
         ]);
 
-        //create rule element
-        $this->addElement('select', 'rule', [
+        //create role element
+        $this->addElement('select', 'role', [
             'label' => "Phân quyền",
             'multiOptions' => $this->__getDataRole(),
             'value' => '',

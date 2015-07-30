@@ -21,7 +21,7 @@ class Teacher_Model_TeacherMapper extends Application_Model_MapperAbstract{
                 ->setDiploma($data->diploma)
                 ->setPhone($data->phone)
                 ->setAddress($data->address)
-                ->setRule($data->rule)
+                ->setRole($data->role)
                 ->setAvatar($data->avatar);
 
     }
@@ -39,7 +39,7 @@ class Teacher_Model_TeacherMapper extends Application_Model_MapperAbstract{
         $data['diploma'] = $teacher->getDiploma();
         $data['phone'] = $teacher->getPhone();
         $data['address'] = $teacher->getAddress();
-        $data['rule'] = $teacher->getRule();
+        $data['role'] = $teacher->getRole();
         $data['avatar'] = $teacher->getAvatar() ? $teacher->getAvatar() :
                 realpath(APPLICATION_PATH . '/../public/images/avatar/defaultAvatar.png');
 

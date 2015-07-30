@@ -13,7 +13,7 @@ class TeacherProfile extends AbstractMigration {
                 ->addColumn('diploma', 'string', ['limit' => 100])
                 ->addColumn('phone', 'string', ['limit' => 15])
                 ->addColumn('address', 'string', ['limit' => 150])
-                ->addColumn('rule', 'integer', ['limit' => 5])
+                ->addColumn('role', 'integer', ['limit' => 5])
                 ->addColumn('avatar', 'string')
                 ->create();
     }

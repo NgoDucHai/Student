@@ -15,7 +15,7 @@ class ShowTeacherProfileTest extends Vms_Test_PHPUnit_ControllerWithDatabaseFixt
                     'diploma' => 'Master',
                     "phone" => '01659338885',
                     "address" => "Tan Yen- Bac Giang",
-                    'rule' => '1',
+                    'role' => '1',
                     'avatar' => 'no avata'
                 ],
                 [
@@ -26,7 +26,7 @@ class ShowTeacherProfileTest extends Vms_Test_PHPUnit_ControllerWithDatabaseFixt
                     'diploma' => 'Master',
                     "phone" => '01659338885',
                     "address" => "Quang Ninh",
-                    'rule' => '1',
+                    'role' => '1',
                     'avatar' => 'no avata'
                 ],
             ]
@@ -62,7 +62,7 @@ class ShowTeacherProfileTest extends Vms_Test_PHPUnit_ControllerWithDatabaseFixt
         $this->assertQueryContentContains('td', 'Diploma');
         $this->assertQueryContentContains('td', 'Gender');
         $this->assertQueryContentContains('td', 'Phone');
-        $this->assertQueryContentContains('td', 'Rule');
+        $this->assertQueryContentContains('td', 'Role');
         $this->assertQueryContentContains('td', 'Address');
         
         $this->assertQueryContentContains('td', '12020535');
