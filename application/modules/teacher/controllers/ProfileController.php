@@ -119,7 +119,6 @@ class Teacher_ProfileController extends Zend_Controller_Action {
         }
 
         if (!$form->isValidPartial($request->getPost())) {
-            var_dump($request->getPost());die;
             return;
         }
         
