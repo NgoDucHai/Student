@@ -117,11 +117,11 @@ class Employee_Form_CreateProfile extends Twitter_Bootstrap3_Form_Horizontal {
 
     private function __getDataFaculty() {
         $facultyMapper = new Application_Model_FacultyMapper();
-        $listFaculty = $facultyMapper->fetchAll()->toArray();
+        $listFaculty = $facultyMapper->fetchAll();
 
         $data[''] = 'Chọn khoa';
         if ($listFaculty) {
-            foreach ($listFaculty as $faculty):
+            foreach ($listFaculty->toArray() as $faculty):
                 $data[$faculty['facultyId']] = $faculty['facultyName'];
             endforeach;
         }
