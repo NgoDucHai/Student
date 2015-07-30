@@ -4,11 +4,19 @@
  * @author TranVanHoang <hoangtv@vnext.com.vn>
  * test create teacher profile
  */
-class CreateTeacherProfileTest extends Zend_Test_PHPUnit_ControllerTestCase {
+class CreateTeacherProfileTest extends Vms_Test_PHPUnit_ControllerWithDatabaseFixturesTestCase {
 
-    public function setUp() {
-        $this->bootstrap = new Zend_Application(APPLICATION_ENV, APPLICATION_PATH . '/configs/application.ini');
-        parent::setUp();
+    protected $truncateFixturesWhenTearDown = true;
+
+    protected function getDataSet() {
+        return new PHPUnit_Extensions_Database_DataSet_ArrayDataSet([
+            "role" => [
+                [
+                    "roleId" => '1',
+                    "roleName"=>'abc'
+                ]
+            ]
+        ]);
     }
 
     /**
@@ -103,7 +111,7 @@ class CreateTeacherProfileTest extends Zend_Test_PHPUnit_ControllerTestCase {
             'phone' => '1233213231',
             'address' => 'sfdrgk',
             'role' => '101'
-        ];
+            ];
 
 
         $this->request->setMethod('POST')
