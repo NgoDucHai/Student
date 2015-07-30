@@ -31,7 +31,6 @@ class Employee_ProfileController extends Zend_Controller_Action {
         $paginator->setCurrentPageNumber($page);
 
         $this->view->paginator = $paginator;
-
     }
 
     /**
@@ -43,24 +42,17 @@ class Employee_ProfileController extends Zend_Controller_Action {
      */
     public function deleteAction() {
         $id = $this->getRequest()->getParam('id', '');
-        $this->view->deleteMessage = "";
         $mapper = new Employee_Model_EmployeeMapper();
         $idExists = $mapper->findById($id);
-        if('' == $id){
-            $this->_helper->redirector('list-profile');
-        }
-        if (FALSE === $idExists) {
-            $this->view->headTitle("Trang xóa thông tin người dùng");
-            $this->view->deleteMessage = "ID không tồn tại";
-            return;
-        }
+
         // Delete avatar then delete profile in db
         if (FALSE !== $idExists) {
-            unlink($mapper->getAvatarById($id));
+//            unlink($mapper->getAvatarById($id));
             $mapper->deleteById($id);
-            $this->_helper->redirector('list-profile');
         }
+        $this->_helper->redirector('list-profile');
     }
+
     public function createProfileAction() {
         $this->view->headTitle('Create profile employee');
         $form = new Employee_Form_CreateProfile();
@@ -101,7 +93,7 @@ class Employee_ProfileController extends Zend_Controller_Action {
             $this->_helper->redirector('create-profile');
             return;
         }
-        
+
         $this->view->employee = $employee;
     }
 

@@ -20,7 +20,7 @@ class deleteEmployeeProfileTest extends Vms_Test_PHPUnit_ControllerWithDatabaseF
             'phone' => '01663669281',
             'address' => 'Quang Ninh',
             'role' => 2,
-            'avatar' => 'no avatar',
+            'avatar' => 'defaultAvatar.jpg',
                 ],
                 [
                     'employeeId' => '12020533',
@@ -32,7 +32,7 @@ class deleteEmployeeProfileTest extends Vms_Test_PHPUnit_ControllerWithDatabaseF
                     'phone' => '01663669281',
                     'address' => 'Hoa Binh',
                     'role' => 2,
-                    'avatar' => 'no avatar',
+                    'avatar' => 'defaultAvatar.jpg',
                 ],
                 [
                     'employeeId' => '12023232',
@@ -44,7 +44,7 @@ class deleteEmployeeProfileTest extends Vms_Test_PHPUnit_ControllerWithDatabaseF
                     'phone' => '01663669381',
                     'address' => 'Bac Giang',
                     'role' => 2,
-                    'avatar' => 'no avatar',
+                    'avatar' => 'defaultAvatar.jpg',
                 ],
                 [
                     'employeeId' => '12023262',
@@ -56,7 +56,7 @@ class deleteEmployeeProfileTest extends Vms_Test_PHPUnit_ControllerWithDatabaseF
                     'phone' => '01663669323',
                     'address' => 'Hai Phong',
                     'role' => 2,
-                    'avatar' => 'no avatar',
+                    'avatar' => 'defaultAvatar.jpg',
                 ]
         ]]);
     }
@@ -73,8 +73,7 @@ class deleteEmployeeProfileTest extends Vms_Test_PHPUnit_ControllerWithDatabaseF
     public function testWhenUserInputANotExistsIdThenExpectedTitlePageFollowIdeaOfCustomer()
     {
         $this->dispatch('/employee/profile/delete/id/1202');
-        $this->assertQueryContentContains('title', 'Trang xóa thông tin người dùng');
-        $this->assertQueryContentContains('h1', 'ID không tồn tại');
+        $this->assertRedirectTo('/employee/profile/list-profile');
         
     }
 
@@ -83,6 +82,4 @@ class deleteEmployeeProfileTest extends Vms_Test_PHPUnit_ControllerWithDatabaseF
         $this->dispatch('/employee/profile/delete/id/12023232');
         $this->assertRedirectTo('/employee/profile/list-profile');
     }
-    
-    
 }
