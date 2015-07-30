@@ -19,7 +19,6 @@ class Employee_Form_CreateProfile extends Twitter_Bootstrap3_Form_Horizontal {
                 ['Digits', true]
             ],
         ]);
-        new Zend_Validate_Alpha();
         $this->addElement('text', 'employeeName', [
             'label' => 'Tên nhân viên',
             'required' => true,
