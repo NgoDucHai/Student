@@ -99,6 +99,7 @@ class Employee_Form_UpdateProfile extends Twitter_Bootstrap3_Form_Horizontal {
         $this->addElement('select', 'position', [
             'label' => "Vị trí",
             'multiOptions' => [
+                '' => 'Chọn',
                 '1' => 'Quản lý',
                 '0' => 'Thư ký'
             ]
@@ -156,6 +157,8 @@ class Employee_Form_UpdateProfile extends Twitter_Bootstrap3_Form_Horizontal {
         $this->addElement('select', 'role', [
             'label' => "Phân quyền",
             'multiOptions' => [
+                
+                '' => 'Chọn',
                 '1' => 'Khoa',
                 '2' => 'Giảng viên',
                 '3' => 'Sinh viên'

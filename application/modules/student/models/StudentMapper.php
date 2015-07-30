@@ -1,8 +1,12 @@
 <?php
 
-class Student_Model_StudentMapper {
+class Student_Model_StudentMapper extends Application_Model_MapperAbstract{
 
-    protected $_dbTable;
+    public function __construct() {
+        if ($this->getDbTable() === False) {
+            $this->setDbTable('Student_Model_DbTable_Student');
+        }
+    }
 
     /**
      * lay du lieu tu mang 1 chieu va gan cho object
@@ -31,27 +35,6 @@ class Student_Model_StudentMapper {
         $data['phone'] = $student->getPhone();
         $data['address'] = $student->getAddress();
         return $data;
-    }
-
-    public function setDbTable($dbTable) {
-        if (is_string($dbTable)) {
-            $dbTable = new $dbTable();
-        }
-        if (!$dbTable instanceof Zend_Db_Table_Abstract) {
-            throw new Exception('Invalid table data gateway provided');
-        }
-        $this->_dbTable = $dbTable;
-        return $this;
-    }
-    /**
-     * 
-     * @return Zend_Db_Table
-     */
-    public function getDbTable() {
-        if (null === $this->_dbTable) {
-            $this->setDbTable('Student_Model_DbTable_Student');
-        }
-        return $this->_dbTable;
     }
 
     /**

@@ -1,8 +1,13 @@
 <?php
 
-class Employee_Model_EmployeeMapper {
+class Employee_Model_EmployeeMapper extends Application_Model_MapperAbstract {
 
-    protected $_dbTable;
+
+    public function __construct() {
+        if ($this->getDbTable() === False) {
+            $this->setDbTable('Employee_Model_DbTable_Employee');
+        }
+    }
 
     /**
      * lay du lieu tu mang 1 chieu va gan cho object
@@ -44,28 +49,6 @@ class Employee_Model_EmployeeMapper {
         $data['avatar'] = $employee->getAvatar();
 
         return $data;
-    }
-
-    public function setDbTable($dbTable) {
-        if (is_string($dbTable)) {
-            $dbTable = new $dbTable();
-        }
-        if (!$dbTable instanceof Zend_Db_Table_Abstract) {
-            throw new Exception('Invalid table data gateway provided');
-        }
-        $this->_dbTable = $dbTable;
-        return $this;
-    }
-
-    /**
-     * 
-     * @return Zend_Db_Table
-     */
-    public function getDbTable() {
-        if (null === $this->_dbTable) {
-            $this->setDbTable('Employee_Model_DbTable_Employee');
-        }
-        return $this->_dbTable;
     }
 
     /**
@@ -140,8 +123,6 @@ class Employee_Model_EmployeeMapper {
         $rowResult = $this->getDbTable()->fetchRow(['employeeId = ?' => $id]);
         return $rowResult->avatar;
     }
-
- 
 
     public function save(Employee_Model_Employee $employee) {
         $table = $this->getDbTable(); /* @var $table Employee_Model_DbTable_Employee */
