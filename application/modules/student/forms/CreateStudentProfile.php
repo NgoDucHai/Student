@@ -1,6 +1,19 @@
 
 <?php
-class Student_Form_CreateStudentProfile extends Zend_Form {
+
+class Student_Form_CreateStudentProfile extends Twitter_Bootstrap3_Form_Horizontal {
+
+    // Some notes: 
+    /**
+     * @author Ngo Anh Long <ngoanhlong@gmail.com>
+     * If we use Twitter_Bootstrap3_Form_Horizontal to create a element follow format such as:
+     * $studentId = $this->createElement('text', 'studentId');
+     * Then: Type of element you must make it in lower case 'text'
+     * Because: If you make the type of element in uper case 'Text', bootstrap3 is not active for U
+     * Beside that: To create a element must follow the format: 
+     * $studentId = $this->createElement('text', 'studentId');
+     * If you have a recommendation for me, please recomment for me
+     */
     public function init() {
         // Add some Attributes for this form
         // Name of form is: createProfile and method is POST to itsefl
@@ -11,7 +24,7 @@ class Student_Form_CreateStudentProfile extends Zend_Form {
         // Just contains number
         // Max length: 25
         // Min length: 6
-        $studentId = $this->createElement('Text', 'studentId');
+        $studentId = $this->createElement('text', 'studentId');
         $studentId->setLabel('Mã sinh viên: ');
         $studentId->setRequired();
         $studentId->addValidator('NotEmpty', true, [
@@ -19,7 +32,7 @@ class Student_Form_CreateStudentProfile extends Zend_Form {
                 'isEmpty' => 'Mã sinh viên yêu cầu không để trống'
             ]
         ]);
-        $studentId->addValidator('Digits', true, [
+        $studentId->addValidator('digits', true, [
             'messages' => [
                 'notDigits' => 'Mã sinh viên yêu cầu chỉ được là số'
             ]
@@ -35,8 +48,8 @@ class Student_Form_CreateStudentProfile extends Zend_Form {
         // Just contains: Alphabet and allow white space in it
         // Max length: 50
         // Min length: 6
-        
-        $studentName = $this->createElement('Text', 'studentName');
+
+        $studentName = $this->createElement('text', 'studentName');
         $studentName->setLabel("Your studentName");
         $studentName->setRequired();
         $studentName->addValidator('NotEmpty', true, [
@@ -58,8 +71,8 @@ class Student_Form_CreateStudentProfile extends Zend_Form {
         // dateOf birth: 
         // 1. Not Empty
         // 2. Must follow this format: dd/mm/YYYY
-        
-        $dateOfBirth = $this->createElement('Text', 'dateOfBirth');
+
+        $dateOfBirth = $this->createElement('text', 'dateOfBirth');
         $dateOfBirth->setLabel("Date of birth: ");
         $dateOfBirth->setAttrib('placeholder', 'dd/mm/YYYY');
         $dateOfBirth->setRequired();
@@ -68,7 +81,7 @@ class Student_Form_CreateStudentProfile extends Zend_Form {
                 'isEmpty' => 'Ngày sinh yêu cầu không được để trống'
             ]
         ]);
-        
+
         $dateValidator = new Zend_Validate_Date();
         $dateValidator->setFormat('dd-MM-yyyy');
         $dateValidator->setMessage("Ngày sinh của bạn phải theo định dạng: dd/mm/yyyy", Zend_Validate_Date::FALSEFORMAT);
@@ -79,7 +92,9 @@ class Student_Form_CreateStudentProfile extends Zend_Form {
         // Default value is 1 - male
         // And 0 - Female
         // Gender don't need validate because it has default value 
-        $gender = new Zend_Form_Element_Select("gender");
+
+        $gender = $this->createElement('select', "gender");
+
         $gender->setValue("1");
         $gender->setLabel("Gender");
         $gender->setMultiOptions([
@@ -100,7 +115,7 @@ class Student_Form_CreateStudentProfile extends Zend_Form {
         // Max length: 12
         // Min length: 11
         // Note: this rule follows number of Vietnamese phone number
-        $phone = $this->createElement('Text', 'phone');
+        $phone = $this->createElement('text', 'phone');
         $phone->setLabel("Your phone: ");
         $phone->setRequired();
         $phone->addValidator('NotEmpty', true, [
@@ -117,24 +132,18 @@ class Student_Form_CreateStudentProfile extends Zend_Form {
         $phoneLengthValidator->setMessage("Số điện thoại chỉ tối đa 12 chữ số", Zend_Validate_StringLength::TOO_LONG);
         $phone->addValidator($phoneDigitValidator);
         $phone->addValidator($phoneLengthValidator);
-        
+
         // Address
         // Contains: 40 columns and 10 rows
         // Address can empty is Ok
-        $address = new Zend_Form_Element_Textarea("address");
+        $address = $this->createElement('textarea', 'address');
         $address->setLabel("Address: ");
         $address->setAttrib('cols', '40');
         $address->setAttrib('rows', '10');
-//        $address->setRequired();
-//        $address->addValidator('NotEmpty', true, [
-//            'messages' => [
-//                'isEmpty' => 'Địa chỉ yêu cầu không để trống'
-//            ]
-//        ]);
-        $submit = $this->createElement('Submit', 'submit');
+
+        // Submit button
+        $submit = $this->createElement('submit', 'submit');
         // Add element to this form
         $this->addElements([$studentId, $studentName, $dateOfBirth, $gender, $phone, $address, $submit]);
     }
-    
-    
 }

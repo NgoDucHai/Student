@@ -64,5 +64,15 @@ class Student_Model_StudentMapper extends Application_Model_MapperAbstract{
             $table->update($data, ['studentId = ?' => $id]);
         }
     }
+    
+    public function fetchAll() {
+        $table = $this->getDbTable(); /* @var $table Application_Model_DbTable_Faculty */
+        $result = $table->fetchAll(); /* @var $result Zend_Db_Table_Rowset*/
+        if(!count($result)){
+            return false;
+        }
+        
+        return $result;
+    }
 
 }
