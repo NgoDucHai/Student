@@ -110,7 +110,7 @@ class CreateTeacherProfileTest extends Vms_Test_PHPUnit_ControllerWithDatabaseFi
             'diploma' => '111',
             'phone' => '1233213231',
             'address' => 'sfdrgk',
-            'role' => '101'
+            'role' => '1'
             ];
 
 
